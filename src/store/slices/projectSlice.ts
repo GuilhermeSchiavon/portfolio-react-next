@@ -1,16 +1,39 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+interface Technology {
+  id: number
+  name: string
+  icon?: string
+}
+
+interface Image {
+  id: number
+  filename: string
+  alt?: string
+}
+
+interface Feature {
+  id: number
+  name: string
+  description: string
+}
+
 interface Project {
   id: number
   title: string
+  subtitle?: string
   description: string
-  slug: string
-  images: string[]
-  technologies: string[]
-  category: string
-  url?: string
-  github?: string
+  link?: string
+  implementations?: number
+  backgroundImage?: string
+  colorPrimary?: string
+  colorSecondary?: string
+  colorTertiary?: string
+  status: string
+  Features: Feature[]
+  Technologies: Technology[]
+  Images: Image[]
 }
 
 interface ProjectState {
@@ -18,7 +41,7 @@ interface ProjectState {
   currentProject: Project | null
   loading: boolean
   error: string | null
-  page: number
+  pageNumber: number
   pages: number
   total: number
 }
@@ -28,7 +51,7 @@ const initialState: ProjectState = {
   currentProject: null,
   loading: false,
   error: null,
-  page: 1,
+  pageNumber: 1,
   pages: 1,
   total: 0
 }
@@ -36,18 +59,18 @@ const initialState: ProjectState = {
 // Async thunks
 export const fetchProjects = createAsyncThunk(
   'project/fetchProjects',
-  async ({ keyword = '', page = 1 }: { keyword?: string; page?: number }) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/projects`, {
-      params: { keyword, page }
+  async ({ keyword = '', pageNumber = 1, language = 'pt' }: { keyword?: string; pageNumber?: number; language?: string }) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project`, {
+      params: { keyword, pageNumber, language }
     })
     return response.data
   }
 )
 
-export const fetchProjectBySlug = createAsyncThunk(
-  'project/fetchProjectBySlug',
-  async (slug: string) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/projects/${slug}`)
+export const fetchProjectById = createAsyncThunk(
+  'project/fetchProjectById',
+  async (id: number) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/${id}`)
     return response.data
   }
 )
@@ -72,12 +95,12 @@ const projectSlice = createSlice({
       })
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false
-        if (action.meta.arg.page === 1) {
-          state.projects = action.payload.projects
+        if (action.meta.arg.pageNumber === 1) {
+          state.projects = action.payload.items
         } else {
-          state.projects = [...state.projects, ...action.payload.projects]
+          state.projects = [...state.projects, ...action.payload.items]
         }
-        state.page = action.payload.page
+        state.pageNumber = action.payload.pageNumber
         state.pages = action.payload.pages
         state.total = action.payload.total
       })
@@ -85,16 +108,16 @@ const projectSlice = createSlice({
         state.loading = false
         state.error = action.error.message || 'Failed to fetch projects'
       })
-      // Fetch project by slug
-      .addCase(fetchProjectBySlug.pending, (state) => {
+      // Fetch project by id
+      .addCase(fetchProjectById.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(fetchProjectBySlug.fulfilled, (state, action) => {
+      .addCase(fetchProjectById.fulfilled, (state, action) => {
         state.loading = false
-        state.currentProject = action.payload
+        state.currentProject = action.payload.item
       })
-      .addCase(fetchProjectBySlug.rejected, (state, action) => {
+      .addCase(fetchProjectById.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch project'
       })

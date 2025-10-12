@@ -1,13 +1,18 @@
 import { Metadata } from 'next'
 import { HomeView } from '@/components/views/HomeView'
+import { profileData } from '@/data/profile'
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Welcome to Guilherme Schiavon\'s portfolio. Computer Scientist and Full Stack Developer creating modern web solutions.',
+  title: profileData.seo.metaTitle,
+  description: profileData.seo.metaDescription,
+  keywords: profileData.seo.keywords,
+  authors: [{ name: profileData.personal.name }],
+  creator: profileData.personal.name,
   openGraph: {
-    title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Welcome to my portfolio. Computer Scientist and Full Stack Developer creating modern web solutions.',
+    title: profileData.seo.metaTitle,
+    description: profileData.seo.metaDescription,
     url: '/',
+    siteName: 'Guilherme Schiavon Portfolio',
     images: [
       {
         url: '/og-image.jpg',
@@ -16,6 +21,25 @@ export const metadata: Metadata = {
         alt: 'Guilherme Schiavon Portfolio',
       },
     ],
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: profileData.seo.metaTitle,
+    description: profileData.seo.metaDescription,
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 

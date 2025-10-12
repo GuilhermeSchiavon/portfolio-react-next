@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useAppDispatch } from '@/store'
-import { fetchProjects } from '@/store/slices/projectSlice'
 import { Header } from '@/components/layout/Header'
 import { HeroSection } from '@/components/home/HeroSection'
 import { AboutSection } from '@/components/home/AboutSection'
@@ -11,7 +9,6 @@ import { ProjectsSection } from '@/components/home/ProjectsSection'
 import { Footer } from '@/components/layout/Footer'
 
 export function HomeView() {
-  const dispatch = useAppDispatch()
   const [loading, setLoading] = useState(true)
   const [currentWelcomeIndex, setCurrentWelcomeIndex] = useState(0)
   
@@ -30,12 +27,9 @@ export function HomeView() {
       // Start welcome text animation
       const welcomeInterval = setInterval(() => {
         setCurrentWelcomeIndex((prev) => (prev + 1) % welcomeTexts.length)
-      }, 400)
+      }, 200)
 
       try {
-        // Fetch initial data
-        await dispatch(fetchProjects({ keyword: '' }))
-        
         // Minimum loading time for better UX
         await new Promise(resolve => setTimeout(resolve, 2500))
         
@@ -50,7 +44,7 @@ export function HomeView() {
     }
 
     initializeApp()
-  }, [dispatch, welcomeTexts.length])
+  }, [welcomeTexts.length])
 
   return (
     <div className="relative">
