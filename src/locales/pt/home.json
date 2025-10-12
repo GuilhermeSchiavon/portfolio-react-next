@@ -1,0 +1,24 @@
+{
+    "heroComponent": {
+        "scientist": "Cientista da Computação",
+        "full": "Full Stack"
+    },
+    "descriptionComponent": {
+        "title": "Transformando sistemas em soluções modernas há ",
+        "itens": ["Sobre", "Serviços", "Experiências"],
+        "about": "Como <strong>cientista na área de TI</strong>, levo o desenvolvimento de projetos web a um novo patamar, utilizando meu conhecimento para <strong>criar sistemas que não apenas atendem, mas superam as expectativas</strong> em termos de escalabilidade, robustez, modularidade e responsividade. <br>Minha habilidade em gerenciar <strong>todos os aspectos de um projeto</strong>, desde a concepção da interface até o controle total do backend, me destaca como um profissional versátil e inovador.",
+        "services": "Meu trabalho como <strong>desenvolvedor full-stack</strong> abrange todas as camadas de um software, garantindo que cada projeto se beneficie das tecnologias mais recentes. <br><br>No <strong>frontend</strong>, aplico conceitos avançados para criar <strong>interfaces reativas e envolventes</strong>, e no <strong>backend, desenvolvo APIs robustas em Node.js</strong> que garantem eficiência e escalabilidade. <br><br>Meu objetivo é sempre entregar soluções que estejam na vanguarda da tecnologia e que <strong>realmente façam a diferença</strong>.",
+        "experience": "Minha experiência se estende desde o <strong>desenvolvimento de sistemas</strong> complexos até a gestão e <strong>comunicação eficaz</strong> com clientes e equipes de desenvolvedores. <br><br>Grande parte dos meus projetos foram para <strong>médicos e profissionais da saúde</strong>, criando sistemas que atendem às necessidades específicas desse setor. Sempre focando em simplificar a jornada dos usuários e otimizar a operação.<br><br>Abaixo, você encontrará exemplos concretos de como transformei ideias em soluções que se destacam.",
+        "years": "anos"
+    },
+    "project": {
+        "explore": "Explorar",
+        "implementation": "Implementação",
+        "implementations": "Implementações"
+    },
+    "otherProjects": {
+        "title": "Outros Projetos",
+        "subtitle": "Confira também outros projetos que desenvolvi, todos com a mesma dedicação e qualidade.",
+        "seeMore": "Ver mais"
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "home": "Global EN",
+    "navItens": [
+        {
+            "name": "Home",
+            "url": "/#home"
+        },
+        {
+            "name": "About",
+            "url": "/#about"
+        },
+        {
+            "name": "Project",
+            "url": "/#project"
+        },
+        {
+            "name": "Contact",
+            "url": "/#contact"
+        }
+    ],
+    "footer": {
+        "description": "Let's discuss how my experience can add real value to your next project.",
+        "textLink": "Hello Guilherme, can you help me with ...",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookies",
+        "chat": {
+            "name": "Developer Schiavon",
+            "massages": [
+                "It's a pleasure to see you here, feel free to share how I can assist",
+                "Thank you for sending, I will contact you as soon, if you need to resend, ",
+                "click here"
+            ],
+            "placeholder": [
+                "You",
+                "your-email@email.com",
+                "Enter any additional order notes..."
+            ],
+            "send": "Send"
+        }
+    }
+}

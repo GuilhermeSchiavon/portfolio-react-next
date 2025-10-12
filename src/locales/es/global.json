@@ -1,0 +1,42 @@
+{
+    "home": "Global ES",
+    "navItens": [
+        {
+            "name": "Inicio",
+            "url": "/#home"
+        },
+        {
+            "name": "Acerca de",
+            "url": "/#about"
+        },
+        {
+            "name": "Proyectos",
+            "url": "/#project"
+        },
+        {
+            "name": "Contacto",
+            "url": "/#contact"
+        }
+    ],
+    "footer": {
+        "description": "Discutamos cómo mi experiencia puede agregar valor real a tu próximo proyecto.",
+        "textLink": "Hola Guilherme, ¿puedes ayudarme con ...",
+        "terms": "Términos y Condiciones",
+        "privacy": "Política de Privacidad",
+        "cookies": "Cookies",
+        "chat": {
+            "name": "Desarrollador Schiavon",
+            "massages": [
+                "Es un placer verte aquí, siéntete libre de compartir cómo puedo ayudar",
+                "Gracias por enviar, te contactaré pronto, si necesitas reenviar, ",
+                "haz clic aquí"
+            ],
+            "placeholder": [
+                "Tú",
+                "tu-email@email.com",
+                "Ingresa cualquier nota adicional..."
+            ],
+            "send": "Enviar"
+        }
+    }
+}
