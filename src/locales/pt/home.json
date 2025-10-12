@@ -1,7 +1,9 @@
 {
     "heroComponent": {
         "scientist": "Cientista da Computação",
-        "full": "Full Stack"
+        "full": "Full Stack",
+        "btn_about": "Conheça meu trabalho",
+        "btn_contact": "Contato"
     },
     "descriptionComponent": {
         "title": "Transformando sistemas em soluções modernas há ",

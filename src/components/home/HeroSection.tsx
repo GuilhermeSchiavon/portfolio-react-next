@@ -64,7 +64,7 @@ export function HeroSection() {
   return (
     <section 
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-neutral-50 via-white to-primary-50 dark:from-neutral-950 dark:via-neutral-900 dark:to-primary-950"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-200 via-white dark:bg-neutral-800"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -100,7 +100,7 @@ export function HeroSection() {
             <span className="block md:inline">{t('heroComponent.scientist')}</span>
             <span className="mx-2 hidden md:inline">•</span>
             <span className="block md:inline text-primary-600 dark:text-primary-400 font-semibold">
-              {t('heroComponent.full')} Developer
+              {t('heroComponent.full')}
             </span>
           </p>
 
@@ -117,7 +117,7 @@ export function HeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Discover My Work
+              {t('heroComponent.btn_about')}
             </motion.a>
             
             <motion.a
@@ -126,13 +126,14 @@ export function HeroSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Get In Touch
+              {t('heroComponent.btn_contact')}
             </motion.a>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div 
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        </motion.div>
+      </div>
+       {/* Scroll Indicator */}
+       <motion.div 
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2 }}
@@ -148,8 +149,6 @@ export function HeroSection() {
               </svg>
             </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
     </section>
   )
 }

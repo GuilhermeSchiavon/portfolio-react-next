@@ -1,7 +1,9 @@
 {
     "heroComponent": {
         "scientist": "Computer Scientist",
-        "full": "Full Stack"
+        "full": "Full Stack Developer",
+        "btn_about": "Discover My Work",
+        "btn_contact": "Get In Touch"
     },
     "descriptionComponent": {
         "title": "Transforming systems into modern solutions for ",
