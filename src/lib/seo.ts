@@ -65,6 +65,6 @@ export function generateProjectSEO(project: any, language: string = 'pt'): Metad
       ...(project.Technologies?.map((tech: any) => tech.name.toLowerCase()) || [])
     ],
     images: project.Images?.map((img: any) => img.url) || ['/og-image.jpg'],
-    url: `${baseUrl}/projects/${project.id}`
+    url: `${baseUrl}/projects/${project.slug}`
   })
 }

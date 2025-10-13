@@ -11,6 +11,8 @@ interface Image {
   id: number
   filename: string
   alt?: string
+  mediaType: 'image' | 'video'
+  order?: number
 }
 
 interface Feature {
@@ -24,6 +26,7 @@ interface Project {
   title: string
   subtitle?: string
   description: string
+  slug: string
   link?: string
   implementations?: number
   backgroundImage?: string
@@ -36,9 +39,18 @@ interface Project {
   Images: Image[]
 }
 
+interface ProjectUpdate {
+  id: number
+  title: string
+  description: string
+  createdAt: string
+  updatedAt: string
+}
+
 interface ProjectState {
   projects: Project[]
   currentProject: Project | null
+  projectUpdates: ProjectUpdate[]
   loading: boolean
   error: string | null
   pageNumber: number
@@ -49,6 +61,7 @@ interface ProjectState {
 const initialState: ProjectState = {
   projects: [],
   currentProject: null,
+  projectUpdates: [],
   loading: false,
   error: null,
   pageNumber: 1,
@@ -67,10 +80,22 @@ export const fetchProjects = createAsyncThunk(
   }
 )
 
-export const fetchProjectById = createAsyncThunk(
-  'project/fetchProjectById',
-  async (id: number) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/${id}`)
+export const fetchProjectBySlug = createAsyncThunk(
+  'project/fetchProjectBySlug',
+  async ({ slug, language = 'pt' }: { slug: string; language?: string }) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/slug/${slug}`, {
+      params: { language }
+    })
+    return response.data
+  }
+)
+
+export const fetchProjectUpdates = createAsyncThunk(
+  'project/fetchProjectUpdates',
+  async ({ slug, language = 'pt' }: { slug: string; language?: string }) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/slug/${slug}/updates`, {
+      params: { language }
+    })
     return response.data
   }
 )
@@ -108,18 +133,31 @@ const projectSlice = createSlice({
         state.loading = false
         state.error = action.error.message || 'Failed to fetch projects'
       })
-      // Fetch project by id
-      .addCase(fetchProjectById.pending, (state) => {
+      // Fetch project by slug
+      .addCase(fetchProjectBySlug.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(fetchProjectById.fulfilled, (state, action) => {
+      .addCase(fetchProjectBySlug.fulfilled, (state, action) => {
         state.loading = false
         state.currentProject = action.payload.item
       })
-      .addCase(fetchProjectById.rejected, (state, action) => {
+      .addCase(fetchProjectBySlug.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch project'
+      })
+      // Fetch project updates
+      .addCase(fetchProjectUpdates.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchProjectUpdates.fulfilled, (state, action) => {
+        state.loading = false
+        state.projectUpdates = action.payload.items || []
+      })
+      .addCase(fetchProjectUpdates.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch project updates'
       })
   }
 })

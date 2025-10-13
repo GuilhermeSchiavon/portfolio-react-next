@@ -10,8 +10,8 @@
             "url": "/#about"
         },
         {
-            "name": "Project",
-            "url": "/#project"
+            "name": "Projects",
+            "url": "/projects"
         },
         {
             "name": "Contact",
