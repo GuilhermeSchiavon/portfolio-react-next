@@ -1,16 +1,15 @@
 import { Metadata } from 'next'
 import { HomeView } from '@/components/views/HomeView'
-import { profileData } from '@/data/profile'
 
 export const metadata: Metadata = {
-  title: profileData.seo.metaTitle,
-  description: profileData.seo.metaDescription,
-  keywords: profileData.seo.keywords,
-  authors: [{ name: profileData.personal.name }],
-  creator: profileData.personal.name,
+  title: 'Guilherme Schiavon - Full Stack Developer | Portfolio',
+  description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
+  keywords: ['guilherme schiavon', 'full stack developer', 'vue.js', 'react', 'node.js', 'portfolio'],
+  authors: [{ name: 'Guilherme Schiavon' }],
+  creator: 'Guilherme Schiavon',
   openGraph: {
-    title: profileData.seo.metaTitle,
-    description: profileData.seo.metaDescription,
+    title: 'Guilherme Schiavon - Full Stack Developer',
+    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
     url: '/',
     siteName: 'Guilherme Schiavon Portfolio',
     images: [
@@ -26,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: profileData.seo.metaTitle,
-    description: profileData.seo.metaDescription,
+    title: 'Guilherme Schiavon - Full Stack Developer',
+    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js',
     images: ['/og-image.jpg'],
   },
   robots: {

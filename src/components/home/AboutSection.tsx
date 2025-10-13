@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { profileData } from '@/data/profile'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -19,7 +18,26 @@ export function AboutSection() {
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const { skills, stats, experience: experiences } = profileData
+  const skills = [
+    { name: 'Vue.js', level: 'Expert', icon: 'V' },
+    { name: 'React', level: 'Advanced', icon: 'R' },
+    { name: 'Node.js', level: 'Expert', icon: 'N' },
+    { name: 'Python', level: 'Advanced', icon: 'P' },
+    { name: 'TypeScript', level: 'Advanced', icon: 'T' },
+    { name: 'AWS', level: 'Intermediate', icon: 'A' }
+  ]
+
+  const stats = [
+    { value: '50+', label: t('otherProjects.title') },
+    { value: '3+', label: t('descriptionComponent.years') },
+    { value: '15+', label: 'Tecnologias' }
+  ]
+
+  const experiences = t('experiences', { returnObjects: true }) as Array<{
+    period: string
+    title: string
+    description: string
+  }>
 
   const tabs = [
     { key: 'about', label: t('descriptionComponent.itens.0') },

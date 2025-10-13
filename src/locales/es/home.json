@@ -20,5 +20,22 @@
         "title": "Otros Proyectos",
         "subtitle": "Echa un vistazo a otros proyectos que desarrollé, todos con la misma dedicación y calidad.",
         "seeMore": "Ver más"
-    }
+    },
+    "experiences": [
+        {
+            "period": "2023 - Presente",
+            "title": "Desarrollador Full Stack Senior",
+            "description": "Liderando el desarrollo de aplicaciones web escalables usando tecnologías modernas y mejores prácticas."
+        },
+        {
+            "period": "2022 - 2023",
+            "title": "Desarrollador Full Stack",
+            "description": "Desarrollo y mantenimiento de múltiples proyectos de clientes con enfoque en rendimiento y experiencia del usuario."
+        },
+        {
+            "period": "2021 - 2022",
+            "title": "Desarrollador Frontend",
+            "description": "Especializado en crear interfaces responsivas e interactivas usando Vue.js y React."
+        }
+    ]
 }

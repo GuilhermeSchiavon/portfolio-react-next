@@ -3,6 +3,7 @@ import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { AlertSystem } from '@/components/ui/AlertSystem'
+import { StructuredData } from '@/components/seo/StructuredData'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -87,6 +88,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <StructuredData type="person" data={{}} />
+        <StructuredData type="organization" data={{}} />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
