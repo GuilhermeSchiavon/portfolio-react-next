@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -15,6 +15,13 @@ export function ProjectsListView() {
   const { projects, loading, error, pageNumber, pages } = useAppSelector((state) => state.project)
   const [searchKeyword, setSearchKeyword] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [visibleVideos, setVisibleVideos] = useState<Set<number>>(new Set())
+  
+  const getYouTubeVideoId = useCallback((url: string): string | null => {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    const match = url.match(regex)
+    return match ? match[1] : null
+  }, [])
 
   useEffect(() => {
     dispatch(fetchProjects({ 
@@ -23,6 +30,31 @@ export function ProjectsListView() {
       language: i18n.language 
     }))
   }, [dispatch, searchKeyword, currentPage, i18n.language])
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const projectId = parseInt(entry.target.getAttribute('data-project-id') || '0')
+          if (entry.isIntersecting) {
+            setVisibleVideos(prev => new Set([...prev, projectId]))
+          } else {
+            setVisibleVideos(prev => {
+              const newSet = new Set(prev)
+              newSet.delete(projectId)
+              return newSet
+            })
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    
+    const projectCards = document.querySelectorAll('[data-project-id]')
+    projectCards.forEach(card => observer.observe(card))
+    
+    return () => observer.disconnect()
+  }, [projects])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -111,20 +143,33 @@ export function ProjectsListView() {
                   transition={{ duration: 0.6 }}
                   className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
-                  {projects.map((project, index) => (
-                    <motion.div
-                      key={project.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                    >
-                      <Link 
-                        href={`/projects/${project.slug}`}
-                        className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2 block"
+                  {projects.map((project, index) => {
+                    const videoId = project.youtubeUrl ? getYouTubeVideoId(project.youtubeUrl) : null
+                    const isVideoVisible = visibleVideos.has(project.id)
+                    
+                    return (
+                      <motion.div
+                        key={project.id}
+                        data-project-id={project.id}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.1 }}
+                        className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2"
                       >
-                        {/* Project Image */}
-                        <div className="relative overflow-hidden">
-                          {project.Images && project.Images.length > 0 ? (
+                        <Link href={`/projects/${project.slug}`} className="block">
+                          {/* Project Media */}
+                          <div className="relative overflow-hidden">
+                            {project.youtubeUrl && videoId ? (
+                              <div className="relative w-full h-48">
+                                <iframe
+                                  src={`https://www.youtube.com/embed/${videoId}?autoplay=${isVideoVisible ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=${videoId}`}
+                                  className="w-full h-full object-cover"
+                                  frameBorder="0"
+                                  allow="autoplay; encrypted-media"
+                                  title={project.title}
+                                />
+                              </div>
+                            ) : project.Images && project.Images.length > 0 ? (
                             <img 
                               src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${project.Images[0].filename}`}
                               alt={project.title}
@@ -190,10 +235,11 @@ export function ProjectsListView() {
                               </span>
                             )}
                           </div>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
+                          </div>
+                        </Link>
+                      </motion.div>
+                    )
+                  })}
                 </motion.div>
 
                 {/* Load More Button */}

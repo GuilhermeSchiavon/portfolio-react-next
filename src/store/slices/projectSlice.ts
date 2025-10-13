@@ -28,6 +28,7 @@ interface Project {
   description: string
   slug: string
   link?: string
+  youtubeUrl?: string
   implementations?: number
   backgroundImage?: string
   colorPrimary?: string
