@@ -25,19 +25,14 @@
     },
     "experiences": [
         {
-            "period": "2023 - Presente",
+            "period": "2020 - Presente",
             "title": "Desenvolvedor Full Stack Sênior",
-            "description": "Liderando o desenvolvimento de aplicações web escaláveis usando tecnologias modernas e melhores práticas."
+            "description": "Trabalho para sociedades médicas internacionais, desenvolvendo projetos do leventamento a implementação."
         },
         {
-            "period": "2022 - 2023",
+            "period": "2018 - 2020",
             "title": "Desenvolvedor Full Stack",
             "description": "Desenvolvimento e manutenção de múltiplos projetos de clientes com foco em performance e experiência do usuário."
-        },
-        {
-            "period": "2021 - 2022",
-            "title": "Desenvolvedor Frontend",
-            "description": "Especializado na criação de interfaces responsivas e interativas usando Vue.js e React."
-        }
+        }        
     ]
 }
