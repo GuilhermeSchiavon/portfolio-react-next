@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
@@ -19,6 +19,38 @@ export function ProjectsSection() {
   const { projects, loading, error } = useAppSelector((state) => state.project)
   const sectionRef = useRef<HTMLElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  const [visibleVideos, setVisibleVideos] = useState<Set<number>>(new Set())
+  
+  const getYouTubeVideoId = useCallback((url: string): string | null => {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    const match = url.match(regex)
+    return match ? match[1] : null
+  }, [])
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const projectId = parseInt(entry.target.getAttribute('data-project-id') || '0')
+          if (entry.isIntersecting) {
+            setVisibleVideos(prev => new Set([...prev, projectId]))
+          } else {
+            setVisibleVideos(prev => {
+              const newSet = new Set(prev)
+              newSet.delete(projectId)
+              return newSet
+            })
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    
+    const projectCards = document.querySelectorAll('[data-project-id]')
+    projectCards.forEach(card => observer.observe(card))
+    
+    return () => observer.disconnect()
+  }, [projects])
   
   useEffect(() => {
     dispatch(fetchProjects({ 
@@ -137,15 +169,30 @@ export function ProjectsSection() {
             ref={gridRef}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {projects.slice(0, 3).map((project) => (
-              <Link 
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2 block"
-              >
-                {/* Project Image */}
-                <div className="relative overflow-hidden">
-                  {project.Images && project.Images.length > 0 ? (
+            {projects.slice(0, 3).map((project) => {
+              const videoId = project.youtubeUrl ? getYouTubeVideoId(project.youtubeUrl) : null
+              const isVideoVisible = visibleVideos.has(project.id)
+              
+              return (
+                <div 
+                  key={project.id}
+                  data-project-id={project.id}
+                  className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2"
+                >
+                  <Link href={`/projects/${project.slug}`} className="block">
+                    {/* Project Media */}
+                    <div className="relative overflow-hidden">
+                      {project.youtubeUrl && videoId ? (
+                        <div className="relative w-full h-48">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${videoId}?autoplay=${isVideoVisible ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=${videoId}`}
+                            className="w-full h-full object-cover"
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            title={project.title}
+                          />
+                        </div>
+                      ) : project.Images && project.Images.length > 0 ? (
                     <img 
                       src={process.env.NEXT_PUBLIC_API_URL + '/uploads/projects/' + project.Images[0].filename } 
                       alt={project.title}
@@ -169,22 +216,6 @@ export function ProjectsSection() {
                   )}
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  {/* Project Links Overlay */}
-                  {project.link && (
-                    <div className="absolute inset-0 flex items-center justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <a 
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-white/90 dark:bg-neutral-900/90 rounded-full text-neutral-900 dark:text-white hover:bg-primary-500 hover:text-white transition-all duration-300 transform hover:scale-110"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    </div>
-                  )}
                 </div>
 
                 {/* Project Content */}
@@ -222,9 +253,11 @@ export function ProjectsSection() {
                       </span>
                     ))}
                   </div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            ))}
+              )
+            })}
           </div>
         )}
 

@@ -9,7 +9,7 @@ import { ProjectsSection } from '@/components/home/ProjectsSection'
 import { Footer } from '@/components/layout/Footer'
 
 export function HomeView() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [currentWelcomeIndex, setCurrentWelcomeIndex] = useState(0)
   
   const welcomeTexts = [
@@ -23,27 +23,34 @@ export function HomeView() {
   ]
 
   useEffect(() => {
-    const initializeApp = async () => {
-      // Start welcome text animation
-      const welcomeInterval = setInterval(() => {
-        setCurrentWelcomeIndex((prev) => (prev + 1) % welcomeTexts.length)
-      }, 200)
+    const hasSeenWelcome = sessionStorage.getItem('hasSeenWelcome')
+    
+    if (!hasSeenWelcome) {
+      setLoading(true)
+      
+      const initializeApp = async () => {
+        // Start welcome text animation
+        const welcomeInterval = setInterval(() => {
+          setCurrentWelcomeIndex((prev) => (prev + 1) % welcomeTexts.length)
+        }, 200)
 
-      try {
-        // Minimum loading time for better UX
-        await new Promise(resolve => setTimeout(resolve, 2500))
-        
-      } catch (error) {
-        console.error('Error initializing app:', error)
-      } finally {
-        clearInterval(welcomeInterval)
-        setTimeout(() => {
-          setLoading(false)
-        }, 300)
+        try {
+          // Minimum loading time for better UX
+          await new Promise(resolve => setTimeout(resolve, 2500))
+          
+        } catch (error) {
+          console.error('Error initializing app:', error)
+        } finally {
+          clearInterval(welcomeInterval)
+          sessionStorage.setItem('hasSeenWelcome', 'true')
+          setTimeout(() => {
+            setLoading(false)
+          }, 300)
+        }
       }
-    }
 
-    initializeApp()
+      initializeApp()
+    }
   }, [welcomeTexts.length])
 
   return (
@@ -108,29 +115,9 @@ export function HomeView() {
         <main>
           <HeroSection />
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={!loading ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <AboutSection />
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={!loading ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <ProjectsSection />
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={!loading ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Footer />
-          </motion.div>
+          <AboutSection />
+          <ProjectsSection />
+          <Footer />
         </main>
       </div>
     </div>
