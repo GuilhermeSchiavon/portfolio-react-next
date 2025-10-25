@@ -231,3 +231,48 @@ img {
     scroll-behavior: auto !important;
   }
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos para animações do HeroSection */
+.shadow-glow {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+/* Efeito de hover nos textos principais */
+.hero-text:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-out;
+}
+
+/* Animação de pulsação para elementos interativos */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.floating-element {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Efeito de glitch sutil */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+.hero-text:hover {
+  animation: glitch 0.3s ease-in-out;
+}

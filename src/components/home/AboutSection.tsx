@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
 export function AboutSection() {
   const { t } = useTranslation('home')
   const [activeTab, setActiveTab] = useState(0)
-  const [yearsExperience] = useState(5)
+  const [yearsExperience] = useState(3)
   const sectionRef = useRef<HTMLElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -28,28 +28,16 @@ export function AboutSection() {
   ]
 
   const stats = [
-    { value: '50+', label: 'Projects' },
-    { value: '3+', label: 'Years Exp.' },
-    { value: '15+', label: 'Technologies' }
+    { value: '50+', label: t('otherProjects.title') },
+    { value: '3+', label: t('descriptionComponent.years') },
+    { value: '15+', label: 'Tecnologias' }
   ]
 
-  const experiences = [
-    {
-      period: '2023 - Present',
-      title: 'Senior Full Stack Developer',
-      description: 'Leading development of scalable web applications using modern technologies and best practices.'
-    },
-    {
-      period: '2022 - 2023',
-      title: 'Full Stack Developer',
-      description: 'Developed and maintained multiple client projects with focus on performance and user experience.'
-    },
-    {
-      period: '2021 - 2022',
-      title: 'Frontend Developer',
-      description: 'Specialized in creating responsive and interactive user interfaces using Vue.js and React.'
-    }
-  ]
+  const experiences = t('experiences', { returnObjects: true }) as Array<{
+    period: string
+    title: string
+    description: string
+  }>
 
   const tabs = [
     { key: 'about', label: t('descriptionComponent.itens.0') },

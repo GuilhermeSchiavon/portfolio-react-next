@@ -2,12 +2,16 @@ import { Metadata } from 'next'
 import { HomeView } from '@/components/views/HomeView'
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Welcome to Guilherme Schiavon\'s portfolio. Computer Scientist and Full Stack Developer creating modern web solutions.',
+  title: 'Guilherme Schiavon - Full Stack Developer | Portfolio',
+  description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
+  keywords: ['guilherme schiavon', 'full stack developer', 'vue.js', 'react', 'node.js', 'portfolio'],
+  authors: [{ name: 'Guilherme Schiavon' }],
+  creator: 'Guilherme Schiavon',
   openGraph: {
     title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Welcome to my portfolio. Computer Scientist and Full Stack Developer creating modern web solutions.',
+    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
     url: '/',
+    siteName: 'Guilherme Schiavon Portfolio',
     images: [
       {
         url: '/og-image.jpg',
@@ -16,6 +20,25 @@ export const metadata: Metadata = {
         alt: 'Guilherme Schiavon Portfolio',
       },
     ],
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Guilherme Schiavon - Full Stack Developer',
+    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 

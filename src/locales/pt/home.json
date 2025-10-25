@@ -1,7 +1,9 @@
 {
     "heroComponent": {
         "scientist": "Cientista da Computação",
-        "full": "Full Stack"
+        "full": "Full Stack",
+        "btn_about": "Conheça meu trabalho",
+        "btn_contact": "Contato"
     },
     "descriptionComponent": {
         "title": "Transformando sistemas em soluções modernas há ",
@@ -20,5 +22,17 @@
         "title": "Outros Projetos",
         "subtitle": "Confira também outros projetos que desenvolvi, todos com a mesma dedicação e qualidade.",
         "seeMore": "Ver mais"
-    }
+    },
+    "experiences": [
+        {
+            "period": "2020 - Presente",
+            "title": "Desenvolvedor Full Stack Sênior",
+            "description": "Trabalho para sociedades médicas internacionais, desenvolvendo projetos do leventamento a implementação."
+        },
+        {
+            "period": "2018 - 2020",
+            "title": "Desenvolvedor Full Stack",
+            "description": "Desenvolvimento e manutenção de múltiplos projetos de clientes com foco em performance e experiência do usuário."
+        }        
+    ]
 }
