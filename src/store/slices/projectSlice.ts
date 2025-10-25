@@ -37,7 +37,7 @@ const initialState: ProjectState = {
 export const fetchProjects = createAsyncThunk(
   'project/fetchProjects',
   async ({ keyword = '', page = 1 }: { keyword?: string; page?: number }) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/projects`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project`, {
       params: { keyword, page }
     })
     return response.data
@@ -47,7 +47,7 @@ export const fetchProjects = createAsyncThunk(
 export const fetchProjectBySlug = createAsyncThunk(
   'project/fetchProjectBySlug',
   async (slug: string) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/projects/${slug}`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/${slug}`)
     return response.data
   }
 )

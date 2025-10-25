@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAppSelector, useAppDispatch } from '@/store'
-import { toggleDarkMode, setLanguage } from '@/store/slices/helpersSlice'
+import { toggleDarkMode } from '@/store/slices/helpersSlice'
+import { setLanguage } from '@/store/slices/languageSlice'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
 
 export function Header() {

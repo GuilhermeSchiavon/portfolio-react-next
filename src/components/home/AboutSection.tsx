@@ -18,6 +18,39 @@ export function AboutSection() {
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  const skills = [
+    { name: 'Vue.js', level: 'Expert', icon: 'V' },
+    { name: 'React', level: 'Advanced', icon: 'R' },
+    { name: 'Node.js', level: 'Expert', icon: 'N' },
+    { name: 'Python', level: 'Advanced', icon: 'P' },
+    { name: 'TypeScript', level: 'Advanced', icon: 'T' },
+    { name: 'AWS', level: 'Intermediate', icon: 'A' }
+  ]
+
+  const stats = [
+    { value: '50+', label: 'Projects' },
+    { value: '3+', label: 'Years Exp.' },
+    { value: '15+', label: 'Technologies' }
+  ]
+
+  const experiences = [
+    {
+      period: '2023 - Present',
+      title: 'Senior Full Stack Developer',
+      description: 'Leading development of scalable web applications using modern technologies and best practices.'
+    },
+    {
+      period: '2022 - 2023',
+      title: 'Full Stack Developer',
+      description: 'Developed and maintained multiple client projects with focus on performance and user experience.'
+    },
+    {
+      period: '2021 - 2022',
+      title: 'Frontend Developer',
+      description: 'Specialized in creating responsive and interactive user interfaces using Vue.js and React.'
+    }
+  ]
+
   const tabs = [
     { key: 'about', label: t('descriptionComponent.itens.0') },
     { key: 'services', label: t('descriptionComponent.itens.1') },
@@ -28,12 +61,8 @@ export function AboutSection() {
     if (!sectionRef.current || typeof window === 'undefined') return
 
     const ctx = gsap.context(() => {
-      // Animate section on scroll
       gsap.fromTo(sectionRef.current,
-        {
-          opacity: 0,
-          y: 50
-        },
+        { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
@@ -48,13 +77,9 @@ export function AboutSection() {
         }
       )
 
-      // Animate tabs
       if (tabsRef.current) {
         gsap.fromTo(tabsRef.current.children,
-          {
-            opacity: 0,
-            x: -30
-          },
+          { opacity: 0, x: -30 },
           {
             opacity: 1,
             x: 0,
@@ -102,91 +127,134 @@ export function AboutSection() {
   }
 
   return (
-    <section 
-      id="about"
-      ref={sectionRef}
-      className="py-20 lg:py-32 bg-white dark:bg-neutral-900"
-    >
-      <div className="container mx-auto px-6 lg:px-8">
+    <section id="about" ref={sectionRef} className="py-20 lg:py-32 bg-neutral-50 dark:bg-neutral-900 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-primary-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-accent-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-8 relative">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-              {t('descriptionComponent.title')}
-              <span className="text-primary-600 dark:text-primary-400">
-                {yearsExperience} {t('descriptionComponent.years')}
-              </span>
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-2 mb-4">
+              <div className="w-8 h-px bg-primary-500"></div>
+              <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">About Me</span>
+              <div className="w-8 h-px bg-primary-500"></div>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6">
+              Passionate About
+              <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> Innovation</span>
             </h2>
-          </motion.div>
+            <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+              I'm a full-stack developer with a passion for creating exceptional digital experiences. 
+              With expertise in modern technologies and a focus on user-centric design.
+            </p>
+          </div>
 
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {/* Tabs Navigation */}
-            <div className="lg:col-span-4">
-              <div 
-                ref={tabsRef}
-                className="space-y-2 sticky top-24"
-              >
-                {tabs.map((tab, index) => (
-                  <button
-                    key={tab.key}
-                    onClick={() => setActiveTab(index)}
-                    className={`w-full text-left px-6 py-4 rounded-lg font-semibold transition-all duration-300 ${
-                      activeTab === index
-                        ? 'bg-primary-600 text-white shadow-lg transform scale-105'
-                        : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700'
-                    }`}
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content Side */}
+            <div className="space-y-8">
+              {/* Skills Grid */}
+              <div>
+                <h3 className="text-2xl font-display font-semibold text-neutral-900 dark:text-white mb-6">
+                  Technical Expertise
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {skills.map((skill) => (
+                    <div 
+                      key={skill.name}
+                      className="group p-4 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                          {skill.icon}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-neutral-900 dark:text-white">{skill.name}</h4>
+                          <p className="text-sm text-neutral-600 dark:text-neutral-400">{skill.level}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-6">
+                {stats.map((stat) => (
+                  <div 
+                    key={stat.label}
+                    className="text-center p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700"
                   >
-                    {tab.label}
-                  </button>
+                    <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">{stat.value}</div>
+                    <div className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">{stat.label}</div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Tab Content */}
-            <div className="lg:col-span-8">
-              <motion.div
-                key={activeTab}
-                ref={contentRef}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-neutral-50 dark:bg-neutral-800 rounded-xl p-8 shadow-lg"
-              >
-                {getTabContent(tabs[activeTab].key)}
-              </motion.div>
+            {/* Image Side */}
+            <div className="relative">
+              <div className="relative">
+                {/* Main Image Container */}
+                <div className="relative overflow-hidden rounded-2xl">
+                  <div className="w-full h-96 bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
+                    <div className="text-white text-6xl font-bold">GS</div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/50 to-transparent"></div>
+                </div>
+                
+                {/* Floating Card */}
+                <div className="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-700 max-w-xs">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-semibold text-neutral-900 dark:text-white">Available for Projects</span>
+                  </div>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    Currently accepting new opportunities and collaborations.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Stats Section */}
-          <motion.div 
-            className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            {[
-              { number: '50+', label: 'Projects Completed' },
-              { number: '5+', label: 'Years Experience' },
-              { number: '30+', label: 'Happy Clients' },
-              { number: '24/7', label: 'Support Available' }
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-neutral-600 dark:text-neutral-400 font-medium">
-                  {stat.label}
-                </div>
+          {/* Experience Timeline */}
+          <div className="mt-20">
+            <h3 className="text-3xl font-display font-semibold text-neutral-900 dark:text-white text-center mb-12">
+              Professional Journey
+            </h3>
+            <div className="relative">
+              {/* Timeline Line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-primary-500 to-accent-500"></div>
+              
+              <div className="space-y-12">
+                {experiences.map((experience, index) => (
+                  <div 
+                    key={index}
+                    className={`relative flex items-center ${
+                      index % 2 === 0 ? 'justify-start' : 'justify-end'
+                    }`}
+                  >
+                    {/* Timeline Dot */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-neutral-900 z-10"></div>
+                    
+                    {/* Content Card */}
+                    <div 
+                      className={`w-5/12 p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-lg ${
+                        index % 2 === 0 ? 'mr-auto' : 'ml-auto'
+                      }`}
+                    >
+                      <div className="text-sm text-primary-600 dark:text-primary-400 font-semibold mb-1">{experience.period}</div>
+                      <h4 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">{experience.title}</h4>
+                      <p className="text-neutral-600 dark:text-neutral-400 text-sm">{experience.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
