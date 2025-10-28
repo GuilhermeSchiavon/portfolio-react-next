@@ -13,6 +13,17 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
+interface Project {
+  id: number
+  title: string
+  description: string
+  category: string
+  image: string
+  liveUrl: string
+  githubUrl: string
+  technologies: string[]
+}
+
 export function ProjectsSection() {
   const { t, i18n } = useTranslation('home')
   const dispatch = useAppDispatch()
