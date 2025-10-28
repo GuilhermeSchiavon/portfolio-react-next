@@ -7,11 +7,15 @@
     },
     "descriptionComponent": {
         "title": "Transforming systems into modern solutions for ",
-        "itens": ["About", "Services", "Experience"],
-        "about": "As a <strong>scientist in the IT field</strong>, I elevate web project development to a new level, using my knowledge to <strong>create systems that not only meet but exceed expectations</strong> in terms of scalability, robustness, modularity, and responsiveness. <br>My ability to manage <strong>all aspects of a project</strong>, from interface design to full backend control, highlights me as a versatile and innovative professional.",
-        "services": "My work as a <strong>full-stack developer</strong> covers all layers of software, ensuring that each project benefits from the latest technologies. <br><br>On the <strong>frontend</strong>, I apply advanced concepts to create <strong>engaging and reactive interfaces</strong>, while on the <strong>backend</strong>, I develop robust APIs in Node.js that ensure efficiency and scalability. <br><br>My goal is always to deliver solutions that are at the cutting edge of technology and that <strong>truly make a difference</strong>.",
-        "experience": "My experience ranges from <strong>developing complex systems</strong> to effective <strong>management and communication</strong> with clients and development teams. <br><br>A large part of my projects has been for <strong>doctors and healthcare professionals</strong>, creating systems that address the specific needs of this sector. Always focusing on simplifying the user journey and optimizing operations.<br><br>Below, you will find concrete examples of how I have transformed ideas into standout solutions.",
-        "years": "years"
+        "itens": ["About Me", "Technical Vision", "Tech Stack"],
+        "about": "As a <strong>scientist in the IT field</strong>, I elevate web project development to a new level, using my knowledge to <strong>create systems that not only meet but exceed expectations</strong> in terms of scalability, robustness, modularity, and responsiveness.",
+        "technical": "In recent years, I have been developing integrated solutions with APIs from major platforms (Google, Meta, Mercado Pago, ChatGPT, Zoom), as well as systems for medical institutions such as <strong>SBU-SP, SBN and UNIFESP</strong>.",
+        "techstack": "Technology stack organized by categories, demonstrating expertise in different areas of development.",
+        "years": "years",
+        "certificates": {
+            "google": "Google Certificate - Introduction to AI and Machine Learning",
+            "hacktown": "Participation in HackTown 2025"
+        }
     },
     "project": {
         "explore": "Explore",

@@ -13,25 +13,69 @@ if (typeof window !== 'undefined') {
 export function AboutSection() {
   const { t } = useTranslation('home')
   const [activeTab, setActiveTab] = useState(0)
-  const [yearsExperience] = useState(3)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const skills = [
-    { name: 'Vue.js', level: 'Expert', icon: 'V' },
-    { name: 'React', level: 'Advanced', icon: 'R' },
-    { name: 'Node.js', level: 'Expert', icon: 'N' },
-    { name: 'Python', level: 'Advanced', icon: 'P' },
-    { name: 'TypeScript', level: 'Advanced', icon: 'T' },
-    { name: 'AWS', level: 'Intermediate', icon: 'A' }
+  // Imagens do HackTown que serão trocadas automaticamente
+  const hackTownImages = [
+    '/img/hacktown-1.jpg', // Você adicionará essas imagens depois
+    '/img/hacktown-2.jpg',
+    '/img/hacktown-3.jpg'
   ]
+
+  const techStack = {
+    frontend: [
+      { name: 'Vue.js', icon: 'V' },
+      { name: 'Vuex', icon: 'Vx' },
+      { name: 'React', icon: 'R' },
+      { name: 'Next.js', icon: 'N' },
+      { name: 'Tailwind CSS', icon: 'T' },
+      { name: 'GSAP', icon: 'G' }
+    ],
+    backend: [
+      { name: 'Node.js', icon: 'N' },
+      { name: 'Express', icon: 'E' },
+      { name: 'Sequelize', icon: 'S' }
+    ],
+    architecture: [
+      { name: 'Multi-tenant', icon: 'M' },
+      { name: 'Multi-vendor (SaaS)', icon: 'S' },
+      { name: 'Webhooks', icon: 'W' },
+      { name: 'Fila Redis', icon: 'R' },
+      { name: 'Testes unitários', icon: 'T' }
+    ],
+    integrations: [
+      { name: 'Google', icon: 'G' },
+      { name: 'Meta', icon: 'M' },
+      { name: 'Mercado Pago', icon: 'MP' },
+      { name: 'ChatGPT', icon: 'C' },
+      { name: 'Zoom', icon: 'Z' },
+      { name: 'SBU-SP', icon: 'S' },
+      { name: 'SBN', icon: 'SB' },
+      { name: 'UNIFESP', icon: 'U' }
+    ],
+    devops: [
+      { name: 'Docker', icon: 'D' },
+      { name: 'GitHub Actions', icon: 'GA' }
+    ]
+  }
 
   const stats = [
     { value: '50+', label: t('otherProjects.title') },
     { value: '3+', label: t('descriptionComponent.years') },
     { value: '15+', label: 'Tecnologias' }
   ]
+
+  // Rotação automática das imagens do HackTown
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % hackTownImages.length)
+    }, 3000) // Troca a cada 3 segundos
+
+    return () => clearInterval(interval)
+  }, [])
 
   const experiences = t('experiences', { returnObjects: true }) as Array<{
     period: string
@@ -40,9 +84,9 @@ export function AboutSection() {
   }>
 
   const tabs = [
-    { key: 'about', label: t('descriptionComponent.itens.0') },
-    { key: 'services', label: t('descriptionComponent.itens.1') },
-    { key: 'experience', label: t('descriptionComponent.itens.2') }
+    { key: 'about', label: 'Sobre Mim' },
+    { key: 'technical', label: 'Visão Técnica' },
+    { key: 'techstack', label: 'Tech Stack' }
   ]
 
   useEffect(() => {
@@ -90,24 +134,158 @@ export function AboutSection() {
     switch (tabKey) {
       case 'about':
         return (
-          <div 
-            className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: t('descriptionComponent.about') }}
-          />
+          <div className="space-y-6">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Como <strong>cientista na área de TI</strong>, levo o desenvolvimento de projetos web a um novo patamar, 
+                utilizando meu conhecimento para <strong>criar sistemas que não apenas atendem, mas superam as expectativas</strong> 
+                em termos de escalabilidade, robustez, modularidade e responsividade.
+              </p>
+            </div>
+            
+            {/* Certificados e Eventos */}
+            <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700">
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Certificados & Eventos</h4>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                    G
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-neutral-900 dark:text-white">Certificado Google</h5>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">Introdução à IA e Machine Learning</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                    HT
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-neutral-900 dark:text-white">HackTown 2025</h5>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400">Participação no maior evento de tecnologia</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Carrossel de imagens do HackTown */}
+              <div className="mt-6 relative overflow-hidden rounded-lg h-48">
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+                >
+                  {hackTownImages.map((image, index) => (
+                    <div key={index} className="w-full h-full flex-shrink-0">
+                      <div className="w-full h-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-lg font-semibold">
+                        HackTown 2025 - Imagem {index + 1}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Indicadores */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                  {hackTownImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         )
-      case 'services':
+      case 'technical':
         return (
-          <div 
-            className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: t('descriptionComponent.services') }}
-          />
+          <div className="prose prose-lg dark:prose-invert max-w-none">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
+              Nos últimos anos, venho desenvolvendo soluções integradas com APIs de grandes plataformas 
+              (Google, Meta, Mercado Pago, ChatGPT, Zoom), além de sistemas para instituições médicas 
+              como <strong>SBU-SP, SBN e UNIFESP</strong>.
+            </p>
+            
+            <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700">
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Principais Integrações</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {techStack.integrations.map((integration) => (
+                  <div key={integration.name} className="flex items-center space-x-2 p-3 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                      {integration.icon}
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{integration.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )
-      case 'experience':
+      case 'techstack':
         return (
-          <div 
-            className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: t('descriptionComponent.experience') }}
-          />
+          <div className="space-y-8">
+            {/* Frontend */}
+            <div>
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Frontend</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {techStack.frontend.map((tech) => (
+                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                      {tech.icon}
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Backend */}
+            <div>
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Backend</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {techStack.backend.map((tech) => (
+                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                      {tech.icon}
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Arquitetura */}
+            <div>
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Arquitetura</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {techStack.architecture.map((tech) => (
+                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                      {tech.icon}
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* DevOps */}
+            <div>
+              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">Infra / DevOps</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {techStack.devops.map((tech) => (
+                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
+                      {tech.icon}
+                    </div>
+                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )
       default:
         return null
@@ -141,71 +319,48 @@ export function AboutSection() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Content Side */}
-            <div className="space-y-8">
-              {/* Skills Grid */}
-              <div>
-                <h3 className="text-2xl font-display font-semibold text-neutral-900 dark:text-white mb-6">
-                  Technical Expertise
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {skills.map((skill) => (
-                    <div 
-                      key={skill.name}
-                      className="group p-4 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
-                          {skill.icon}
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-neutral-900 dark:text-white">{skill.name}</h4>
-                          <p className="text-sm text-neutral-600 dark:text-neutral-400">{skill.level}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-6">
-                {stats.map((stat) => (
-                  <div 
-                    key={stat.label}
-                    className="text-center p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700"
-                  >
-                    <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">{stat.value}</div>
-                    <div className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+          {/* Tabs Navigation */}
+          <div className="flex justify-center mb-12">
+            <div ref={tabsRef} className="flex bg-white dark:bg-neutral-800 rounded-xl p-2 border border-neutral-200 dark:border-neutral-700">
+              {tabs.map((tab, index) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(index)}
+                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                    activeTab === index
+                      ? 'bg-primary-500 text-white shadow-lg'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
+          </div>
 
-            {/* Image Side */}
-            <div className="relative">
-              <div className="relative">
-                {/* Main Image Container */}
-                <div className="relative overflow-hidden rounded-2xl">
-                  <div className="w-full h-96 bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
-                    <div className="text-white text-6xl font-bold">GS</div>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/50 to-transparent"></div>
-                </div>
-                
-                {/* Floating Card */}
-                <div className="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-700 max-w-xs">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-semibold text-neutral-900 dark:text-white">Available for Projects</span>
-                  </div>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                    Currently accepting new opportunities and collaborations.
-                  </p>
-                </div>
+          {/* Tab Content */}
+          <div ref={contentRef} className="max-w-4xl mx-auto">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {getTabContent(tabs[activeTab].key)}
+            </motion.div>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
+            {stats.map((stat) => (
+              <div 
+                key={stat.label}
+                className="text-center p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700"
+              >
+                <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-2">{stat.value}</div>
+                <div className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">{stat.label}</div>
               </div>
-            </div>
+            ))}
           </div>
 
           {/* Experience Timeline */}

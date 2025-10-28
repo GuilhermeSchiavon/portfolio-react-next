@@ -5,11 +5,15 @@
     },
     "descriptionComponent": {
         "title": "Transformando sistemas en soluciones modernas desde hace ",
-        "itens": ["Acerca de", "Servicios", "Experiencia"],
-        "about": "Como <strong>científico en el campo de TI</strong>, elevo el desarrollo de proyectos web a un nuevo nivel, utilizando mi conocimiento para <strong>crear sistemas que no solo cumplen sino que superan las expectativas</strong> en términos de escalabilidad, robustez, modularidad y capacidad de respuesta. <br>Mi habilidad para gestionar <strong>todos los aspectos de un proyecto</strong>, desde el diseño de la interfaz hasta el control completo del backend, me destaca como un profesional versátil e innovador.",
-        "services": "Mi trabajo como <strong>desarrollador full-stack</strong> abarca todas las capas del software, asegurando que cada proyecto se beneficie de las últimas tecnologías. <br><br>En el <strong>frontend</strong>, aplico conceptos avanzados para crear <strong>interfaces atractivas y reactivas</strong>, mientras que en el <strong>backend</strong>, desarrollo APIs robustas en Node.js que garantizan eficiencia y escalabilidad. <br><br>Mi objetivo es siempre entregar soluciones que estén a la vanguardia de la tecnología y que <strong>realmente marquen la diferencia</strong>.",
-        "experience": "Mi experiencia abarca desde el <strong>desarrollo de sistemas complejos</strong> hasta la <strong>gestión y comunicación efectiva</strong> con clientes y equipos de desarrollo. <br><br>Una gran parte de mis proyectos ha sido para <strong>médicos y profesionales de la salud</strong>, creando sistemas que abordan las necesidades específicas de este sector. Siempre enfocándome en simplificar el recorrido del usuario y optimizar las operaciones.<br><br>A continuación, encontrarás ejemplos concretos de cómo he transformado ideas en soluciones destacadas.",
-        "years": "años"
+        "itens": ["Acerca de Mí", "Visión Técnica", "Tech Stack"],
+        "about": "Como <strong>científico en el campo de TI</strong>, elevo el desarrollo de proyectos web a un nuevo nivel, utilizando mi conocimiento para <strong>crear sistemas que no solo cumplen sino que superan las expectativas</strong> en términos de escalabilidad, robustez, modularidad y capacidad de respuesta.",
+        "technical": "En los últimos años, he estado desarrollando soluciones integradas con APIs de grandes plataformas (Google, Meta, Mercado Pago, ChatGPT, Zoom), además de sistemas para instituciones médicas como <strong>SBU-SP, SBN y UNIFESP</strong>.",
+        "techstack": "Stack tecnológico organizado por categorías, demostrando experiencia en diferentes áreas del desarrollo.",
+        "years": "años",
+        "certificates": {
+            "google": "Certificado Google - Introducción a IA y Machine Learning",
+            "hacktown": "Participación en HackTown 2025"
+        }
     },
     "project": {
         "explore": "Explorar",
