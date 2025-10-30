@@ -1,7 +1,8 @@
 {
     "heroComponent": {
         "scientist": "Científico de la Computación",
-        "full": "Full Stack"
+        "full": "Full Stack",
+        "tagline": "Desarrollador Full Stack enfocado en soluciones escalables, aplicando IA a negocios."
     },
     "descriptionComponent": {
         "title": "Transformando sistemas en soluciones modernas desde hace ",

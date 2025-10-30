@@ -68,7 +68,7 @@ export function Header() {
           <div className="flex-shrink-0">
             <Link 
               href="/" 
-              className="text-2xl font-bold text-neutral-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300"
+              className="text-2xl font-bold text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300"
             >
               GS
             </Link>
@@ -80,7 +80,7 @@ export function Header() {
               <Link
                 key={index}
                 href={item.url}
-                className="nav-link relative px-3 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
+                className="nav-link relative px-3 py-2 text-sm font-medium text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
               >
                 {item.name}
               </Link>
@@ -92,7 +92,7 @@ export function Header() {
             {/* Theme Toggle */}
             <button 
               onClick={handleThemeToggle}
-              className="p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300"
+              className="p-2 rounded-lg text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300"
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {darkMode ? (
@@ -116,7 +116,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300"
+              className="md:hidden p-2 rounded-lg text-neutral-100 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300"
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
               {!isMobileMenuOpen ? (

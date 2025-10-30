@@ -6,24 +6,43 @@ import { gsap } from 'gsap'
 
 export function HeroSection() {
   const { t } = useTranslation('home')
-  const heroImageRef = useRef<HTMLImageElement>(null)
+  const heroImageRef = useRef<HTMLDivElement>(null)
+  const heroImageBgRef = useRef<HTMLDivElement>(null)
   const firstNameRef = useRef<HTMLDivElement>(null)
   const lastNameRef = useRef<HTMLDivElement>(null)
-  const iconRef = useRef<HTMLDivElement>(null)
-  const subtitleRef = useRef<HTMLDivElement>(null)
+  const taglineRef = useRef<HTMLDivElement>(null)
+  const taglineMobileRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  const integrations = [
+    { name: 'Google', icon: '/icons/google.svg' },
+    { name: 'Meta', icon: '/icons/meta.svg' },
+    { name: 'OpenAI', icon: '/icons/openai.svg' },
+    { name: 'Zoom', icon: '/icons/zoom.svg' },
+    { name: 'Mercado Pago', icon: '/icons/mercadopago.svg' }
+  ]
 
   useEffect(() => {
     const tl = gsap.timeline()
 
     // Animação para a imagem de fundo
+    tl.fromTo(heroImageBgRef.current, {
+      opacity: 0,
+      scale: 1.1
+    }, {
+      opacity: 1,
+      scale: 1.0,
+      duration: 2,
+      ease: 'power2.out'
+    })
     tl.fromTo(heroImageRef.current, {
       opacity: 0,
-      scale: 1.0
+      scale: 1.1
     }, {
-      opacity: 0.8,
+      opacity: 1,
       scale: 1.0,
-      duration: 3.33,
+      duration: 2,
       ease: 'power2.out'
     })
 
@@ -34,9 +53,9 @@ export function HeroSection() {
     }, {
       opacity: 1,
       y: 0,
-      duration: 0.7,
+      duration: 0.8,
       ease: 'power2.out'
-    }, '-=1.2')
+    }, '-=1')
 
     // Animação para "Schiavon"
     tl.fromTo(lastNameRef.current, {
@@ -45,29 +64,38 @@ export function HeroSection() {
     }, {
       opacity: 1,
       y: 0,
-      duration: 0.7,
+      duration: 0.8,
       ease: 'power2.out'
-    }, '-=0.8')
+    }, '-=0.6')
 
-    // Animação para o ícone
-    tl.fromTo(iconRef.current, {
+    // Animação para a tagline
+    tl.fromTo(taglineRef.current, {
       opacity: 0,
-      y: 50
+      y: 30
     }, {
       opacity: 1,
       y: 0,
-      duration: 0.7,
+      duration: 0.8,
       ease: 'power2.out'
-    }, '-=0.5')
-
-    // Animação para o subtítulo
-    tl.fromTo(subtitleRef.current, {
+    }, '-=0.4')
+    tl.fromTo(taglineMobileRef.current, {
       opacity: 0,
-      y: 50
+      y: 30
     }, {
       opacity: 1,
       y: 0,
-      duration: 0.7,
+      duration: 0.8,
+      ease: 'power2.out'
+    }, '-=0.4')
+
+    // Animação para o carrossel
+    tl.fromTo(carouselRef.current, {
+      opacity: 0,
+      y: 30
+    }, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
       ease: 'power2.out'
     }, '-=0.2')
 
@@ -79,6 +107,14 @@ export function HeroSection() {
       duration: 1,
       ease: 'power2.out'
     }, '-=0.5')
+
+    // Animação infinita do carrossel
+    gsap.to('.carousel-track', {
+      x: '-50%',
+      duration: 20,
+      ease: 'none',
+      repeat: -1
+    })
 
     // Animação de movimento contínuo do scroll
     gsap.to('.scroll-arrow', {
@@ -95,58 +131,77 @@ export function HeroSection() {
   }, [])
 
   return (
-    <header className="relative h-screen overflow-hidden bg-[#3d3d3d] text-white">
-      <img 
-        ref={heroImageRef}
-        alt="Guilherme Schiavon Picture" 
-        loading="lazy" 
-        decoding="async" 
-        className="absolute inset-0 w-full h-full object-cover lg:object-contain opacity-0 mt-24"
-        src="/img/myPicture.png" 
-      />
-      <div className="relative bottom-10 p-4 flex h-full flex-col justify-end gap-2 lg:flex-col-reverse lg:justify-normal">
-        <div className="flex w-full flex-nowrap overflow-hidden whitespace-nowrap select-none">
-          <div className="relative w-full mx-4 text-[#d2d2d2] opacity-90">
-            <div 
-              ref={firstNameRef}
-              className="md:font-thin lg:text-[6vw] text-[max(4vh,12vw)] font-[Raleway] leading-[0.82] opacity-0"
-            >
-              GUILHERME
-            </div>
-            <div 
-              ref={lastNameRef}
-              className="lg:text-right lg:text-[7vw] text-[max(4vh,12vw)] font-[Raleway] leading-[0.82] font-semibold opacity-0"
-            >
-              SCHIAVON
+    <header className="relative h-screen overflow-hidden text-white">
+      {/* Background Image */}
+      <div ref={heroImageBgRef} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-1" style={{ backgroundImage: 'url(/img/myPicture.jpg)', backgroundPosition: 'center 50%' }} />
+    
+      {/* Radial Gradient Overlay - darker at corners */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+      
+      {/* Content */}
+      <div className="relative z-10 h-full px-4 md:px-8 lg:px-16">
+       
+        {/* Name - Top Left */}
+        <div className="absolute top-28 left-4 md:left-8 lg:left-16">
+          <div ref={firstNameRef}className="text-[max(12vw)] md:text-[max(6vw)] font-[Raleway] font-thin leading-[0.85] opacity-0 text-white mb-2">
+            GUILHERME
+          </div>
+        </div>
+
+        {/* Surname - Top Right, slightly below name */}
+        <div className="absolute top-44 right-4 md:right-8 lg:right-16">
+          <div ref={lastNameRef} className="lg:text-right text-[max(12vw)] md:text-[max(6vw)] font-[Raleway] font-semibold leading-[0.85] opacity-0 text-white text-right">
+            SCHIAVON
+
+            <div ref={taglineMobileRef} className="md:hidden backdrop-blur-md bg-black/20 p-2 mt-2 rounded border border-white/10 w-1/2 ml-auto">
+              <p className="text-[12px] leading-4 md:text-base font-[Raleway] text-center text-gray-100">
+                {t('heroComponent.tagline')}
+              </p>
             </div>
           </div>
         </div>
-        <div className="lg:ml-auto">
-          <div className="flex mx-2 mt-2 lg:mb-12 lg:mx-36 text-gray-300 items-center">
-            <div ref={iconRef} className="mb-2 lg:mb-4 mr-2 opacity-0">
-              <svg className="size-12 lg:size-7 max-lg:-rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 13V19H13"></path>
-                <path d="M5 5L19 19"></path>
-              </svg>
-            </div>
-            <div ref={subtitleRef} className="font-[Raleway] opacity-0">
-              <span className="block">
-                {t('heroComponent.scientist')}
-              </span>
-              <span className="block">
-                {t('heroComponent.full')}
-              </span>
+
+
+        {/* Tagline - Right side with blur background */}
+        <div className="absolute max-md:hidden top-1/2 right-4 md:right-8 lg:right-16 w-1/2">
+          <div ref={taglineRef} className="backdrop-blur-md bg-black/20 px-2 md:px-5 py-2 rounded border border-white/10 opacity-0">
+          {/* <div className="backdrop-blur-md bg-black/20 px-2 md:px-5 py-2 rounded border border-white/10 opacity-0"> */}
+            <p className="text-xs md:text-base font-[Raleway] pl-24 lg:pl-44 text-right text-gray-100 leading-relaxed">
+              {t('heroComponent.tagline')}
+            </p>
+          </div>
+        </div>
+
+        {/* Integrations Carousel - Bottom Left, half screen width */}
+        <div className="absolute bottom-[37%] md:bottom-20 left-0 w-1/2 overflow-hidden max-sm">
+          <div ref={carouselRef}className="relative opacity-0">
+            <div className="carousel-track flex items-center gap-8 w-max pl-4 md:pl-8 lg:pl-16">
+              {[...integrations, ...integrations].map((integration, index) => (
+                <div key={`${integration.name}-${index}`} className="flex flex-col items-center gap-2 min-w-[60px]">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300">
+                    <span className="text-xs font-medium text-white">
+                      {integration.name.slice(0, 2).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-300 font-medium">
+                    {integration.name}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-      
+
+      <div ref={heroImageRef} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-0 z-20" style={{ backgroundImage: 'url(/img/My.png)', backgroundPosition: 'center 50%' }} />
+
       {/* Scroll Indicator */}
-      <div ref={scrollRef} className="absolute bottom-6 left-1/2 transform -translate-x-1/2 opacity-0">
-        <div className="flex flex-col items-center text-gray-400">
-          <span className="text-sm mb-2">Scroll</span>
+      <div ref={scrollRef} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0">
+        <div className="flex flex-col items-center text-gray-300">
+          <span className="text-sm mb-2 font-light">Scroll</span>
           <svg className="w-6 h-6 scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </div>

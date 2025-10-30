@@ -2,6 +2,7 @@
     "heroComponent": {
         "scientist": "Computer Scientist",
         "full": "Full Stack Developer",
+        "tagline": "Full Stack Developer focused on scalable solutions, applying AI to business.",
         "btn_about": "Discover My Work",
         "btn_contact": "Get In Touch"
     },
