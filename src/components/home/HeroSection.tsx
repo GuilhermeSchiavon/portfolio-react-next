@@ -18,9 +18,11 @@ export function HeroSection() {
   const integrations = [
     { name: 'Google', icon: '/icons/google.svg' },
     { name: 'Meta', icon: '/icons/meta.svg' },
+    { name: 'Whats App', icon: '/icons/whatsapp.svg' },
     { name: 'OpenAI', icon: '/icons/openai.svg' },
     { name: 'Zoom', icon: '/icons/zoom.svg' },
-    { name: 'Mercado Pago', icon: '/icons/mercadopago.svg' }
+    { name: 'Mercado Pago', icon: '/icons/mercadopago.svg' },
+    { name: 'Amazon', icon: '/icons/aws.svg' }
   ]
 
   useEffect(() => {
@@ -179,14 +181,12 @@ export function HeroSection() {
             <div className="carousel-track flex items-center gap-8 w-max pl-4 md:pl-8 lg:pl-16">
               {[...integrations, ...integrations].map((integration, index) => (
                 <div key={`${integration.name}-${index}`} className="flex flex-col items-center gap-2 min-w-[60px]">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300">
-                    <span className="text-xs font-medium text-white">
-                      {integration.name.slice(0, 2).toUpperCase()}
-                    </span>
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                    <img src={integration.icon} alt={integration.name} className="w-10 h-10 md:h-14 md:w-14 object-contain" />
                   </div>
-                  <span className="text-xs text-gray-300 font-medium">
+                  {/* <span className="text-xs text-gray-300 font-medium">
                     {integration.name}
-                  </span>
+                  </span> */}
                 </div>
               ))}
             </div>
