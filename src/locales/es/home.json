@@ -6,15 +6,31 @@
     },
     "descriptionComponent": {
         "title": "Transformando sistemas en soluciones modernas desde hace ",
-        "itens": ["Acerca de Mí", "Visión Técnica", "Tech Stack"],
+        "itens": ["Para Todos", "Tech Stack"],
         "about": "Como <strong>científico en el campo de TI</strong>, elevo el desarrollo de proyectos web a un nuevo nivel, utilizando mi conocimiento para <strong>crear sistemas que no solo cumplen sino que superan las expectativas</strong> en términos de escalabilidad, robustez, modularidad y capacidad de respuesta.",
         "technical": "En los últimos años, he estado desarrollando soluciones integradas con APIs de grandes plataformas (Google, Meta, Mercado Pago, ChatGPT, Zoom), además de sistemas para instituciones médicas como <strong>SBU-SP, SBN y UNIFESP</strong>.",
         "techstack": "Stack tecnológico organizado por categorías, demostrando experiencia en diferentes áreas del desarrollo.",
         "years": "años",
+        "solutions": "Soluciones Flexibles",
+        "certificatesTitle": "Certificados y Eventos",
         "certificates": {
-            "google": "Certificado Google - Introducción a IA y Machine Learning",
-            "hacktown": "Participación en HackTown 2025"
+            "google": "Certificado Google",
+            "googleDesc": "Introducción a IA y Machine Learning",
+            "hacktown": "HackTown 2025",
+            "hacktownDesc": "Participación en el mayor evento tecnológico"
         }
+    },
+    "techStack": {
+        "title": "Tecnologías",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "architecture": "Arquitectura",
+        "devops": "Infra / DevOps"
+    },
+    "stats": {
+        "viewProjects": "Ver proyectos",
+        "viewTechnologies": "Ver tecnologías",
+        "viewExperience": "Ver experiencia"
     },
     "project": {
         "explore": "Explorar",

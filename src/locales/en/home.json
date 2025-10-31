@@ -8,15 +8,31 @@
     },
     "descriptionComponent": {
         "title": "Transforming systems into modern solutions for ",
-        "itens": ["About Me", "Technical Vision", "Tech Stack"],
+        "itens": ["For Everyone", "Tech Stack"],
         "about": "As a <strong>scientist in the IT field</strong>, I elevate web project development to a new level, using my knowledge to <strong>create systems that not only meet but exceed expectations</strong> in terms of scalability, robustness, modularity, and responsiveness.",
         "technical": "In recent years, I have been developing integrated solutions with APIs from major platforms (Google, Meta, Mercado Pago, ChatGPT, Zoom), as well as systems for medical institutions such as <strong>SBU-SP, SBN and UNIFESP</strong>.",
         "techstack": "Technology stack organized by categories, demonstrating expertise in different areas of development.",
-        "years": "years",
+        "years": "Years of experience",
+        "solutions": "Flexible Solutions",
+        "certificatesTitle": "Certificates & Events",
         "certificates": {
-            "google": "Google Certificate - Introduction to AI and Machine Learning",
-            "hacktown": "Participation in HackTown 2025"
+            "google": "Google Certificate",
+            "googleDesc": "Introduction to AI and Machine Learning",
+            "hacktown": "HackTown 2025",
+            "hacktownDesc": "Participation in the biggest tech event"
         }
+    },
+    "techStack": {
+        "title": "Technologies",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "architecture": "Architecture",
+        "devops": "Infra / DevOps"
+    },
+    "stats": {
+        "viewProjects": "View projects",
+        "viewTechnologies": "View technologies",
+        "viewExperience": "View experience"
     },
     "project": {
         "explore": "Explore",
@@ -28,16 +44,22 @@
         "subtitle": "Check out other projects I developed, all with the same dedication and quality.",
         "seeMore": "See more"
     },
-    "experiences": [
-        {
-            "period": "2023 - Present",
-            "title": "Senior Full Stack Developer",
-            "description": "Leading development of scalable web applications using modern technologies and best practices."
-        },
-        {
-            "period": "2022 - 2023",
-            "title": "Full Stack Developer",
-            "description": "Developed and maintained multiple client projects with focus on performance and user experience."
-        }
-    ]
+    "experiences": {
+        "title": "Professional Journey",
+        "itens": [
+            {
+                "period": "2023 - Present",
+                "title": "Senior Full Stack Developer",
+                "url": "https://unimagem.com.br",
+                "description": "Leading development of scalable web applications using modern technologies and best practices."
+            },
+            {
+                "period": "2022 - 2023",
+                "title": "Full Stack Developer",
+                "url": "https://devcodes.com.br",
+                "description": "Developed and maintained multiple client projects with focus on performance and user experience."
+            }
+        ]
+    }
+
 }

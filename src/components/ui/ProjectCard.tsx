@@ -1,139 +1,198 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useCallback } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { useTranslation } from 'react-i18next'
-
-interface Project {
-  id: number
-  title: string
-  description: string
-  slug: string
-  images: string[]
-  technologies: string[]
-  category: string
-  url?: string
-  github?: string
-}
+import { motion } from 'framer-motion'
 
 interface ProjectCardProps {
-  project: Project
-  index: number
+  project: {
+    id: number
+    title: string
+    description: string
+    subtitle?: string
+    slug: string
+    youtubeUrl?: string
+    Images?: Array<{
+      id: number
+      filename: string
+      mediaType?: string
+      alt?: string
+    }>
+    Technologies?: Array<{
+      id: number
+      name: string
+    }>
+    ProjectUpdates?: Array<{ id: number }>
+    Implementations?: Array<{ id: number }>
+  }
+  isVideoVisible?: boolean
+  showAnimation?: boolean
+  animationDelay?: number
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
+  isFirstCard?: boolean
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
-  const { t } = useTranslation('home')
+export function ProjectCard({ 
+  project, 
+  isVideoVisible = false, 
+  showAnimation = false,
+  animationDelay = 0,
+  onMouseEnter,
+  onMouseLeave,
+  isFirstCard = false
+}: ProjectCardProps) {
+  const getYouTubeVideoId = useCallback((url: string): string | null => {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    const match = url.match(regex)
+    return match ? match[1] : null
+  }, [])
 
-  return (
-    <motion.div
-      className="group relative bg-white dark:bg-neutral-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
-      whileHover={{ y: -10 }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      viewport={{ once: true }}
+  const getTechColor = (tech: string) => {
+    const colors: Record<string, string> = {
+      'Vue.js': 'bg-green-500',
+      'React': 'bg-blue-500',
+      'Node.js': 'bg-green-600',
+      'TypeScript': 'bg-blue-600',
+      'MongoDB': 'bg-green-700',
+      'PostgreSQL': 'bg-blue-700',
+      'Express': 'bg-neutral-600',
+      'Firebase': 'bg-yellow-500',
+      'TailwindCSS': 'bg-cyan-500'
+    }
+    return colors[tech] || 'bg-neutral-400'
+  }
+
+  const videoId = project.youtubeUrl ? getYouTubeVideoId(project.youtubeUrl) : null
+  const updatesCount = project.ProjectUpdates?.length || 0
+  const implementationsCount = project.Implementations?.length || 0
+
+  const shouldAutoplay = isFirstCard || isVideoVisible
+
+  const CardContent = () => (
+    <div 
+      data-project-id={project.id}
+      className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
-      {/* Project Image */}
-      <div className="relative h-48 overflow-hidden">
-        {project.images && project.images.length > 0 ? (
-          <Image
-            src={project.images[0]}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
-            <div className="text-white text-4xl font-bold">
-              {project.title.charAt(0)}
+      <Link href={`/projects/${project.slug}`} className="block">
+        {/* Project Media */}
+        <div className="relative overflow-hidden">
+          {project.youtubeUrl && videoId ? (
+            <div className="relative w-full h-48">
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=${shouldAutoplay ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=${videoId}`}
+                className="w-full h-full object-cover"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                title={project.title}
+              />
+            </div>
+          ) : project.Images && project.Images.length > 0 ? (
+            <img 
+              src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${project.Images[0].filename}`}
+              alt={project.title}
+              className="w-full h-48 object-cover"
+            />
+          ) : (
+            <div className="w-full h-48 bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
+              <div className="text-white text-4xl font-bold">
+                {project.title.charAt(0)}
+              </div>
+            </div>
+          )}
+          
+          {/* Video Indicator */}
+          {project.Images?.some((img: any) => img.mediaType === 'video') && (
+            <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full p-2">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          )}
+          
+          <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+
+        {/* Project Content */}
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
+              {project.subtitle || 'Project'}
+            </span>
+            <div className="flex space-x-1">
+              {project.Technologies?.slice(0, 3).map((tech) => (
+                <div
+                  key={tech.id}
+                  className={`w-2 h-2 rounded-full ${getTechColor(tech.name)}`}
+                ></div>
+              ))}
             </div>
           </div>
-        )}
-        
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-        
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-primary-600 text-white text-xs font-semibold rounded-full">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          {project.url && (
-            <motion.a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 bg-white/90 hover:bg-white text-neutral-800 rounded-full shadow-lg"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </motion.a>
-          )}
-          {project.github && (
-            <motion.a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 bg-white/90 hover:bg-white text-neutral-800 rounded-full shadow-lg"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
-            </motion.a>
-          )}
-        </div>
-      </div>
-
-      {/* Project Content */}
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
-          {project.title}
-        </h3>
-        
-        <p className="text-neutral-600 dark:text-neutral-400 mb-4 line-clamp-2">
-          {project.description}
-        </p>
-
-        {/* Technologies */}
-        {project.technologies && project.technologies.length > 0 && (
+          
+          <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+            {project.title}
+          </h3>
+          
+          <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-3">
+            {project.description}
+          </p>
+          
+          {/* Technologies */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.technologies.slice(0, 3).map((tech, techIndex) => (
+            {project.Technologies?.slice(0, 4).map((tech) => (
               <span
-                key={techIndex}
-                className="px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-xs rounded-md"
+                key={tech.id}
+                className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full"
               >
-                {tech}
+                {tech.name}
               </span>
             ))}
-            {project.technologies.length > 3 && (
-              <span className="px-2 py-1 bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-xs rounded-md">
-                +{project.technologies.length - 3}
+            {project.Technologies && project.Technologies.length > 4 && (
+              <span className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full">
+                +{project.Technologies.length - 4}
               </span>
             )}
           </div>
-        )}
 
-        {/* View Project Link */}
-        <Link
-          href={`/project/${project.slug}`}
-          className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold transition-colors duration-300"
-        >
-          {t('project.explore')}
-          <svg className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </Link>
-      </div>
-    </motion.div>
+          {/* Project Stats */}
+          {(updatesCount > 0 || implementationsCount > 0) && (
+            <div className="flex items-center space-x-4 text-xs text-neutral-500 dark:text-neutral-400">
+              {updatesCount > 0 && (
+                <div className="flex items-center space-x-1">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>{updatesCount} atualizações</span>
+                </div>
+              )}
+              {implementationsCount > 0 && (
+                <div className="flex items-center space-x-1">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{implementationsCount} implementações</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </Link>
+    </div>
   )
+
+  if (showAnimation) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: animationDelay }}
+      >
+        <CardContent />
+      </motion.div>
+    )
+  }
+
+  return <CardContent />
 }

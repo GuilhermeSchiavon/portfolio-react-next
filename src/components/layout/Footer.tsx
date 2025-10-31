@@ -16,6 +16,7 @@ export function Footer() {
   const footerRef = useRef<HTMLElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
   const emailRef = useRef<HTMLAnchorElement>(null)
+  const locationlRef = useRef<HTMLAnchorElement>(null)
   const phoneRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
@@ -42,6 +43,15 @@ export function Footer() {
           delay: 0.3
         })
         .fromTo(emailRef.current, {
+          opacity: 0,
+          y: 50,
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          delay: 0.3
+        }, "-=0.5")
+        .fromTo(locationlRef.current, {
           opacity: 0,
           y: 50,
         }, {
@@ -132,7 +142,7 @@ export function Footer() {
                   </div>
                   <div>
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">Location</p>
-                    <p className="text-neutral-900 dark:text-white">São Paulo, Brazil</p>
+                    <p ref={locationlRef} className="text-neutral-900 dark:text-white">São Paulo, Brazil</p>
                   </div>
                 </div>
                 
