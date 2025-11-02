@@ -3,6 +3,7 @@
 import { useCallback } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { getTechTypeBgColor } from '@/utils/technologyUtils'
 
 interface ProjectCardProps {
   project: {
@@ -21,6 +22,7 @@ interface ProjectCardProps {
     Technologies?: Array<{
       id: number
       name: string
+      type?: string
     }>
     ProjectUpdates?: Array<{ id: number }>
     Implementations?: Array<{ id: number }>
@@ -48,20 +50,7 @@ export function ProjectCard({
     return match ? match[1] : null
   }, [])
 
-  const getTechColor = (tech: string) => {
-    const colors: Record<string, string> = {
-      'Vue.js': 'bg-green-500',
-      'React': 'bg-blue-500',
-      'Node.js': 'bg-green-600',
-      'TypeScript': 'bg-blue-600',
-      'MongoDB': 'bg-green-700',
-      'PostgreSQL': 'bg-blue-700',
-      'Express': 'bg-neutral-600',
-      'Firebase': 'bg-yellow-500',
-      'TailwindCSS': 'bg-cyan-500'
-    }
-    return colors[tech] || 'bg-neutral-400'
-  }
+
 
   const videoId = project.youtubeUrl ? getYouTubeVideoId(project.youtubeUrl) : null
   const updatesCount = project.ProjectUpdates?.length || 0
@@ -125,7 +114,7 @@ export function ProjectCard({
               {project.Technologies?.slice(0, 3).map((tech) => (
                 <div
                   key={tech.id}
-                  className={`w-2 h-2 rounded-full ${getTechColor(tech.name)}`}
+                  className={`w-2 h-2 rounded-full ${getTechTypeBgColor(tech.type || 'frontend')}`}
                 ></div>
               ))}
             </div>

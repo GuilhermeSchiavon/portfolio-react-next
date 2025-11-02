@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Link from 'next/link'
+import { useTechnologies } from '@/hooks/useTechnologies'
+import { groupTechnologiesByType, getTechTypeColor, getTechTypeLabel } from '@/utils/technologyUtils'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -19,6 +21,7 @@ export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const { technologies } = useTechnologies()
 
   // Cálculo automático dos anos de experiência desde outubro 2021
   const getYearsExperience = () => {
@@ -38,45 +41,8 @@ export function AboutSection() {
     '/mov/hacktown-3.MOV'
   ]
 
-  const techStack = {
-    frontend: [
-      { name: 'Vue.js', icon: 'V' },
-      { name: 'Vuex', icon: 'Vx' },
-      { name: 'React', icon: 'R' },
-      { name: 'Next.js', icon: 'N' },
-      { name: 'Tailwind CSS', icon: 'T' },
-      { name: 'GSAP', icon: 'G' }
-    ],
-    backend: [
-      { name: 'Node.js', icon: 'N' },
-      { name: 'Express', icon: 'E' },
-      { name: 'Sequelize', icon: 'S' }
-    ],
-    architecture: [
-      { name: 'Multi-tenant', icon: 'M' },
-      { name: 'Multi-vendor (SaaS)', icon: 'S' },
-      { name: 'Webhooks', icon: 'W' },
-      { name: 'Fila Redis', icon: 'R' },
-      { name: 'Testes unitários', icon: 'T' }
-    ],
-    integrations: [
-      { name: 'Google', icon: 'G' },
-      { name: 'Meta', icon: 'M' },
-      { name: 'Mercado Pago', icon: 'MP' },
-      { name: 'ChatGPT', icon: 'C' },
-      { name: 'Zoom', icon: 'Z' },
-      { name: 'SBU-SP', icon: 'S' },
-      { name: 'SBN', icon: 'SB' },
-      { name: 'UNIFESP', icon: 'U' }
-    ],
-    devops: [
-      { name: 'Docker', icon: 'D' },
-      { name: 'GitHub Actions', icon: 'GA' }
-    ]
-  }
-
   const getTechCount = () => {
-    return Object.values(techStack).reduce((total, category) => total + category.length, 0)
+    return technologies.length
   }
 
   const stats = [
@@ -265,67 +231,30 @@ export function AboutSection() {
         )
 
       case 'techstack':
+        const groupedTechs = groupTechnologiesByType(technologies)
         return (
           <div className="space-y-8">
-            {/* Frontend */}
-            <div>
-              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('techStack.frontend') || 'Frontend'}</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {techStack.frontend.map((tech) => (
-                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
-                      {tech.icon}
+            {Object.entries(groupedTechs).map(([type, techs]) => (
+              <div key={type}>
+                <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">
+                  {getTechTypeLabel(type)}
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {techs.map((tech) => (
+                    <div key={tech.id} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                      <div className={`w-8 h-8 bg-gradient-to-br ${getTechTypeColor(tech.type)} rounded-lg flex items-center justify-center text-white font-semibold text-xs`}>
+                        {tech.svg ? (
+                          <div dangerouslySetInnerHTML={{ __html: tech.svg }} className="w-4 h-4" />
+                        ) : (
+                          tech.name.charAt(0)
+                        )}
+                      </div>
+                      <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
                     </div>
-                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-            
-            {/* Backend */}
-            <div>
-              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('techStack.backend') || 'Backend'}</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {techStack.backend.map((tech) => (
-                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
-                      {tech.icon}
-                    </div>
-                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Arquitetura */}
-            <div>
-              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('techStack.architecture') || 'Arquitetura'}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {techStack.architecture.map((tech) => (
-                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
-                      {tech.icon}
-                    </div>
-                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* DevOps */}
-            <div>
-              <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('techStack.devops') || 'Infra / DevOps'}</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {techStack.devops.map((tech) => (
-                  <div key={tech.name} className="flex items-center space-x-2 p-3 bg-white dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
-                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-semibold text-xs">
-                      {tech.icon}
-                    </div>
-                    <span className="text-sm font-medium text-neutral-900 dark:text-white">{tech.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         )
       default:
