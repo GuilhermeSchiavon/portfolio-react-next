@@ -40,12 +40,10 @@ export function HeroSection() {
     })
     tl.fromTo(heroImageRef.current, {
       opacity: 0,
-      scale: 1.1
     }, {
       opacity: 1,
-      scale: 1.0,
       duration: 2,
-      ease: 'power2.out'
+      ease: "slow(0.7,0.7,false)",
     })
 
     // Animação para "Guilherme"

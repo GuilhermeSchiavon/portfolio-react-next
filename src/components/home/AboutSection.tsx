@@ -21,6 +21,7 @@ export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
   const { technologies } = useTechnologies()
 
   // Cálculo automático dos anos de experiência desde outubro 2021
@@ -59,6 +60,19 @@ export function AboutSection() {
 
     return () => clearInterval(interval)
   }, [])
+
+  // Controle de reprodução dos vídeos
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === currentImageIndex) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      }
+    })
+  }, [currentImageIndex])
 
   // Efeito de scroll para mudança de cor do background
   useEffect(() => {
@@ -142,19 +156,35 @@ export function AboutSection() {
                 <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700">
                   <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('descriptionComponent.solutions') || 'Soluções Flexíveis'}</h4>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg">
-                      <div className="w-12 h-12 bg-blue-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">MT</span>
+                    <div className="relative text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg cursor-help" title='Cada cliente tem sua própria instância dedicada do software e infraestrutura, permitindo alta personalização e isolamento.'>
+                      <svg className="absolute size-4 top-1 right-1 text-[#5a9567]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+                      <div className="w-20 h-20 bg-green-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                        <div className="w-full h-full bg-cover bg-center bg-no-repeat rounded-lg"
+                          style={{ 
+                            backgroundImage: 'url(/icons/single-tenant.png)', backgroundPosition: 'center 50%'
+                          }}
+                        />
                       </div>
-                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-2">Multi-tenant</h5>
-                      <p className="text-sm text-neutral-600 dark:text-neutral-400">Vários clientes, uma instância</p>
-                    </div>
-                    <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg">
-                      <div className="w-12 h-12 bg-green-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">ST</span>
+                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">Single-tenant</h5>
+                      <div className="flex justify-center items-center">
+                        <p className="px-3 py-1 text-xs bg-[#5a9567] dark:bg-neutral-900/50 text-white mb-1 rounded-full">Personalização</p>
                       </div>
-                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-2">Single-tenant</h5>
                       <p className="text-sm text-neutral-600 dark:text-neutral-400">Um cliente, uma instância</p>
+                    </div>
+                    <div className="relative text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg cursor-help" title='Vários clientes compartilham uma única instância do software, economizando custos e recursos, mas com menos personalização e isolamento entre clientes.'>
+                      <svg className="absolute size-5 top-1 right-1 text-[#378ac5]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+                      <div className="w-20 h-20 bg-blue-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                        <div className="w-full h-full bg-cover bg-center bg-no-repeat rounded-lg"
+                          style={{ 
+                            backgroundImage: 'url(/icons/multi-tenant.png)', backgroundPosition: 'center 50%'
+                          }}
+                        />
+                      </div>
+                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">Multi-tenant</h5>
+                      <div className="flex justify-center items-center">
+                        <p className="px-3 py-1 text-xs bg-[#378ac5] dark:bg-neutral-900/50 text-white mb-1 rounded-full">SaaS</p>
+                      </div>
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">Vários clientes, uma instância</p>
                     </div>
                   </div>
                 </div>
@@ -195,14 +225,12 @@ export function AboutSection() {
                     {hackTownVideos.map((video, index) => (
                       <div key={index} className="w-full h-full max-h-screen flex-shrink-0">
                         <video 
+                          ref={(el) => videoRefs.current[index] = el}
                           className="w-full h-full object-cover rounded-xl"
                           muted
                           loop
                           playsInline
                           preload="metadata"
-                          loading="lazy"
-                          autoPlay
-                          // {...(index === currentImageIndex ? { autoPlay: true } : {})}
                         >
                           <source src={video} type="video/quicktime" />
                           <source src={video} type="video/mp4" />

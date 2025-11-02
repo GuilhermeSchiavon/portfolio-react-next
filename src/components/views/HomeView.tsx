@@ -114,7 +114,6 @@ export function HomeView() {
         
         <main>
           <HeroSection />
-          
           <AboutSection />
           <ProjectsSection />
           <Footer />
