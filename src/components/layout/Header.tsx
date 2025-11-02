@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAppSelector, useAppDispatch } from '@/store'
@@ -18,6 +19,9 @@ export function Header() {
   
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   const navigationItems = [
     { name: t('navItens.0.name'), url: t('navItens.0.url') },
@@ -56,10 +60,12 @@ export function Header() {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300  ${
-        isScrolled 
-          ? 'text-black bg-white/80 dark:text-neutral-300 dark:bg-neutral-900/80 backdrop-blur-md' 
-          : 'text-white bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isHome
+          ? isScrolled 
+            ? 'text-black bg-white/80 dark:text-neutral-300 dark:bg-neutral-900/80 backdrop-blur-md' 
+            : 'text-white bg-transparent'
+          : 'text-black bg-white/80 dark:text-neutral-300 dark:bg-neutral-900/80 backdrop-blur-md'
       }`}
     >
       <nav className="container mx-auto px-6 lg:px-8">
