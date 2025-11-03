@@ -133,7 +133,7 @@ export function HeroSection() {
   return (
     <header className="relative h-screen overflow-hidden text-white">
       {/* Background Image */}
-      <div ref={heroImageBgRef} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-1" style={{ backgroundImage: 'url(/img/MyPicture.jpg)', backgroundPosition: 'center 50%' }} />
+      <div ref={heroImageBgRef} className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-1" style={{ backgroundImage: 'url(/img/background.jpg)', backgroundPosition: 'center 50%' }} />
     
       {/* Radial Gradient Overlay - darker at corners */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
