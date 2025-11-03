@@ -56,10 +56,23 @@ export function AboutSection() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % hackTownVideos.length)
-    }, 14000) // Troca a cada 14 segundos
+    }, 8000) // Troca a cada 8 segundos
 
     return () => clearInterval(interval)
   }, [hackTownVideos.length])
+
+  // Funções para navegação manual dos vídeos
+  const nextVideo = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % hackTownVideos.length)
+  }
+
+  const prevVideo = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + hackTownVideos.length) % hackTownVideos.length)
+  }
+
+  const goToVideo = (index: number) => {
+    setCurrentImageIndex(index)
+  }
 
   // Controle de reprodução dos vídeos
   useEffect(() => {
@@ -93,6 +106,10 @@ export function AboutSection() {
     { key: 'about', label: t('descriptionComponent.itens.0') },
     { key: 'techstack', label: t('descriptionComponent.itens.1') }
   ]
+
+  const handleTabClick = (index: number) => {
+    setActiveTab(index)
+  }
 
   useEffect(() => {
     if (!sectionRef.current || typeof window === 'undefined') return
@@ -220,7 +237,7 @@ export function AboutSection() {
               
               {/* Vídeos do HackTown */}
               <div className="relative h-full max-w-lg mx-auto">
-                <div className="relative overflow-hidden rounded-xl h-full min-h-[500px] max-h-[77vh]">
+                <div className="relative overflow-hidden rounded-xl h-full min-h-[500px] max-h-[77vh] group">
                   <div 
                     className="flex transition-transform duration-500 ease-in-out h-full"
                     style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
@@ -243,17 +260,46 @@ export function AboutSection() {
                     ))}
                   </div>
                   
+                  {/* Botões de Navegação */}
+                  <button
+                    onClick={prevVideo}
+                    className="video-nav-button absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+                    aria-label="Vídeo anterior"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  
+                  <button
+                    onClick={nextVideo}
+                    className="video-nav-button absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+                    aria-label="Próximo vídeo"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                  
                   {/* Indicadores */}
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                     {hackTownVideos.map((_, index) => (
                       <button
                         key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`w-3 h-3 rounded-full transition-colors ${
-                          index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                        onClick={() => goToVideo(index)}
+                        className={`video-indicator w-4 h-4 rounded-full transition-all duration-300 ${
+                          index === currentImageIndex 
+                            ? 'bg-white scale-110 shadow-lg active' 
+                            : 'bg-white/60 hover:bg-white/80 hover:scale-105'
                         }`}
+                        aria-label={`Ir para vídeo ${index + 1}`}
                       />
                     ))}
+                  </div>
+                  
+                  {/* Contador de vídeos */}
+                  <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {currentImageIndex + 1} / {hackTownVideos.length}
                   </div>
                 </div>
               </div>
@@ -347,18 +393,26 @@ export function AboutSection() {
 
           {/* Tabs Navigation */}
           <div className="flex justify-center mb-12">
-            <div ref={tabsRef} className="flex bg-white dark:bg-neutral-800 rounded-xl p-2 border border-neutral-200 dark:border-neutral-700">
+            <div ref={tabsRef} className="tab-container flex bg-white dark:bg-neutral-800 rounded-xl p-1 border border-neutral-200 dark:border-neutral-700 shadow-lg">
               {tabs.map((tab, index) => (
                 <button
                   key={tab.key}
-                  onClick={() => setActiveTab(index)}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  onClick={() => handleTabClick(index)}
+                  className={`tab-button relative px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform ${
                     activeTab === index
-                      ? 'bg-primary-500 text-white shadow-lg'
-                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white'
+                      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg scale-105'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-102'
                   }`}
                 >
-                  {tab.label}
+                  {activeTab === index && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{tab.label}</span>
                 </button>
               ))}
             </div>
@@ -438,38 +492,41 @@ export function AboutSection() {
             <h3 className="text-3xl font-display font-semibold text-neutral-900 dark:text-white text-center mb-12">
               {t('experiences.title')}
             </h3>
-            <div className="relative mx-auto">
-              {/* Timeline Line - Hidden on mobile */}
-              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-primary-500 to-accent-500"></div>
+            <div className="relative max-w-6xl mx-auto">
+              {/* Timeline Line - Responsive */}
+              <div className="timeline-line absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-px h-full bg-gradient-to-b from-primary-500 to-accent-500"></div>
               
               <div className="space-y-8 md:space-y-12">
                 {experiences.map((experience, index) => (
                   <div 
                     key={index}
-                    className={`relative flex flex-col md:flex-row items-center ${
+                    className={`relative flex flex-col md:flex-row items-start md:items-center ${
                       index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'
                     }`}
                   >
-                    {/* Timeline Dot - Adjusted for mobile */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-neutral-900 z-10"></div>
+                    {/* Timeline Dot - Responsive positioning */}
+                    <div className="timeline-dot absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-neutral-900 z-10 transform -translate-x-1/2"></div>
                     
-                    {/* Content Card - Full width on mobile */}
+                    {/* Content Card - Responsive width and positioning */}
                     <div
-                      className={`w-full md:w-5/12 p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg hover:shadow-primary-500/10 cursor-pointer transform shadow-lg ${
+                      className={`timeline-card w-full md:w-5/12 ml-12 md:ml-0 p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg hover:shadow-primary-500/10 transition-all duration-300 shadow-lg ${
                         index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
                       }`}
                     >
-                     
                       <div className="text-sm text-primary-600 dark:text-primary-400 font-semibold mb-1">{experience.period}</div>
-                      <div className="text-lg font-semibold text-neutral-900 dark:text-white">{experience.title}</div>
+                      <div className="text-lg font-semibold text-neutral-900 dark:text-white mb-1">{experience.title}</div>
                       <a 
-                      href={experience.url || '#'} 
-                      target="_blank"
-                      rel={experience.title} className="text-sm text-neutral-900 dark:text-white hover:underline hover:text-primary-400">{experience.organization}</a>
+                        href={experience.url || '#'} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-neutral-600 dark:text-neutral-300 hover:underline hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-300"
+                      >
+                        {experience.organization}
+                      </a>
                       <p 
-                      className="text-neutral-600 dark:text-neutral-400 text-sm list-disc mt-2"
-                      dangerouslySetInnerHTML={{ __html: t(experience.description) }}
-                    />
+                        className="text-neutral-600 dark:text-neutral-400 text-sm mt-2 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: experience.description }}
+                      />
                     </div>
                   </div>
                 ))}

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Poppins } from 'next/font/google'
+import { Inter, Poppins, Raleway } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { AlertSystem } from '@/components/ui/AlertSystem'
@@ -15,6 +15,13 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
   variable: '--font-poppins',
+  display: 'swap'
+})
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-raleway',
   display: 'swap'
 })
 
@@ -108,7 +115,7 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
         <meta name="theme-color" content="#3b82f6" />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} antialiased`}>
+      <body className={`${inter.variable} ${poppins.variable} ${raleway.variable} antialiased`}>
         <Providers>
           <div id="app" className="min-h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
             <AlertSystem />

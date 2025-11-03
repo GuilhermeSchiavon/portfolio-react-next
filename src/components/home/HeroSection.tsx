@@ -144,18 +144,18 @@ export function HeroSection() {
        
         {/* Name - Top Left */}
         <div className="absolute top-28 left-4 md:left-8 lg:left-16">
-          <div ref={firstNameRef}className="text-[max(12vw)] md:text-[max(6vw)] font-[Raleway] font-thin leading-[0.85] opacity-0 text-white mb-2">
+          <div ref={firstNameRef} className="text-[max(12vw)] md:text-[max(6vw)] font-raleway font-thin leading-[0.85] opacity-0 text-white mb-2">
             GUILHERME
           </div>
         </div>
 
         {/* Surname - Top Right, slightly below name */}
         <div className="absolute top-44 right-4 md:right-8 lg:right-16">
-          <div ref={lastNameRef} className="lg:text-right text-[max(12vw)] md:text-[max(6vw)] font-[Raleway] font-semibold leading-[0.85] opacity-0 text-white text-right">
+          <div ref={lastNameRef} className="lg:text-right text-[max(12vw)] md:text-[max(6vw)] font-raleway font-semibold leading-[0.85] opacity-0 text-white text-right">
             SCHIAVON
 
             <div ref={taglineMobileRef} className="md:hidden backdrop-blur-md bg-black/20 p-2 mt-2 rounded border border-white/10 w-1/2 ml-auto">
-              <p className="text-[12px] leading-4 md:text-base font-[Raleway] text-center text-gray-100">
+              <p className="text-[12px] leading-4 md:text-base font-raleway text-center text-gray-100">
                 {t('heroComponent.tagline')}
               </p>
             </div>
@@ -167,7 +167,7 @@ export function HeroSection() {
         <div className="absolute max-md:hidden top-1/2 right-4 md:right-8 lg:right-16 w-1/2">
           <div ref={taglineRef} className="backdrop-blur-md bg-black/20 px-2 md:px-5 py-2 rounded border border-white/10 opacity-0">
           {/* <div className="backdrop-blur-md bg-black/20 px-2 md:px-5 py-2 rounded border border-white/10 opacity-0"> */}
-            <p className="text-xs md:text-base font-[Raleway] pl-24 lg:pl-44 text-right text-gray-100 leading-relaxed">
+            <p className="text-xs md:text-base font-raleway pl-24 lg:pl-44 text-right text-gray-100 leading-relaxed">
               {t('heroComponent.tagline')}
             </p>
           </div>
