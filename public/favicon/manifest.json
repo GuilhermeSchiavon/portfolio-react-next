@@ -1,5 +1,11 @@
 {
- "name": "App",
+ "name": "Guilherme Schiavon Portfolio",
+ "short_name": "GS Portfolio",
+ "description": "Portfolio de Guilherme Schiavon - Full Stack Developer",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#3b82f6",
  "icons": [
   {
    "src": "\/favicon\/android-icon-36x36.png",
