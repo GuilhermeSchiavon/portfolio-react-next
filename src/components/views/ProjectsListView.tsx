@@ -35,7 +35,7 @@ export function ProjectsListView() {
         entries.forEach((entry) => {
           const projectId = parseInt(entry.target.getAttribute('data-project-id') || '0')
           if (entry.isIntersecting) {
-            setVisibleVideos(prev => new Set([...prev, projectId]))
+            setVisibleVideos(prev => new Set(Array.from(prev).concat(projectId)))
           } else {
             setVisibleVideos(prev => {
               const newSet = new Set(prev)

@@ -21,9 +21,9 @@ export function Footer() {
   const [showCookies, setShowCookies] = useState(false)
   const footerRef = useRef<HTMLElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
-  const emailRef = useRef<HTMLAnchorElement>(null)
-  const locationlRef = useRef<HTMLAnchorElement>(null)
-  const phoneRef = useRef<HTMLAnchorElement>(null)
+  const emailRef = useRef<HTMLDivElement>(null)
+  const locationlRef = useRef<HTMLDivElement>(null)
+  const phoneRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!footerRef.current || typeof window === 'undefined') return

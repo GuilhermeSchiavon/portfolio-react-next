@@ -228,7 +228,7 @@ export function AboutSection() {
                     {hackTownVideos.map((video, index) => (
                       <div key={index} className="w-full h-full max-h-screen flex-shrink-0">
                         <video 
-                          ref={(el) => videoRefs.current[index] = el}
+                          ref={(el) => { videoRefs.current[index] = el }}
                           className="w-full h-full object-cover rounded-xl"
                           muted
                           loop

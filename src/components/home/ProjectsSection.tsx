@@ -42,7 +42,7 @@ export function ProjectsSection() {
         entries.forEach((entry) => {
           const projectId = parseInt(entry.target.getAttribute('data-project-id') || '0')
           if (entry.isIntersecting) {
-            setVisibleVideos(prev => new Set([...prev, projectId]))
+            setVisibleVideos(prev => new Set(Array.from(prev).concat(projectId)))
           } else {
             setVisibleVideos(prev => {
               const newSet = new Set(prev)
@@ -75,19 +75,22 @@ export function ProjectsSection() {
     if (!sectionRef.current || typeof window === 'undefined') return
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(sectionRef.current?.querySelector('.section-header'),
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%"
+      const headerElement = sectionRef.current?.querySelector('.section-header')
+      if (headerElement) {
+        gsap.fromTo(headerElement,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 80%"
+            }
           }
-        }
-      )
+        )
+      }
 
       if (gridRef.current) {
         gsap.fromTo(gridRef.current.children,
