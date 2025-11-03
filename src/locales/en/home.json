@@ -7,19 +7,34 @@
         "btn_contact": "Get In Touch"
     },
     "descriptionComponent": {
-        "title": "Transforming systems into modern solutions for ",
+        "title": "Professional Experience",
+        "subtitle": "Transforming systems into modern solutions for ",
         "itens": ["About me", "Tech Stack"],
         "about": "As a <strong>scientist in the IT field</strong>, I elevate web project development to a new level, using my knowledge to <strong>create systems that not only meet but exceed expectations</strong> in terms of scalability, robustness, modularity, and responsiveness.",
         "technical": "In recent years, I have been developing integrated solutions with APIs from major platforms (Google, Meta, Mercado Pago, ChatGPT, Zoom), as well as systems for medical institutions such as <strong>SBU-SP, SBN and UNIFESP</strong>.",
         "techstack": "Technology stack organized by categories, demonstrating expertise in different areas of development.",
         "years": "Years of experience",
-        "solutions": "Flexible Solutions",
+        "solutions": {
+            "title": "Flexible Solutions",
+            "single": {
+                "name": "Single-tenant",
+                "slug": "Customization",
+                "description": "One client, one instance",
+                "help": "Each client has its own dedicated instance of the software and infrastructure, allowing for a high degree of customization and isolation."
+            },
+            "multi": {
+                "name": "Multi-tenant",
+                "slug": "SaaS",
+                "description": "Multiple clients, one instance.",
+                "help": "Multiple clients share a single instance of the software, saving costs and resources, but with less customization and isolation between clients."
+            }
+        },
         "certificatesTitle": "Certificates & Events",
         "certificates": {
             "google": "Google Certificate",
-            "googleDesc": "Introduction to AI and Machine Learning",
+            "googleDesc": "Introduction to AI and Machine Learning on Google Cloud",
             "hacktown": "HackTown 2025",
-            "hacktownDesc": "Participation in the biggest tech event"
+            "hacktownDesc": "Participation in the largest technology event in Latin America"
         }
     },
     "techStack": {
@@ -48,18 +63,56 @@
         "title": "Professional Journey",
         "itens": [
             {
-                "period": "2023 - Present",
-                "title": "Senior Full Stack Developer",
+                "period": "May 2022 – Present",
+                "title": "Senior Full-Stack Developer / AI Solutions Engineer",
+                "organization": "Unimagem Produções Audiovisuais LTDA",
                 "url": "https://unimagem.com.br",
-                "description": "Leading development of scalable web applications using modern technologies and best practices."
+                "description": "Responsible for designing and integrating full-stack systems for national and international medical societies, using Node.js, Vue.js, and cloud services.<ul class='list-disc px-6'><li>Developed a medical E-learning platform (Vue.js/Vuex) with detailed watch-time tracking and analytics to boost learning engagement.</li><li>Created the World Kidney Day platform, connecting hospitals nationwide to promote preventive health campaigns.</li><li>Built a geolocation-based specialist search tool, ensuring accurate proximity results for medical professionals.</li><li>Implemented an annual fee and subscription management system, integrating with Mercado Pago for automated billing and improved financial performance.</li><li>Currently implementing AI integrations and automations to optimize internal processes and user interactions.</li></ul>Projects consistently delivered measurable impact, improving system scalability, user experience, and operational efficiency."
             },
             {
-                "period": "2022 - 2023",
-                "title": "Full Stack Developer",
+                "period": "Jan 2022 – May 2022",
+                "title": "Junior Developer",
+                "organization": "DevCodes – Software House",
                 "url": "https://devcodes.com.br",
-                "description": "Developed and maintained multiple client projects with focus on performance and user experience."
+                "description": "Promoted from intern to junior developer for technical growth and leadership initiative.<ul class='list-disc px-6'><li>Contributed to backend architecture and project coordination.</li><li>Integrated APIs (Google, Facebook OAuth2, Mercado Pago).</li><li>Designed relational database models and optimized SQL queries.</li></ul>"
+            },
+            {
+                "period": "Oct 2021 – Dec 2021",
+                "title": "Intern Developer",
+                "organization": "DevCodes – Software House",
+                "url": "https://devcodes.com.br",
+                "description": "Assisted in maintenance and modernization of web systems, improving interface design and UX. <br>Gained practical experience across multiple projects in a fast-paced agency environment."
             }
         ]
+    },
+    "projectDetail": {
+        "implementations": "implementations",
+        "technologies": "technologies",
+        "viewExample": "View Example",
+        "summary": "Summary",
+        "aboutProject": "About the Project",
+        "features": "Features",
+        "updates": "Updates",
+        "latestUpdates": "Latest Updates",
+        "projectUpdates": "Project Updates",
+        "videoPresentation": "Video Presentation"
+    },
+    "projectsList": {
+        "allThe": "All",
+        "projects": "Projects",
+        "subtitle": "Explore my complete collection of projects, from modern web applications to robust APIs.",
+        "searchPlaceholder": "Search projects...",
+        "loadingProjects": "Loading projects...",
+        "noProjectsFound": "No projects found.",
+        "loadMore": "Load More",
+        "loading": "Loading..."
+    },
+    "projectsSection": {
+        "title": "Portfolio",
+        "featured": "Featured",
+        "projects": "Projects",
+        "subtitle": "A showcase of my recent work, featuring modern web applications built with cutting-edge technologies.",
+        "viewAllProjects": "View All Projects"
     }
 
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -13,6 +14,11 @@ if (typeof window !== 'undefined') {
 
 export function Footer() {
   const { t } = useTranslation('global')
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
+  const [showTerms, setShowTerms] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
+  const [showCookies, setShowCookies] = useState(false)
   const footerRef = useRef<HTMLElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
   const emailRef = useRef<HTMLAnchorElement>(null)
@@ -168,7 +174,7 @@ export function Footer() {
               <ul className="space-y-3">
                 <li>
                   <a 
-                    href="#home" 
+                    href={isHomePage ? "#home" : "/#home"}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-0 group-hover:w-4 h-px bg-primary-500 transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -177,7 +183,7 @@ export function Footer() {
                 </li>
                 <li>
                   <a 
-                    href="#about" 
+                    href={isHomePage ? "#about" : "/#about"}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-0 group-hover:w-4 h-px bg-primary-500 transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -186,7 +192,7 @@ export function Footer() {
                 </li>
                 <li>
                   <a 
-                    href="#projects" 
+                    href={isHomePage ? "#projects" : "/#projects"}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-0 group-hover:w-4 h-px bg-primary-500 transition-all duration-300 mr-0 group-hover:mr-2"></span>
@@ -195,7 +201,7 @@ export function Footer() {
                 </li>
                 <li>
                   <a 
-                    href="#contact" 
+                    href={isHomePage ? "#contact" : "/#contact"}
                     className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-0 group-hover:w-4 h-px bg-primary-500 transition-all duration-300 mr-0 group-hover:mr-2"></span>

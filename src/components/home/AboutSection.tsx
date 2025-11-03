@@ -84,6 +84,8 @@ export function AboutSection() {
   const experiences = t('experiences.itens', { returnObjects: true }) as Array<{
     period: string
     title: string
+    organization: string
+    url: string
     description: string
   }>
 
@@ -154,9 +156,9 @@ export function AboutSection() {
                 
                 {/* Animação Multi-tenant vs Single-tenant */}
                 <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 border border-neutral-200 dark:border-neutral-700">
-                  <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('descriptionComponent.solutions') || 'Soluções Flexíveis'}</h4>
+                  <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('descriptionComponent.solutions.title') || 'Soluções Flexíveis'}</h4>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="relative text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg cursor-help" title='Cada cliente tem sua própria instância dedicada do software e infraestrutura, permitindo alta personalização e isolamento.'>
+                    <div className="relative text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg cursor-help" title={t('descriptionComponent.solutions.single.help')}>
                       <svg className="absolute size-4 top-1 right-1 text-[#5a9567]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
                       <div className="w-20 h-20 bg-green-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
                         <div className="w-full h-full bg-cover bg-center bg-no-repeat rounded-lg"
@@ -165,13 +167,14 @@ export function AboutSection() {
                           }}
                         />
                       </div>
-                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">Single-tenant</h5>
+                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">{t('descriptionComponent.solutions.single.name')}</h5>
                       <div className="flex justify-center items-center">
-                        <p className="px-3 py-1 text-xs bg-[#5a9567] dark:bg-neutral-900/50 text-white mb-1 rounded-full">Personalização</p>
+                        <p className="px-3 py-1 text-xs bg-[#5a9567] dark:bg-neutral-900/50 text-white mb-1 rounded-full">{t('descriptionComponent.solutions.single.slug')}</p>
                       </div>
-                      <p className="text-sm text-neutral-600 dark:text-neutral-400">Um cliente, uma instância</p>
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">{t('descriptionComponent.solutions.single.description')}</p>
                     </div>
-                    <div className="relative text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg cursor-help" title='Vários clientes compartilham uma única instância do software, economizando custos e recursos, mas com menos personalização e isolamento entre clientes.'>
+
+                    <div className="relative text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg cursor-help" title={t('descriptionComponent.solutions.multi.help')}>
                       <svg className="absolute size-5 top-1 right-1 text-[#378ac5]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
                       <div className="w-20 h-20 bg-blue-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
                         <div className="w-full h-full bg-cover bg-center bg-no-repeat rounded-lg"
@@ -180,11 +183,11 @@ export function AboutSection() {
                           }}
                         />
                       </div>
-                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">Multi-tenant</h5>
+                      <h5 className="font-semibold text-neutral-900 dark:text-white mb-1">{t('descriptionComponent.solutions.multi.name')}</h5>
                       <div className="flex justify-center items-center">
-                        <p className="px-3 py-1 text-xs bg-[#378ac5] dark:bg-neutral-900/50 text-white mb-1 rounded-full">SaaS</p>
+                        <p className="px-3 py-1 text-xs bg-[#378ac5] dark:bg-neutral-900/50 text-white mb-1 rounded-full">{t('descriptionComponent.solutions.multi.slug')}</p>
                       </div>
-                      <p className="text-sm text-neutral-600 dark:text-neutral-400">Vários clientes, uma instância</p>
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">{t('descriptionComponent.solutions.multi.description')}</p>
                     </div>
                   </div>
                 </div>
@@ -337,7 +340,7 @@ export function AboutSection() {
               <div className="w-8 h-px bg-primary-500"></div>
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-              {t('descriptionComponent.title')}
+              {t('descriptionComponent.subtitle')}
               <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> {yearsExperience}+ {t('descriptionComponent.years')}</span>
             </h2>
             <p dangerouslySetInnerHTML={{ __html: t('descriptionComponent.about') }} className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed"/>
@@ -452,15 +455,23 @@ export function AboutSection() {
                     <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary-500 rounded-full border-4 border-white dark:border-neutral-900 z-10"></div>
                     
                     {/* Content Card - Full width on mobile */}
-                    <a href={experience.url} target="_blank"
+                    <div
                       className={`w-full md:w-5/12 p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg hover:shadow-primary-500/10 cursor-pointer transform shadow-lg ${
                         index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
                       }`}
                     >
+                     
                       <div className="text-sm text-primary-600 dark:text-primary-400 font-semibold mb-1">{experience.period}</div>
-                      <div className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">{experience.title}</div>
-                      <p className="text-neutral-600 dark:text-neutral-400 text-sm">{experience.description}</p>
-                    </a>
+                      <div className="text-lg font-semibold text-neutral-900 dark:text-white">{experience.title}</div>
+                      <a 
+                      href={experience.url || '#'} 
+                      target="_blank"
+                      rel={experience.title} className="text-sm text-neutral-900 dark:text-white hover:underline hover:text-primary-400">{experience.organization}</a>
+                      <p 
+                      className="text-neutral-600 dark:text-neutral-400 text-sm list-disc mt-2"
+                      dangerouslySetInnerHTML={{ __html: t(experience.description) }}
+                    />
+                    </div>
                   </div>
                 ))}
               </div>

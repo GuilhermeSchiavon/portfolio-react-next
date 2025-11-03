@@ -110,7 +110,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                       <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="text-neutral-700 dark:text-neutral-300 whitespace-nowrap">{project.implementations} implementações</span>
+                      <span className="text-neutral-700 dark:text-neutral-300 whitespace-nowrap">{project.implementations} {t('projectDetail.implementations')}</span>
                     </div>
                   )}
                   {project.Technologies && project.Technologies.length > 0 && (
@@ -118,7 +118,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                       <svg className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                       </svg>
-                      <span className="text-neutral-700 dark:text-neutral-300 whitespace-nowrap">{project.Technologies.length} tecnologias</span>
+                      <span className="text-neutral-700 dark:text-neutral-300 whitespace-nowrap">{project.Technologies.length} {t('projectDetail.technologies')}</span>
                     </a>
                   )}
                 </div>
@@ -138,7 +138,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center space-x-2 px-4 sm:px-5 py-2 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-xs sm:text-sm"
                     >
-                      <span>Ver Exemplo</span>
+                      <span>{t('projectDetail.viewExample')}</span>
                       <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
@@ -164,21 +164,21 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                   className="sticky top-24"
                 >
                   <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
-                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-6">Sumário</h3>
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-6">{t('projectDetail.summary')}</h3>
                     <nav className="space-y-3">
-                      <a href="#sobre" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">Sobre o Projeto</a>
+                      <a href="#sobre" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.aboutProject')}</a>
                       {project.Features && project.Features.length > 0 && (
-                        <a href="#funcionalidades" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">Funcionalidades</a>
+                        <a href="#funcionalidades" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.features')}</a>
                       )}
                       {project.Technologies && project.Technologies.length > 0 && (
-                        <a href="#tecnologias" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">Tecnologias</a>
+                        <a href="#tecnologias" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.technologies')}</a>
                       )}
-                      <a href="#atualizacoes" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">Atualizações</a>
+                      <a href="#atualizacoes" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.updates')}</a>
                     </nav>
                     
                     {projectUpdates && projectUpdates.length > 0 && (
                       <div className="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                        <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">Últimas Atualizações</h4>
+                        <h4 className="text-sm font-semibold text-neutral-900 dark:text-white mb-4">{t('projectDetail.latestUpdates')}</h4>
                         <div className="space-y-3">
                           {projectUpdates.slice(0, 3).map((update: any) => (
                             <div key={update.id} className="text-sm">
@@ -219,7 +219,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                                   frameBorder="0"
                                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                   allowFullScreen
-                                  title={`${project.title} - Vídeo de Apresentação`}
+                                  title={`${project.title} - ${t('projectDetail.videoPresentation')}`}
                                 />
                               </div>
                             ) : allMedia[selectedImageIndex].mediaType === 'video' ? (
@@ -369,7 +369,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 {/* About Section */}
                 <div id="sobre">
                   <h2 className="text-3xl font-display font-bold text-neutral-900 dark:text-white mb-8">
-                    Sobre o Projeto
+                    {t('projectDetail.aboutProject')}
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p>{project.description}</p>
@@ -380,7 +380,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 {project.Features && project.Features.length > 0 && (
                   <div id="funcionalidades">
                     <h3 className="text-xl sm:text-2xl font-display font-semibold text-neutral-900 dark:text-white mb-4 sm:mb-6">
-                      Funcionalidades
+                      {t('projectDetail.features')}
                     </h3>
                     <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                       {project.Features.map((feature: any) => (
@@ -404,7 +404,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 {projectUpdates && projectUpdates.length > 0 && (
                   <div id="atualizacoes">
                     <h3 className="text-xl sm:text-2xl font-display font-semibold text-neutral-900 dark:text-white mb-6">
-                      Atualizações do Projeto
+                      {t('projectDetail.projectUpdates')}
                     </h3>
                       <div className="space-y-6">
                         {projectUpdates.map((update: any) => (
@@ -443,8 +443,8 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                       {/* Technologies */}
                       {project.Technologies && project.Technologies.length > 0 && (
                         <div id="tecnologias" className="p-4 sm:p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
-                          <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4 sm:mb-6">
-                            Tecnologias
+                          <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-4 sm:mb-6 capitalize">
+                            {t('projectDetail.technologies')}
                           </h3>
                           {(() => {
                             const groupedTechs = groupTechnologiesByType(project.Technologies)

@@ -130,15 +130,15 @@ export function ProjectsSection() {
         <div className="section-header text-center mb-16">
           <div className="inline-flex items-center space-x-2 mb-4">
             <div className="w-8 h-px bg-primary-500"></div>
-            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">Portfolio</span>
+            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">{t('projectsSection.title')}</span>
             <div className="w-8 h-px bg-primary-500"></div>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-            Featured
-            <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> Projects</span>
+            {t('projectsSection.featured')}
+            <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> {t('projectsSection.projects')}</span>
           </h2>
           <p className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed">
-            A showcase of my recent work, featuring modern web applications built with cutting-edge technologies.
+            {t('projectsSection.subtitle')}
           </p>
         </div>
 
@@ -147,7 +147,7 @@ export function ProjectsSection() {
           <div className="text-center py-12">
             <div className="inline-flex items-center space-x-2">
               <div className="w-4 h-4 bg-primary-500 rounded-full animate-pulse"></div>
-              <span className="text-neutral-600 dark:text-neutral-400">Carregando projetos...</span>
+              <span className="text-neutral-600 dark:text-neutral-400">{t('projectsList.loadingProjects')}</span>
             </div>
           </div>
         )}
@@ -189,7 +189,7 @@ export function ProjectsSection() {
             href="/projects"
             className="inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-primary-500/25"
           >
-            <span>View All Projects ({ projects.length })</span>
+            <span>{t('projectsSection.viewAllProjects')} ({ projects.length })</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

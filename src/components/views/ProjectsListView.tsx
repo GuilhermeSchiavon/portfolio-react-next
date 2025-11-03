@@ -85,12 +85,12 @@ export function ProjectsListView() {
                 transition={{ duration: 0.6 }}
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-                  Todos os
-                  <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> Projetos</span>
+                  {t('projectsList.allThe')}
+                  <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> {t('projectsList.projects')}</span>
                 </h1>
                 
                 <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed mb-8">
-                  Explore minha coleção completa de projetos, desde aplicações web modernas até APIs robustas.
+                  {t('projectsList.subtitle')}
                 </p>
 
                 {/* Search Form */}
@@ -100,7 +100,7 @@ export function ProjectsListView() {
                       type="text"
                       value={searchKeyword}
                       onChange={(e) => setSearchKeyword(e.target.value)}
-                      placeholder="Buscar projetos..."
+                      placeholder={t('projectsList.searchPlaceholder')}
                       className="w-full px-4 py-3 pl-12 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     />
                     <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ export function ProjectsListView() {
               <div className="text-center py-12">
                 <div className="inline-flex items-center space-x-2">
                   <div className="w-4 h-4 bg-primary-500 rounded-full animate-pulse"></div>
-                  <span className="text-neutral-600 dark:text-neutral-400">Carregando projetos...</span>
+                  <span className="text-neutral-600 dark:text-neutral-400">{t('projectsList.loadingProjects')}</span>
                 </div>
               </div>
             ) : error ? (
@@ -130,7 +130,7 @@ export function ProjectsListView() {
             ) : projects.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-neutral-600 dark:text-neutral-400">
-                  Nenhum projeto encontrado.
+                  {t('projectsList.noProjectsFound')}
                 </p>
               </div>
             ) : (
@@ -171,11 +171,11 @@ export function ProjectsListView() {
                       {loading ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Carregando...</span>
+                          <span>{t('projectsList.loading')}</span>
                         </>
                       ) : (
                         <>
-                          <span>Carregar Mais</span>
+                          <span>{t('projectsList.loadMore')}</span>
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                           </svg>

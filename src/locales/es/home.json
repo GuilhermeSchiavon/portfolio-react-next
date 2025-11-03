@@ -42,21 +42,49 @@
         "subtitle": "Echa un vistazo a otros proyectos que desarrollé, todos con la misma dedicación y calidad.",
         "seeMore": "Ver más"
     },
-    "experiences": [
-        {
-            "period": "2023 - Presente",
-            "title": "Desarrollador Full Stack Senior",
-            "description": "Liderando el desarrollo de aplicaciones web escalables usando tecnologías modernas y mejores prácticas."
-        },
-        {
-            "period": "2022 - 2023",
-            "title": "Desarrollador Full Stack",
-            "description": "Desarrollo y mantenimiento de múltiples proyectos de clientes con enfoque en rendimiento y experiencia del usuario."
-        },
-        {
-            "period": "2021 - 2022",
-            "title": "Desarrollador Frontend",
-            "description": "Especializado en crear interfaces responsivas e interactivas usando Vue.js y React."
-        }
-    ]
+    "experiences": {
+        "title": "Trayectoria Profesional",
+        "itens": [
+            {
+                "period": "2023 - Presente",
+                "title": "Desarrollador Full Stack Senior",
+                "url": "https://unimagem.com.br",
+                "description": "Liderando el desarrollo de aplicaciones web escalables usando tecnologías modernas y mejores prácticas."
+            },
+            {
+                "period": "2022 - 2023",
+                "title": "Desarrollador Full Stack",
+                "url": "https://devcodes.com.br",
+                "description": "Desarrollo y mantenimiento de múltiples proyectos de clientes con enfoque en rendimiento y experiencia del usuario."
+            }
+        ]
+    },
+    "projectDetail": {
+        "implementations": "implementaciones",
+        "technologies": "tecnologías",
+        "viewExample": "Ver Ejemplo",
+        "summary": "Resumen",
+        "aboutProject": "Sobre el Proyecto",
+        "features": "Funcionalidades",
+        "updates": "Actualizaciones",
+        "latestUpdates": "Últimas Actualizaciones",
+        "projectUpdates": "Actualizaciones del Proyecto",
+        "videoPresentation": "Video de Presentación"
+    },
+    "projectsList": {
+        "allThe": "Todos los",
+        "projects": "Proyectos",
+        "subtitle": "Explora mi colección completa de proyectos, desde aplicaciones web modernas hasta APIs robustas.",
+        "searchPlaceholder": "Buscar proyectos...",
+        "loadingProjects": "Cargando proyectos...",
+        "noProjectsFound": "No se encontraron proyectos.",
+        "loadMore": "Cargar Más",
+        "loading": "Cargando..."
+    },
+    "projectsSection": {
+        "featured": "Proyectos",
+        "projects": "Destacados",
+        "subtitle": "Una muestra de mi trabajo reciente, presentando aplicaciones web modernas construidas con tecnologías de vanguardia.",
+        "viewAllProjects": "Ver Todos los Proyectos"
+    }
 }
