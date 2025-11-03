@@ -197,8 +197,8 @@ export function AboutSection() {
                   <h4 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">{t('descriptionComponent.certificatesTitle') || 'Certificados & Eventos'}</h4>
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
-                        G
+                      <div className="min-w-10 h-10 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                        <img alt="Google" src="/icons/google.svg" className="w-6 h-6 object-contain" />
                       </div>
                       <div>
                         <h5 className="font-semibold text-neutral-900 dark:text-white">{t('descriptionComponent.certificates.google') || 'Certificado Google'}</h5>
@@ -206,8 +206,8 @@ export function AboutSection() {
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
-                        HT
+                      <div className="min-w-10 h-10 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg flex items-center justify-center text-white font-semibold text-sm">
+                        <img alt="Google" src="/icons/hacktown.png" className="w-6 h-6 object-contain" />
                       </div>
                       <div>
                         <h5 className="font-semibold text-neutral-900 dark:text-white">{t('descriptionComponent.certificates.hacktown') || 'HackTown 2025'}</h5>
@@ -343,7 +343,6 @@ export function AboutSection() {
               {t('descriptionComponent.subtitle')}
               <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> {yearsExperience}+ {t('descriptionComponent.years')}</span>
             </h2>
-            <p dangerouslySetInnerHTML={{ __html: t('descriptionComponent.about') }} className="text-xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed"/>
           </div>
 
           {/* Tabs Navigation */}
