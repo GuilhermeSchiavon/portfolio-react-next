@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
@@ -26,10 +26,10 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
   const [canScrollRight, setCanScrollRight] = useState(false)
 
   // Combinar YouTube e imagens em um array único
-  const allMedia = [
+  const allMedia = useMemo(() => [
     ...(project.youtubeUrl ? [{ type: 'youtube', url: project.youtubeUrl, id: 'youtube' }] : []),
     ...(project.Images || []).map((img: any) => ({ ...img, type: 'image' }))
-  ]
+  ], [project.youtubeUrl, project.Images])
 
   useEffect(() => {
     if (project?.slug) {

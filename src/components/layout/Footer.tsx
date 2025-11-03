@@ -108,7 +108,7 @@ export function Footer() {
             <div className="lg:col-span-2">
               <div className="mb-6">
                 <h3 className="text-3xl font-display font-bold mb-4">
-                  Let's Build Something
+                  Let&apos;s Build Something
                   <span className="bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent"> Amazing</span>
                 </h3>
                 <p 

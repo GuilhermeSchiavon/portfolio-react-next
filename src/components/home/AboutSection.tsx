@@ -59,7 +59,7 @@ export function AboutSection() {
     }, 14000) // Troca a cada 14 segundos
 
     return () => clearInterval(interval)
-  }, [])
+  }, [hackTownVideos.length])
 
   // Controle de reprodução dos vídeos
   useEffect(() => {

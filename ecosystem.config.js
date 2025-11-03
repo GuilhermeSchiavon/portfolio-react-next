@@ -1,9 +1,9 @@
 module.exports = {
   apps: [{
-    name: 'portfolio-frontend',
+    name: '9999_Schiavon-frontend',
     script: 'npm',
     args: 'start',
-    cwd: '/var/www/portfolio/nextjs-portfolio',
+    cwd: '/var/www/schiavon/portfolio-react-next',
     instances: 1,
     autorestart: true,
     watch: false,
