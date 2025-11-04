@@ -28,6 +28,12 @@ export function ProjectDetailView({ project: initialProject }: ProjectDetailView
 
   // Usar projeto traduzido ou inicial como fallback
   const project = currentProject || initialProject
+
+  // Reset states when project changes
+  useEffect(() => {
+    setSelectedImageIndex(0)
+    setIsFullscreenOpen(false)
+  }, [initialProject?.slug])
   
   // Combinar YouTube e imagens em um array único
   const allMedia = useMemo(() => [
@@ -36,22 +42,22 @@ export function ProjectDetailView({ project: initialProject }: ProjectDetailView
   ], [project.youtubeUrl, project.Images])
 
   useEffect(() => {
-    if (project?.slug) {
+    if (initialProject?.slug) {
       dispatch(fetchProjectBySlug({ 
-        slug: project.slug, 
+        slug: initialProject.slug, 
         language: i18n.language 
       }))
       dispatch(fetchProjectUpdates({ 
-        slug: project.slug, 
+        slug: initialProject.slug, 
         language: i18n.language 
       }))
       dispatch(fetchProjectRecommendations({ 
-        slug: project.slug, 
+        slug: initialProject.slug, 
         language: i18n.language,
         limit: 3
       }))
     }
-  }, [dispatch, project?.slug, i18n.language])
+  }, [dispatch, initialProject?.slug, i18n.language])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
