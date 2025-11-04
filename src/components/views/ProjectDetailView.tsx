@@ -8,7 +8,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MediaFullscreen } from '@/components/ui/MediaFullscreen'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { fetchProjectUpdates, fetchProjectRecommendations } from '@/store/slices/projectSlice'
+import { fetchProjectUpdates, fetchProjectRecommendations, fetchProjectBySlug } from '@/store/slices/projectSlice'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { groupTechnologiesByType, getTechTypeColor, getTechTypeLabel } from '@/utils/technologyUtils'
 
@@ -16,16 +16,19 @@ interface ProjectDetailViewProps {
   project: any
 }
 
-export function ProjectDetailView({ project }: ProjectDetailViewProps) {
+export function ProjectDetailView({ project: initialProject }: ProjectDetailViewProps) {
   const { t, i18n } = useTranslation('home')
   const dispatch = useAppDispatch()
-  const { projectUpdates, recommendations, loading } = useAppSelector((state) => state.project)
+  const { currentProject, projectUpdates, recommendations, loading } = useAppSelector((state) => state.project)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [isSummaryOpen, setIsSummaryOpen] = useState(false)
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
 
+  // Usar projeto traduzido ou inicial como fallback
+  const project = currentProject || initialProject
+  
   // Combinar YouTube e imagens em um array único
   const allMedia = useMemo(() => [
     ...(project.youtubeUrl ? [{ type: 'youtube', url: project.youtubeUrl, id: 'youtube' }] : []),
@@ -34,6 +37,10 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
 
   useEffect(() => {
     if (project?.slug) {
+      dispatch(fetchProjectBySlug({ 
+        slug: project.slug, 
+        language: i18n.language 
+      }))
       dispatch(fetchProjectUpdates({ 
         slug: project.slug, 
         language: i18n.language 
@@ -382,7 +389,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                     {/* {t('projectDetail.aboutProject')} */}
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p dangerouslySetInnerHTML={{ __html: t(project.description) }}/>
+                    <p dangerouslySetInnerHTML={{ __html: project.description }}/>
                   </div>
                 </div>
 

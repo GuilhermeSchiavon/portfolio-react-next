@@ -116,7 +116,7 @@ export function ProjectCard({
   const CardContent = () => (
     <div 
       data-project-id={project.id}
-      className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10 hover:-translate-y-2"
+      className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -253,9 +253,8 @@ export function ProjectCard({
             {project.title}
           </h3>
           
-          <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-3">
-            {project.description}
-          </p>
+          <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-3"
+           dangerouslySetInnerHTML={{ __html: project.description }}/>
           
           {/* Technologies */}
           <div className="flex flex-wrap gap-2 mb-4">
