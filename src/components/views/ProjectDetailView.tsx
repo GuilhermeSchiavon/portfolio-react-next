@@ -8,7 +8,8 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MediaFullscreen } from '@/components/ui/MediaFullscreen'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { fetchProjectUpdates } from '@/store/slices/projectSlice'
+import { fetchProjectUpdates, fetchProjectRecommendations } from '@/store/slices/projectSlice'
+import { ProjectCard } from '@/components/ui/ProjectCard'
 import { groupTechnologiesByType, getTechTypeColor, getTechTypeLabel } from '@/utils/technologyUtils'
 
 interface ProjectDetailViewProps {
@@ -18,7 +19,7 @@ interface ProjectDetailViewProps {
 export function ProjectDetailView({ project }: ProjectDetailViewProps) {
   const { t, i18n } = useTranslation('home')
   const dispatch = useAppDispatch()
-  const { projectUpdates, loading } = useAppSelector((state) => state.project)
+  const { projectUpdates, recommendations, loading } = useAppSelector((state) => state.project)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [isSummaryOpen, setIsSummaryOpen] = useState(false)
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
@@ -36,6 +37,11 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
       dispatch(fetchProjectUpdates({ 
         slug: project.slug, 
         language: i18n.language 
+      }))
+      dispatch(fetchProjectRecommendations({ 
+        slug: project.slug, 
+        language: i18n.language,
+        limit: 3
       }))
     }
   }, [dispatch, project?.slug, i18n.language])
@@ -166,7 +172,9 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                   <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
                     <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-6">{t('projectDetail.summary')}</h3>
                     <nav className="space-y-3">
-                      <a href="#sobre" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.aboutProject')}</a>
+                      <a href="#sobre" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                        dangerouslySetInnerHTML={{ __html: t('projectDetail.aboutProject') }}
+                        ></a>
                       {project.Features && project.Features.length > 0 && (
                         <a href="#funcionalidades" className="block text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">{t('projectDetail.features')}</a>
                       )}
@@ -232,7 +240,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                               <img
                                 src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${allMedia[selectedImageIndex].filename}`}
                                 alt={allMedia[selectedImageIndex].alt || project.title}
-                                className="w-full h-48 sm:h-64 md:h-80 lg:h-[450px] object-cover rounded-lg shadow-xl cursor-pointer"
+                                className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-contain bg-neutral-100 dark:bg-neutral-700 rounded-lg shadow-xl cursor-pointer"
                                 onClick={() => setIsFullscreenOpen(true)}
                               />
                             )}
@@ -368,11 +376,13 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
 
                 {/* About Section */}
                 <div id="sobre">
-                  <h2 className="text-3xl font-display font-bold text-neutral-900 dark:text-white mb-8">
-                    {t('projectDetail.aboutProject')}
+                  <h2 className="text-3xl font-display font-bold text-neutral-900 dark:text-white mb-8"
+                    dangerouslySetInnerHTML={{ __html: t('projectDetail.aboutProject') }}
+                    >
+                    {/* {t('projectDetail.aboutProject')} */}
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p>{project.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: t(project.description) }}/>
                   </div>
                 </div>
 
@@ -459,7 +469,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                                       {techs.map((tech: any) => (
                                         <span
                                           key={tech.id}
-                                          className={`px-2 sm:px-3 py-1 text-xs font-medium text-white rounded-full bg-gradient-to-r ${getTechTypeColor(tech.type)}`}
+                                          className={`px-2 sm:px-3 py-1 text-xs font-medium text-white rounded-lg bg-gradient-to-r ${getTechTypeColor(tech.type)}`}
                                         >
                                           {tech.name}
                                         </span>
@@ -477,6 +487,29 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 </div>
               </div>
             </div>
+            
+            {/* Recommended Projects Section - Fora da sidebar */}
+            {recommendations && recommendations.length > 0 && (
+              <div className="mt-12 lg:mt-16">
+                <div className="p-4 sm:p-6 bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700">
+                  <h3 className="text-xl sm:text-2xl font-display font-semibold text-neutral-900 dark:text-white mb-6">
+                    {t('projectDetail.recommendedProjects')}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {recommendations.map((recommendedProject, index) => (
+                      <ProjectCard
+                        key={recommendedProject.id}
+                        project={recommendedProject}
+                        isVideoVisible={false}
+                        isFirstCard={false}
+                        showAnimation={true}
+                        animationDelay={index * 0.1}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { getTechTypeBgColor } from '@/utils/technologyUtils'
@@ -44,11 +44,66 @@ export function ProjectCard({
   onMouseLeave,
   isFirstCard = false
 }: ProjectCardProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStart, setDragStart] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+
   const getYouTubeVideoId = useCallback((url: string): string | null => {
     const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
     const match = url.match(regex)
     return match ? match[1] : null
   }, [])
+
+  // Handlers para navegação do carrossel
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true)
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    setDragStart(clientX)
+    setDragOffset(0)
+  }
+
+  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const offset = clientX - dragStart
+    setDragOffset(offset)
+    
+    // Prevenir navegação se estiver arrastando significativamente
+    if (Math.abs(offset) > 10) {
+      e.preventDefault()
+    }
+  }
+
+  const handleDragEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    
+    const images = project.Images || []
+    if (Math.abs(dragOffset) > 50 && images.length > 1) {
+      if (dragOffset > 0) {
+        setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+      } else {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length)
+      }
+    }
+    
+    setDragOffset(0)
+  }
+
+  const nextImage = () => {
+    const images = project.Images || []
+    if (images.length > 1) {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length)
+    }
+  }
+
+  const prevImage = () => {
+    const images = project.Images || []
+    if (images.length > 1) {
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+    }
+  }
 
 
 
@@ -79,11 +134,85 @@ export function ProjectCard({
               />
             </div>
           ) : project.Images && project.Images.length > 0 ? (
-            <img 
-              src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${project.Images[0].filename}`}
-              alt={project.title}
-              className="w-full h-48 object-cover"
-            />
+            <div className="relative w-full h-48 overflow-hidden group">
+              {/* Container das imagens */}
+              <div 
+                className="flex h-full transition-transform duration-300 ease-out"
+                style={{ 
+                  transform: `translateX(calc(-${currentImageIndex * 100}% + ${isDragging ? dragOffset : 0}px))` 
+                }}
+              >
+                <div
+                  className="absolute inset-0 z-10 cursor-grab active:cursor-grabbing"
+                  onMouseDown={handleDragStart}
+                  onMouseMove={handleDragMove}
+                  onMouseUp={handleDragEnd}
+                  onMouseLeave={handleDragEnd}
+                  onTouchStart={handleDragStart}
+                  onTouchMove={handleDragMove}
+                  onTouchEnd={handleDragEnd}
+                />
+                {project.Images.map((image, index) => (
+                  <img 
+                    key={image.id}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${image.filename}`}
+                    alt={image.alt || project.title}
+                    className="w-full h-full object-cover flex-shrink-0 select-none"
+                    draggable={false}
+                  />
+                ))}
+              </div>
+              
+              {/* Botões de navegação */}
+              {project.Images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      prevImage()
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    ‹
+                  </button>
+                  
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      nextImage()
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+              
+              {/* Indicadores */}
+              {project.Images.length > 1 && (
+                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1">
+                  {project.Images.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-1 rounded-full transition-all duration-300 ${
+                        index === currentImageIndex 
+                          ? 'bg-white w-6' 
+                          : 'bg-white/50 w-4'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {/* Contador */}
+              {project.Images.length > 1 && (
+                <div className="absolute top-3 right-3 bg-black/60 text-white px-2 py-1 rounded-full text-xs">
+                  {currentImageIndex + 1}/{project.Images.length}
+                </div>
+              )}
+            </div>
           ) : (
             <div className="w-full h-48 bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
               <div className="text-white text-4xl font-bold">

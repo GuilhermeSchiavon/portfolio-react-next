@@ -92,7 +92,8 @@
       "updates": "Updates",
       "latestUpdates": "Latest Updates",
       "projectUpdates": "Project Updates",
-      "videoPresentation": "Video Presentation"
+      "videoPresentation": "Video Presentation",
+      "recommendedProjects": "Other Projects"
     },
     "projectsList": {
       "allThe": "All",

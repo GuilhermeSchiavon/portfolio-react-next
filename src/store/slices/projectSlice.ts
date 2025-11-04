@@ -35,6 +35,7 @@ interface Project {
   colorSecondary?: string
   colorTertiary?: string
   status: string
+  order?: number
   Features: Feature[]
   Technologies: Technology[]
   Images: Image[]
@@ -52,6 +53,7 @@ interface ProjectState {
   projects: Project[]
   currentProject: Project | null
   projectUpdates: ProjectUpdate[]
+  recommendations: Project[]
   loading: boolean
   error: string | null
   pageNumber: number
@@ -63,6 +65,7 @@ const initialState: ProjectState = {
   projects: [],
   currentProject: null,
   projectUpdates: [],
+  recommendations: [],
   loading: false,
   error: null,
   pageNumber: 1,
@@ -96,6 +99,16 @@ export const fetchProjectUpdates = createAsyncThunk(
   async ({ slug, language = 'pt' }: { slug: string; language?: string }) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/slug/${slug}/updates`, {
       params: { language }
+    })
+    return response.data
+  }
+)
+
+export const fetchProjectRecommendations = createAsyncThunk(
+  'project/fetchProjectRecommendations',
+  async ({ slug, language = 'pt', limit = 3 }: { slug: string; language?: string; limit?: number }) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/slug/${slug}/recommendations`, {
+      params: { language, limit }
     })
     return response.data
   }
@@ -159,6 +172,19 @@ const projectSlice = createSlice({
       .addCase(fetchProjectUpdates.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch project updates'
+      })
+      // Fetch project recommendations
+      .addCase(fetchProjectRecommendations.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchProjectRecommendations.fulfilled, (state, action) => {
+        state.loading = false
+        state.recommendations = action.payload.items || []
+      })
+      .addCase(fetchProjectRecommendations.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.error.message || 'Failed to fetch project recommendations'
       })
   }
 })
