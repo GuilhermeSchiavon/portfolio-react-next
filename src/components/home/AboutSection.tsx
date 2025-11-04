@@ -18,10 +18,15 @@ export function AboutSection() {
   const [activeTab, setActiveTab] = useState(0)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [scrollY, setScrollY] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStart, setDragStart] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const autoplayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const { technologies } = useTechnologies()
 
   // Cálculo automático dos anos de experiência desde outubro 2021
@@ -37,9 +42,9 @@ export function AboutSection() {
 
   // Vídeos do HackTown gravados na horizontal
   const hackTownVideos = [
-    '/mov/hacktown-1.MOV',
-    '/mov/hacktown-2.MOV',
-    '/mov/hacktown-3.MOV'
+    '/mov/hacktown-1.mp4',
+    '/mov/hacktown-2.mp4',
+    '/mov/hacktown-3.mp4'
   ]
 
   const getTechCount = () => {
@@ -52,26 +57,68 @@ export function AboutSection() {
     { value: `${getTechCount()}+`, label: t('techStack.title') || 'Tecnologias', action: 'tab', tabIndex: 1 }
   ]
 
-  // Rotação automática dos vídeos do HackTown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % hackTownVideos.length)
-    }, 8000) // Troca a cada 8 segundos
+  // Função para ir para o próximo vídeo
+  const goToNextVideo = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % hackTownVideos.length)
+  }
 
-    return () => clearInterval(interval)
-  }, [hackTownVideos.length])
+  // Limpar timeout de autoplay
+  const clearAutoplayTimeout = () => {
+    if (autoplayTimeoutRef.current) {
+      clearTimeout(autoplayTimeoutRef.current)
+      autoplayTimeoutRef.current = null
+    }
+  }
+
+  // Configurar próximo autoplay
+  const setAutoplayTimeout = () => {
+    clearAutoplayTimeout()
+    autoplayTimeoutRef.current = setTimeout(goToNextVideo, 8000)
+  }
 
   // Funções para navegação manual dos vídeos
   const nextVideo = () => {
+    clearAutoplayTimeout()
     setCurrentImageIndex((prev) => (prev + 1) % hackTownVideos.length)
   }
 
   const prevVideo = () => {
+    clearAutoplayTimeout()
     setCurrentImageIndex((prev) => (prev - 1 + hackTownVideos.length) % hackTownVideos.length)
   }
 
   const goToVideo = (index: number) => {
+    clearAutoplayTimeout()
     setCurrentImageIndex(index)
+  }
+
+  // Handlers para touch/mouse
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true)
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    setDragStart(clientX)
+    clearAutoplayTimeout()
+  }
+
+  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    setDragOffset(clientX - dragStart)
+  }
+
+  const handleDragEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+    
+    if (Math.abs(dragOffset) > 50) {
+      if (dragOffset > 0) {
+        prevVideo()
+      } else {
+        nextVideo()
+      }
+    }
+    
+    setDragOffset(0)
   }
 
   // Controle de reprodução dos vídeos
@@ -79,6 +126,7 @@ export function AboutSection() {
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === currentImageIndex) {
+          video.currentTime = 0
           video.play().catch(() => {})
         } else {
           video.pause()
@@ -150,6 +198,24 @@ export function AboutSection() {
     }, sectionRef)
 
     return () => ctx.revert()
+  }, [])
+
+  // Iniciar autoplay
+  useEffect(() => {
+    setAutoplayTimeout()
+    return () => clearAutoplayTimeout()
+  }, [])
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      clearAutoplayTimeout()
+      videoRefs.current.forEach(video => {
+        if (video) {
+          video.pause()
+        }
+      })
+    }
   }, [])
 
   const getTabContent = (tabKey: string) => {
@@ -235,71 +301,72 @@ export function AboutSection() {
                 </div>
               </div>
               
-              {/* Vídeos do HackTown */}
-              <div className="relative h-full max-w-lg mx-auto">
-                <div className="relative overflow-hidden rounded-xl h-full min-h-[500px] max-h-[77vh] group">
-                  <div 
-                    className="flex transition-transform duration-500 ease-in-out h-full"
-                    style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
-                  >
-                    {hackTownVideos.map((video, index) => (
-                      <div key={index} className="w-full h-full max-h-screen flex-shrink-0">
-                        <video 
-                          ref={(el) => { videoRefs.current[index] = el }}
-                          className="w-full h-full object-cover rounded-xl"
-                          muted
-                          loop
-                          playsInline
-                          preload="metadata"
-                        >
-                          <source src={video} type="video/quicktime" />
-                          <source src={video} type="video/mp4" />
-                          Seu navegador não suporta vídeos.
-                        </video>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Botões de Navegação */}
-                  <button
-                    onClick={prevVideo}
-                    className="video-nav-button absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-                    aria-label="Vídeo anterior"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  
-                  <button
-                    onClick={nextVideo}
-                    className="video-nav-button absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
-                    aria-label="Próximo vídeo"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                  
-                  {/* Indicadores */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                    {hackTownVideos.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => goToVideo(index)}
-                        className={`video-indicator w-4 h-4 rounded-full transition-all duration-300 ${
-                          index === currentImageIndex 
-                            ? 'bg-white scale-110 shadow-lg active' 
-                            : 'bg-white/60 hover:bg-white/80 hover:scale-105'
-                        }`}
-                        aria-label={`Ir para vídeo ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                  
-                  {/* Contador de vídeos */}
-                  <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {currentImageIndex + 1} / {hackTownVideos.length}
+              {/* Vídeos do HackTown - Carrossel estilo Instagram */}
+              <div className="relative w-full max-w-lg mx-auto">
+                <div className="relative aspect-[9/16] bg-black rounded-xl overflow-hidden group">
+                    {/* Container dos vídeos */}
+                    <div 
+                      className="flex h-full transition-transform duration-300 ease-out"
+                      style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+                      onMouseDown={handleDragStart}
+                      onMouseMove={handleDragMove}
+                      onMouseUp={handleDragEnd}
+                      onMouseLeave={handleDragEnd}
+                      onTouchStart={handleDragStart}
+                      onTouchMove={handleDragMove}
+                      onTouchEnd={handleDragEnd}
+                    >
+                      {hackTownVideos.map((video, index) => (
+                        <div key={index} className="w-full h-full flex-shrink-0 relative bg-gray-800">
+                          {/* Fallback visual */}
+                          <div className="fallback absolute inset-0 flex items-center justify-center text-white z-10">
+                            <div className="text-center">
+                              <div className="text-4xl mb-2">🎥</div>
+                              <div className="text-sm">HackTown {index + 1}</div>
+                              <div className="text-xs mt-1 opacity-70">Carregando...</div>
+                            </div>
+                          </div>
+                          <video 
+                            ref={(el) => { videoRefs.current[index] = el }}
+                            className="w-full h-full object-cover"
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onEnded={goToNextVideo}
+                            onError={() => console.log(`Erro ao carregar: ${video}`)}
+                            onLoadedData={(e) => {
+                              console.log(`Carregado: ${video}`)
+                              const target = e.target as HTMLVideoElement
+                              const fallback = target.parentElement?.querySelector('.fallback') as HTMLElement
+                              if (fallback) fallback.style.display = 'none'
+                            }}
+                          >
+                            <source src={video} type="video/mp4" />
+                            <div className="flex items-center justify-center h-full text-white">
+                              Vídeo não disponível
+                            </div>
+                          </video>
+                        </div>
+                      ))}
+
+                    
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex space-x-1 z-20">
+                      {hackTownVideos.map((_, index) => (
+                        <div
+                          key={index}
+                          className={`h-1 rounded-full transition-all duration-300 ${
+                            index === currentImageIndex 
+                              ? 'bg-white w-8' 
+                              : 'bg-white/50 w-6'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Contador */}
+                    <div className="absolute top-4 right-4 bg-black/60 text-white px-2 py-1 rounded-full text-xs z-20">
+                      {currentImageIndex + 1}/{hackTownVideos.length}
+                    </div>
                   </div>
                 </div>
               </div>
