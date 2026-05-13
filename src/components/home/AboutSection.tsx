@@ -31,7 +31,7 @@ export function AboutSection() {
 
   // Cálculo automático dos anos de experiência desde outubro 2021
   const getYearsExperience = () => {
-    const startDate = new Date(2021, 9, 1) // Outubro = mês 9 (0-indexed)
+    const startDate = new Date(2021, 1, 1) // Outubro = mês 9 (0-indexed)
     const currentDate = new Date()
     const diffTime = Math.abs(currentDate.getTime() - startDate.getTime())
     const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25))

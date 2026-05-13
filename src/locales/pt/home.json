@@ -60,6 +60,13 @@
       "title": "Jornada Profissional",
       "itens": [
         {
+          "period": "Fev 2026 – Presente",
+          "title": "Desenvolvedor Full Stack / Engenheiro de Integrações Logísticas",
+          "organization": "Mais Envios",
+          "url": "https://maisenvios.com.br/",
+          "description": "Construção e evolução de sistemas para operações logísticas de alto volume, com ênfase em confiabilidade, integrações e automação — desafios próximos ao que grandes marketplaces enfrentam em escala (throughput, consistência operacional e resiliência a falhas de parceiros e APIs).<ul class='list-disc px-6'><li>Microsserviços e integrações com transportadoras, marketplaces e plataformas de e-commerce, com foco em contratos claros, retentativas seguras e redução de inconsistências em fluxos distribuídos.</li><li>Arquitetura orientada a eventos com mensageria e processamento assíncrono para desacoplar domínios e absorver picos de carga sem degradar operações críticas.</li><li>Rastreabilidade ponta a ponta, observabilidade (métricas, logs correlacionados) e práticas que encurtam tempo de diagnóstico e recuperação em incidentes operacionais.</li><li>Otimização de caminhos quentes na operação — consultas e integrações sensíveis a latência, uso estratégico de cache e filas para custo previsível de I/O.</li><li>Ambientes distribuídos com Node.js, NestJS, PostgreSQL, Redis e RabbitMQ; evolução contínua do backend pensando disponibilidade, manutenibilidade e evolução segura em produção.</li><li>Automações e guardrails que reduzem retrabalho manual, erros repetitivos e falhas silenciosas em integrações de terceiros.</li></ul>"
+        },
+        {
           "period": "Mai 2022 – Presente",
           "title": "Desenvolvedor Full Stack Sênior / Engenheiro de Soluções em IA",
           "organization": "Unimagem Produções Audiovisuais LTDA",

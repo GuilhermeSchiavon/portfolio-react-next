@@ -60,6 +60,13 @@
       "title": "Professional Journey",
       "itens": [
         {
+          "period": "Feb 2026 – Present",
+          "title": "Full-Stack Developer / Logistics Integrations Engineer",
+          "organization": "Mais Envios",
+          "url": "https://maisenvios.com.br/",
+          "description": "Building and evolving systems for high-volume logistics operations with a strong focus on reliability, integrations, and automation — aligned with challenges large marketplaces tackle at scale (throughput, operational consistency, and resilience to partner/API failures).<ul class='list-disc px-6'><li>Microservices and integrations with carriers, marketplaces, and e-commerce platforms, emphasizing clear contracts, safe retries, and fewer inconsistencies across distributed workflows.</li><li>Event-driven architecture with messaging and asynchronous processing to decouple domains and absorb traffic spikes without degrading critical operational paths.</li><li>End-to-end traceability, observability (metrics, correlated logs), and practices that shorten mean time to diagnose and recover from operational incidents.</li><li>Optimization of hot paths—latency-sensitive queries and integrations, strategic use of caching and queues for predictable I/O cost.</li><li>Distributed environments with Node.js, NestJS, PostgreSQL, Redis, and RabbitMQ; continuous backend evolution with availability, maintainability, and safer production rollout in mind.</li><li>Automations and guardrails that reduce manual rework, repetitive errors, and silent failures in third-party integrations.</li></ul>"
+        },
+        {
           "period": "May 2022 – Present",
           "title": "Senior Full-Stack Developer / AI Solutions Engineer",
           "organization": "Unimagem Produções Audiovisuais LTDA",
