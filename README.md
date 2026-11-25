@@ -1,209 +1,73 @@
-# Portfolio Next.js - Guilherme Schiavon
+# Portfólio — Guilherme Schiavon
 
-## 🚀 Migração Vue → React/Next.js
+Site em [schiavon.dev](https://schiavon.dev). Frontend em Next.js (App Router) que lê projetos e tecnologias da API do portfólio ([Portfolio_backend](https://github.com/GuilhermeSchiavon/Portfolio_backend)).
 
-Este projeto é uma migração completa do portfolio Vue 3 para React/Next.js, mantendo todas as funcionalidades originais e melhorando a performance e SEO.
+## Stack
 
-## 📋 Stack Tecnológica
+- **Next.js 14** (App Router) + **React 18** + **TypeScript**
+- **Tailwind CSS** para estilo
+- **react-i18next** para os textos (português e inglês)
+- **Framer Motion** para as animações de entrada
+- **sharp** para gerar as imagens do hero
 
-### Frontend
-- **Next.js 14** - Framework React com App Router
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS** - Estilização utilitária
-- **Framer Motion** - Animações avançadas
-- **GSAP** - Animações de alta performance
+## Como funciona
 
-### Estado Global
-- **Redux Toolkit** - Gerenciamento de estado (substitui Vuex)
-- **RTK Query** - Cache e sincronização de dados
+- **Dados no servidor.** As páginas buscam os projetos na API pelo servidor do Next (`src/lib/api.ts`), com cache de 5 minutos. O HTML já chega com o conteúdo, o navegador não depende de CORS e, se a API cair, a página renderiza sem a lista em vez de quebrar.
+- **Idioma decidido no servidor.** A ordem é: cookie `lang`, depois o `Accept-Language` do navegador, depois inglês (`src/lib/locale.ts`). O HTML renderizado e a hidratação usam o mesmo idioma.
+- **Tema sem "flash".** A classe `dark` do `<html>` vem do cookie `theme`; sem cookie, um script no `<head>` segue o tema do sistema.
+- **Hero estático.** As fotos do hero são geradas em dois tamanhos por `scripts/optimize-images.mjs` e servidas como arquivo estático com `srcset`.
+- **Números e contatos em um lugar só:** `src/lib/site.ts`.
 
-### Internacionalização
-- **react-i18next** - Suporte a múltiplos idiomas
-- **i18next-browser-languagedetector** - Detecção automática de idioma
-
-### Otimizações
-- **Image Optimization** - Otimização automática de imagens
-- **Code Splitting** - Carregamento sob demanda
-- **SEO Otimizado** - Meta tags dinâmicas e estruturadas
-
-## 🏗️ Arquitetura
+## Estrutura
 
 ```
 src/
-├── app/                    # App Router (Next.js 14)
-│   ├── layout.tsx         # Layout principal
-│   ├── page.tsx           # Página inicial
-│   ├── globals.css        # Estilos globais
-│   └── providers.tsx      # Providers (Redux, i18n, Theme)
+├── app/                  # Rotas, layout, sitemap e robots
 ├── components/
-│   ├── layout/            # Componentes de layout
-│   │   ├── Header.tsx
-│   │   └── Footer.tsx
-│   ├── home/              # Componentes da home
-│   │   ├── HeroSection.tsx
-│   │   ├── AboutSection.tsx
-│   │   └── ProjectsSection.tsx
-│   ├── ui/                # Componentes reutilizáveis
-│   │   ├── AlertSystem.tsx
-│   │   ├── LanguageSelector.tsx
-│   │   ├── ProjectCard.tsx
-│   │   └── LoadingSpinner.tsx
-│   ├── providers/         # Context providers
-│   │   ├── ThemeProvider.tsx
-│   │   └── I18nProvider.tsx
-│   └── views/             # Views principais
-│       └── HomeView.tsx
-├── store/                 # Redux Toolkit
-│   ├── index.ts          # Store configuration
-│   └── slices/           # Redux slices
-│       ├── helpersSlice.ts
-│       ├── languageSlice.ts
-│       ├── projectSlice.ts
-│       ├── chatSlice.ts
-│       └── userSlice.ts
-├── lib/                   # Utilitários e configurações
-│   └── i18n.ts           # Configuração i18n
-├── locales/              # Arquivos de tradução
-│   ├── en/
-│   ├── pt/
-│   └── es/
-├── hooks/                # Custom hooks
-├── types/                # Definições TypeScript
-└── utils/                # Funções utilitárias
+│   ├── home/             # Seções da home (hero, sobre, como trabalho, experiência...)
+│   ├── layout/           # Cabeçalho, rodapé, tema e idioma
+│   ├── seo/              # JSON-LD
+│   ├── ui/               # Card de projeto, ícones, utilitários
+│   └── views/            # Montagem de cada página
+├── lib/                  # API, idioma, SEO, dados do site
+├── locales/              # Textos em pt e en
+└── types/
 ```
 
-## 🔧 Configuração e Instalação
+## Rodando localmente
 
-### 1. Instalar Dependências
 ```bash
-cd nextjs-portfolio
 npm install
+cp .env.example .env.local   # ajuste as URLs
+npm run dev                  # http://localhost:9999
 ```
 
-### 2. Configurar Variáveis de Ambiente
+Variáveis de ambiente (veja `.env.example`):
+
+| Variável | Para quê |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL pública do site (canonical, sitemap, Open Graph) |
+| `NEXT_PUBLIC_API_URL` | API do portfólio e origem das imagens em `/uploads` |
+| `API_URL` | Opcional: URL interna da API para as leituras do servidor |
+| `GOOGLE_VERIFICATION_CODE` | Opcional: verificação do Search Console |
+
+## Scripts
+
 ```bash
-cp .env.local.example .env.local
+npm run dev          # desenvolvimento (porta 9999)
+npm run build        # build de produção
+npm start            # serve o build (porta 9999)
+npm run lint         # ESLint
+npm run type-check   # TypeScript
+node scripts/optimize-images.mjs   # regenera as imagens do hero
 ```
 
-Edite o arquivo `.env.local` com suas configurações:
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_APP_TITLE=Guilherme Schiavon Portfolio
-```
+## Editando o conteúdo
 
-### 3. Executar em Desenvolvimento
-```bash
-npm run dev
-```
+- **Textos** (hero, sobre, como trabalho, experiência): `src/locales/pt/home.json` e `src/locales/en/home.json`.
+- **Números, contatos, redes e stack:** `src/lib/site.ts`.
+- **Projetos:** cadastrados no painel do backend; aparecem aqui em até 5 minutos.
 
-### 4. Build para Produção
-```bash
-npm run build
-npm start
-```
+## Deploy
 
-## 🎨 Principais Funcionalidades
-
-### ✅ Migradas do Vue
-- [x] **Sistema de Tema** - Dark/Light mode com persistência
-- [x] **Internacionalização** - Suporte a EN, PT, ES
-- [x] **Gerenciamento de Estado** - Redux Toolkit (ex-Vuex)
-- [x] **Sistema de Alertas** - Notificações animadas
-- [x] **Navegação Responsiva** - Header com menu mobile
-- [x] **Seções Animadas** - Hero, About, Projects, Footer
-- [x] **Formulário de Contato** - Integração com backend
-- [x] **Loading Screen** - Animação de carregamento
-- [x] **SEO Otimizado** - Meta tags dinâmicas
-
-### 🚀 Melhorias Implementadas
-- [x] **Performance** - Code splitting automático
-- [x] **Animações GSAP** - Animações de alta performance
-- [x] **TypeScript** - Tipagem completa
-- [x] **Framer Motion** - Animações declarativas
-- [x] **Image Optimization** - Otimização automática do Next.js
-- [x] **App Router** - Roteamento moderno do Next.js 14
-
-## 📱 Responsividade
-
-O projeto é totalmente responsivo com breakpoints:
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1024px  
-- **Desktop**: > 1024px
-
-## 🎭 Animações
-
-### GSAP
-- Animações de entrada das seções
-- Efeitos de scroll trigger
-- Animações de texto e elementos
-
-### Framer Motion
-- Transições de página
-- Hover effects
-- Animações de componentes
-- Loading states
-
-## 🌐 SEO e Performance
-
-### Meta Tags Dinâmicas
-- Open Graph completo
-- Twitter Cards
-- Structured Data
-- Canonical URLs
-
-### Performance
-- **Core Web Vitals** otimizados
-- **Image Optimization** automática
-- **Code Splitting** por rota
-- **Lazy Loading** de componentes
-
-## 🔄 Comparação Vue vs React
-
-| Funcionalidade | Vue 3 | React/Next.js |
-|---|---|---|
-| **Estado Global** | Vuex | Redux Toolkit |
-| **Roteamento** | Vue Router | App Router |
-| **i18n** | vue-i18n | react-i18next |
-| **Animações** | GSAP + CSS | GSAP + Framer Motion |
-| **SEO** | Meta tags manuais | Next.js automático |
-| **Performance** | SPA | SSR/SSG + Hydration |
-| **TypeScript** | Opcional | Nativo |
-
-## 🚀 Deploy
-
-### Vercel (Recomendado)
-```bash
-npm install -g vercel
-vercel
-```
-
-### Build Manual
-```bash
-npm run build
-npm start
-```
-
-## 📝 Scripts Disponíveis
-
-- `npm run dev` - Desenvolvimento
-- `npm run build` - Build de produção
-- `npm run start` - Servidor de produção
-- `npm run lint` - Linting
-- `npm run type-check` - Verificação de tipos
-
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature
-3. Commit suas mudanças
-4. Push para a branch
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
-
-**Desenvolvido com ❤️ por Guilherme Schiavon**
+Em produção o site roda com PM2 (`ecosystem.config.js`): `npm run build` e depois reiniciar só o app do portfólio.

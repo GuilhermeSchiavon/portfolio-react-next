@@ -1,129 +1,78 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins, Raleway } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
-import { AlertSystem } from '@/components/ui/AlertSystem'
-import { StructuredData } from '@/components/seo/StructuredData'
+import { PersonStructuredData } from '@/components/seo/StructuredData'
+import { getRequestLocale, getRequestTheme } from '@/lib/request'
+import { htmlLang, THEME_COOKIE } from '@/lib/locale'
+import { getMeta, pageMetadata } from '@/lib/seo'
+import { site } from '@/lib/site'
 
-const inter = Inter({ 
+// Inter e Raleway são fontes variáveis: um arquivo cobre todos os pesos.
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway', display: 'swap' })
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap'
-})
-
-const poppins = Poppins({ 
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['500', '600', '700'],
   variable: '--font-poppins',
-  display: 'swap'
+  display: 'swap',
 })
 
-const raleway = Raleway({
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-raleway',
-  display: 'swap'
-})
+export function generateMetadata(): Metadata {
+  const locale = getRequestLocale()
+  const meta = getMeta(locale)
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Guilherme Schiavon - Full Stack Developer',
-    template: '%s | Guilherme Schiavon'
-  },
-  description: 'Computer Scientist and Full Stack Developer specializing in modern web solutions with React, Next.js, Node.js, and cutting-edge technologies.',
-  keywords: ['Full Stack Developer', 'React', 'Next.js', 'Node.js', 'TypeScript', 'Web Development', 'Computer Science'],
-  authors: [{ name: 'Guilherme Schiavon' }],
-  creator: 'Guilherme Schiavon',
-  publisher: 'Guilherme Schiavon',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-  alternates: {
-    canonical: '/',
-    languages: {
-      'en-US': '/en',
-      'pt-BR': '/pt',
-      'es-ES': '/es',
+  return {
+    metadataBase: new URL(site.url),
+    ...pageMetadata(locale, { title: meta.home.title, description: meta.home.description }),
+    title: { default: meta.home.title, template: `%s | ${site.name}` },
+    authors: [{ name: site.name, url: site.url }],
+    creator: site.name,
+    formatDetection: { email: false, address: false, telephone: false },
+    icons: {
+      icon: [
+        { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+        { url: '/favicon/android-icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      ],
+      apple: [{ url: '/favicon/apple-icon-180x180.png', sizes: '180x180' }],
     },
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: '/',
-    title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Computer Scientist and Full Stack Developer specializing in modern web solutions.',
-    siteName: 'Guilherme Schiavon Portfolio',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Guilherme Schiavon - Full Stack Developer',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Computer Scientist and Full Stack Developer specializing in modern web solutions.',
-    images: ['/og-image.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    manifest: '/favicon/manifest.json',
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
-  },
+    ...(process.env.GOOGLE_VERIFICATION_CODE
+      ? { verification: { google: process.env.GOOGLE_VERIFICATION_CODE } }
+      : {}),
+  }
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+  ],
+}
+
+// Sem preferência salva, segue o tema do sistema antes da primeira pintura
+// (evita o "flash" de tema claro para quem usa o sistema em modo escuro).
+const themeScript = `(function(){try{if(document.cookie.indexOf('${THEME_COOKIE}=')===-1&&window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark')}}catch(e){}})()`
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = getRequestLocale()
+  const theme = getRequestTheme()
+  const meta = getMeta(locale)
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={htmlLang[locale]} className={theme === 'dark' ? 'dark' : undefined} suppressHydrationWarning>
       <head>
-        <StructuredData type="person" data={{}} />
-        <StructuredData type="organization" data={{}} />
-        <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png" />
-        <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png" />
-        <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png" />
-        <link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-        <link rel="manifest" href="/favicon/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#3b82f6" />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <PersonStructuredData jobTitle={meta.jobTitle} description={meta.home.description} />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} ${raleway.variable} antialiased`}>
-        <Providers>
-          <div id="app" className="min-h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
-            <AlertSystem />
-            <main className="w-full">
-              {children}
-            </main>
-          </div>
-        </Providers>
+      <body className={`${inter.variable} ${poppins.variable} ${raleway.variable} font-sans antialiased`}>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   )

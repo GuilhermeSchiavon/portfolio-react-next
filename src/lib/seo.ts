@@ -1,70 +1,61 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
+import { site } from './site'
+import { ogLocale, type Locale } from './locale'
+import { plainText, projectMediaUrl } from './media'
+import type { Project } from '@/types/project'
 
-interface SEOData {
-  title: string
-  description: string
-  keywords?: string[]
-  images?: string[]
-  url?: string
+import enGlobal from '../locales/en/global.json'
+import ptGlobal from '../locales/pt/global.json'
+
+const dictionaries = { en: enGlobal, pt: ptGlobal }
+
+export function getMeta(locale: Locale) {
+  return dictionaries[locale].meta
 }
 
-export function generateSEO(data: SEOData): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-  
+interface PageSeo {
+  title: string
+  description: string
+  path?: string
+  image?: string
+  // true quando o título já é completo e não deve receber o sufixo do layout.
+  absoluteTitle?: boolean
+}
+
+export function pageMetadata(locale: Locale, page: PageSeo): Metadata {
+  const image = page.image || '/og-image.jpg'
+  const path = page.path || '/'
+
   return {
-    title: data.title,
-    description: data.description,
-    keywords: data.keywords,
-    authors: [{ name: 'Guilherme Schiavon' }],
-    creator: 'Guilherme Schiavon',
+    title: page.absoluteTitle ? { absolute: page.title } : page.title,
+    description: page.description,
+    alternates: { canonical: path },
     openGraph: {
-      title: data.title,
-      description: data.description,
-      url: data.url || baseUrl,
-      siteName: 'Guilherme Schiavon Portfolio',
-      images: data.images?.map(img => ({
-        url: img,
-        width: 1200,
-        height: 630,
-        alt: data.title,
-      })) || ['/og-image.jpg'],
-      locale: 'pt_BR',
       type: 'website',
+      title: page.title,
+      description: page.description,
+      url: path,
+      siteName: site.name,
+      locale: ogLocale[locale],
+      images: [{ url: image, alt: page.title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: data.title,
-      description: data.description,
-      images: data.images || ['/og-image.jpg'],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
+      title: page.title,
+      description: page.description,
+      images: [image],
     },
   }
 }
 
-export function generateProjectSEO(project: any, language: string = 'pt'): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-  
-  return generateSEO({
-    title: `${project.title} - Guilherme Schiavon Portfolio`,
-    description: project.description,
-    keywords: [
-      project.title.toLowerCase(),
-      'guilherme schiavon',
-      'portfolio',
-      'projeto',
-      ...(project.Technologies?.map((tech: any) => tech.name.toLowerCase()) || [])
-    ],
-    images: project.Images?.map((img: any) => img.url) || ['/og-image.jpg'],
-    url: `${baseUrl}/projects/${project.slug}`
+export function projectMetadata(locale: Locale, project: Project): Metadata {
+  const cover = project.Images?.find((image) => image.mediaType !== 'video')
+  const subtitle = project.subtitle ? `: ${project.subtitle}` : ''
+
+  return pageMetadata(locale, {
+    title: `${project.title}${subtitle}`,
+    description: plainText(project.description, 160),
+    path: `/projects/${project.slug}`,
+    image: cover ? projectMediaUrl(cover.filename) : undefined,
   })
 }

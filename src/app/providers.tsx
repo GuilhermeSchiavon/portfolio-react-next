@@ -1,18 +1,18 @@
 'use client'
 
-import { Provider } from 'react-redux'
-import { store } from '@/store'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
-import { I18nProvider } from '@/components/providers/I18nProvider'
+import { useMemo } from 'react'
+import { I18nextProvider } from 'react-i18next'
+import { MotionConfig } from 'framer-motion'
+import { createI18n } from '@/lib/i18n'
+import type { Locale } from '@/lib/locale'
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ locale, children }: { locale: Locale; children: React.ReactNode }) {
+  const i18n = useMemo(() => createI18n(locale), [locale])
+
   return (
-    <Provider store={store}>
-      <I18nProvider>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
-      </I18nProvider>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      {/* Respeita "reduzir movimento" do sistema em todas as animações. */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+    </I18nextProvider>
   )
 }

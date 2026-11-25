@@ -1,315 +1,129 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { getTechTypeBgColor } from '@/utils/technologyUtils'
+import { useTranslation } from 'react-i18next'
+import { plainText, projectMediaUrl, techName, youTubeId, youTubeThumbnail } from '@/lib/media'
+import { ChevronLeft, ChevronRight, Play } from '@/components/ui/Icons'
+import type { Project } from '@/types/project'
 
 interface ProjectCardProps {
-  project: {
-    id: number
-    title: string
-    description: string
-    subtitle?: string
-    slug: string
-    youtubeUrl?: string
-    Images?: Array<{
-      id: number
-      filename: string
-      mediaType?: string
-      alt?: string
-    }>
-    Technologies?: Array<{
-      id: number
-      name: string
-      type?: string
-    }>
-    ProjectUpdates?: Array<{ id: number }>
-    Implementations?: Array<{ id: number }>
-  }
-  isVideoVisible?: boolean
-  showAnimation?: boolean
-  animationDelay?: number
-  onMouseEnter?: () => void
-  onMouseLeave?: () => void
-  isFirstCard?: boolean
+  project: Project
+  // true nos primeiros cards da página, para a imagem não esperar o lazy-load.
+  priority?: boolean
 }
 
-export function ProjectCard({ 
-  project, 
-  isVideoVisible = false, 
-  showAnimation = false,
-  animationDelay = 0,
-  onMouseEnter,
-  onMouseLeave,
-  isFirstCard = false
-}: ProjectCardProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragStart, setDragStart] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
+const MAX_TECHS = 4
 
-  const getYouTubeVideoId = useCallback((url: string): string | null => {
-    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
-    const match = url.match(regex)
-    return match ? match[1] : null
-  }, [])
+export function ProjectCard({ project, priority = false }: ProjectCardProps) {
+  const { t } = useTranslation('home')
+  const [imageIndex, setImageIndex] = useState(0)
 
-  // Handlers para navegação do carrossel
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    setIsDragging(true)
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
-    setDragStart(clientX)
-    setDragOffset(0)
-  }
+  const images = (project.Images || []).filter((image) => image.mediaType !== 'video')
+  const videoId = youTubeId(project.youtubeUrl)
+  const technologies = project.Technologies || []
+  const image = images[imageIndex]
 
-  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging) return
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
-    const offset = clientX - dragStart
-    setDragOffset(offset)
-    
-    // Prevenir navegação se estiver arrastando significativamente
-    if (Math.abs(offset) > 10) {
-      e.preventDefault()
-    }
-  }
+  const step = (delta: number) => setImageIndex((index) => (index + delta + images.length) % images.length)
 
-  const handleDragEnd = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-    
-    const images = project.Images || []
-    if (Math.abs(dragOffset) > 50 && images.length > 1) {
-      if (dragOffset > 0) {
-        setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
-      } else {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length)
-      }
-    }
-    
-    setDragOffset(0)
-  }
+  return (
+    <article className="card group relative flex h-full flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-primary-500/10">
+      <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+        {image ? (
+          // Só a imagem atual é carregada. Antes o card baixava todas de uma vez
+          // (até 20 PNGs por projeto, em tamanho original).
+          <Image
+            key={image.id}
+            src={projectMediaUrl(image.filename)}
+            alt={image.alt || project.title}
+            fill
+            priority={priority && imageIndex === 0}
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : videoId ? (
+          <Image
+            src={youTubeThumbnail(videoId)}
+            alt={project.title}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-primary-600 to-accent-500 px-6 text-center">
+            <span className="font-display text-2xl font-semibold text-white/95">{project.title}</span>
+          </div>
+        )}
 
-  const nextImage = () => {
-    const images = project.Images || []
-    if (images.length > 1) {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length)
-    }
-  }
+        {videoId && (
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/65 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+            <Play className="h-3 w-3" />
+            {t('card.video')}
+          </span>
+        )}
 
-  const prevImage = () => {
-    const images = project.Images || []
-    if (images.length > 1) {
-      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
-    }
-  }
-
-
-
-  const videoId = project.youtubeUrl ? getYouTubeVideoId(project.youtubeUrl) : null
-  const updatesCount = project.ProjectUpdates?.length || 0
-  const implementationsCount = project.Implementations?.length || 0
-
-  const shouldAutoplay = isFirstCard || isVideoVisible
-
-  const CardContent = () => (
-    <div 
-      data-project-id={project.id}
-      className="group relative bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/10"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <Link href={`/projects/${project.slug}`} className="block">
-        {/* Project Media */}
-        <div className="relative overflow-hidden">
-          {project.youtubeUrl && videoId ? (
-            <div className="relative w-full h-48">
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=${shouldAutoplay ? 1 : 0}&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=${videoId}`}
-                className="w-full h-full object-cover"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                title={project.title}
-              />
-            </div>
-          ) : project.Images && project.Images.length > 0 ? (
-            <div className="relative w-full h-48 overflow-hidden group">
-              {/* Container das imagens */}
-              <div 
-                className="flex h-full transition-transform duration-300 ease-out"
-                style={{ 
-                  transform: `translateX(calc(-${currentImageIndex * 100}% + ${isDragging ? dragOffset : 0}px))` 
-                }}
-              >
-                <div
-                  className="absolute inset-0 z-10 cursor-grab active:cursor-grabbing"
-                  onMouseDown={handleDragStart}
-                  onMouseMove={handleDragMove}
-                  onMouseUp={handleDragEnd}
-                  onMouseLeave={handleDragEnd}
-                  onTouchStart={handleDragStart}
-                  onTouchMove={handleDragMove}
-                  onTouchEnd={handleDragEnd}
-                />
-                {project.Images.map((image, index) => (
-                  <img 
-                    key={image.id}
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/projects/${image.filename}`}
-                    alt={image.alt || project.title}
-                    className="w-full h-full object-cover flex-shrink-0 select-none"
-                    draggable={false}
-                  />
-                ))}
-              </div>
-              
-              {/* Botões de navegação */}
-              {project.Images.length > 1 && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      prevImage()
-                    }}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
-                  >
-                    ‹
-                  </button>
-                  
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      nextImage()
-                    }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
-                  >
-                    ›
-                  </button>
-                </>
-              )}
-              
-              {/* Indicadores */}
-              {project.Images.length > 1 && (
-                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1">
-                  {project.Images.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`h-1 rounded-full transition-all duration-300 ${
-                        index === currentImageIndex 
-                          ? 'bg-white w-6' 
-                          : 'bg-white/50 w-4'
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              {/* Contador */}
-              {project.Images.length > 1 && (
-                <div className="absolute top-3 right-3 bg-black/60 text-white px-2 py-1 rounded-full text-xs">
-                  {currentImageIndex + 1}/{project.Images.length}
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="w-full h-48 bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center">
-              <div className="text-white text-4xl font-bold">
-                {project.title.charAt(0)}
-              </div>
-            </div>
-          )}
-          
-          {/* Video Indicator */}
-          {project.Images?.some((img: any) => img.mediaType === 'video') && (
-            <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-full p-2">
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          )}
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
-
-        {/* Project Content */}
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
-              {project.subtitle || 'Project'}
+        {images.length > 1 && (
+          <>
+            <span className="absolute right-3 top-3 rounded-full bg-black/65 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
+              {imageIndex + 1}/{images.length}
             </span>
-            <div className="flex space-x-1">
-              {project.Technologies?.slice(0, 3).map((tech) => (
-                <div
-                  key={tech.id}
-                  className={`w-2 h-2 rounded-full ${getTechTypeBgColor(tech.type || 'frontend')}`}
-                ></div>
-              ))}
-            </div>
-          </div>
-          
-          <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+            {/* z-10: ficam acima do link que cobre o card inteiro. */}
+            <button
+              type="button"
+              onClick={() => step(-1)}
+              aria-label={t('card.previousImage')}
+              className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => step(1)}
+              aria-label={t('card.nextImage')}
+              className="absolute right-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-6">
+        {project.subtitle && (
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400">
+            {project.subtitle}
+          </p>
+        )}
+        <h3 className="mt-2 font-display text-xl font-semibold text-neutral-900 dark:text-white">
+          {/* O ::after estica o link pelo card inteiro. */}
+          <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:content-['']">
             {project.title}
-          </h3>
-          
-          <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-4 line-clamp-3"
-           dangerouslySetInnerHTML={{ __html: project.description }}/>
-          
-          {/* Technologies */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.Technologies?.slice(0, 4).map((tech) => (
-              <span
+          </Link>
+        </h3>
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+          {plainText(project.description, 190)}
+        </p>
+
+        {technologies.length > 0 && (
+          <ul className="mt-auto flex flex-wrap gap-2 pt-5">
+            {technologies.slice(0, MAX_TECHS).map((tech) => (
+              <li
                 key={tech.id}
-                className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full"
+                className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
               >
-                {tech.name}
-              </span>
+                {techName(tech.name)}
+              </li>
             ))}
-            {project.Technologies && project.Technologies.length > 4 && (
-              <span className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-full">
-                +{project.Technologies.length - 4}
-              </span>
+            {technologies.length > MAX_TECHS && (
+              <li className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+                +{technologies.length - MAX_TECHS}
+              </li>
             )}
-          </div>
-
-          {/* Project Stats */}
-          {(updatesCount > 0 || implementationsCount > 0) && (
-            <div className="flex items-center space-x-4 text-xs text-neutral-500 dark:text-neutral-400">
-              {updatesCount > 0 && (
-                <div className="flex items-center space-x-1">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  <span>{updatesCount} atualizações</span>
-                </div>
-              )}
-              {implementationsCount > 0 && (
-                <div className="flex items-center space-x-1">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{implementationsCount} implementações</span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </Link>
-    </div>
+          </ul>
+        )}
+      </div>
+    </article>
   )
-
-  if (showAnimation) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: animationDelay }}
-      >
-        <CardContent />
-      </motion.div>
-    )
-  }
-
-  return <CardContent />
 }

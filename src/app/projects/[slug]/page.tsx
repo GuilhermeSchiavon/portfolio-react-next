@@ -1,50 +1,39 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ProjectDetailView } from '@/components/views/ProjectDetailView'
-import { generateProjectSEO } from '@/lib/seo'
-import { StructuredData } from '@/components/seo/StructuredData'
+import { ProjectStructuredData } from '@/components/seo/StructuredData'
+import { getProject, getProjectRecommendations, getProjectUpdates } from '@/lib/api'
+import { getRequestLocale } from '@/lib/request'
+import { projectMetadata } from '@/lib/seo'
 
-async function getProject(slug: string, language: string = 'pt') {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v2/project/slug/${slug}?language=${language}`, {
-      cache: 'no-store'
-    })
-    
-    if (!response.ok) {
-      return null
-    }
-    
-    const data = await response.json()
-    return data.item
-  } catch (error) {
-    return null
-  }
+interface ProjectPageProps {
+  params: { slug: string }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const project = await getProject(params.slug)
-  
-  if (!project) {
-    return {
-      title: 'Projeto não encontrado',
-      description: 'O projeto solicitado não foi encontrado.'
-    }
-  }
-  
-  return generateProjectSEO(project)
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const locale = getRequestLocale()
+  const project = await getProject(params.slug, locale)
+  // Sem projeto, o not-found.tsx cuida do título.
+  return project ? projectMetadata(locale, project) : {}
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = await getProject(params.slug)
-  
-  if (!project) {
-    notFound()
-  }
-  
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const locale = getRequestLocale()
+
+  // As três leituras saem em paralelo e já no idioma do visitante. Antes o
+  // servidor buscava sempre em português e o navegador repetia tudo depois.
+  const [project, updates, recommendations] = await Promise.all([
+    getProject(params.slug, locale),
+    getProjectUpdates(params.slug, locale),
+    getProjectRecommendations(params.slug, locale),
+  ])
+
+  if (!project) notFound()
+
   return (
     <>
-      <StructuredData type="project" data={project} />
-      <ProjectDetailView project={project} />
+      <ProjectStructuredData project={project} />
+      <ProjectDetailView project={project} updates={updates} recommendations={recommendations} />
     </>
   )
 }

@@ -1,122 +1,249 @@
 {
-    "heroComponent": {
-      "scientist": "Cientista da Computação",
-      "full": "Desenvolvedor Full Stack",
-      "tagline": "Desenvolvedor Full Stack focado em criar sistemas escaláveis e integrações com IA."
-    },
-    "descriptionComponent": {
-      "title": "Experiência Profissional",
-      "subtitle": "Transformo código em soluções inteligentes há",
-      "itens": ["Sobre mim", "Tecnologias"],
-      "about": "Atuo como <strong>Cientista da Computação e Desenvolvedor Full Stack</strong>, transformando ideias em soluções sólidas, escaláveis e inteligentes. Minha jornada é guiada pela busca por inovação prática — usar a tecnologia não apenas para resolver problemas, mas para <strong>gerar impacto real e mensurável</strong>.",
-      "technical": "Durante esse período, desenvolvi plataformas completas e integrações complexas com APIs de grandes empresas como <strong>Google, Meta, Mercado Pago, ChatGPT e Zoom</strong>. Também liderei a criação de sistemas para instituições médicas como <a href='https://sbu-sp.org.br' target='_blank' class='underline hover:text-blue-400 font-medium'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' class='underline hover:text-blue-400 font-medium'>SBN</a> e <a href='https://www.unifesp.br' target='_blank' class='underline hover:text-blue-400 font-medium'>UNIFESP</a>, onde implementei soluções que aprimoraram o desempenho, a segurança e a gestão de processos utilizados por milhares de profissionais. Essa combinação entre <strong>tecnologia, automação e propósito</strong> define minha atuação atual, com foco em IA e no desenvolvimento de sistemas que conectam dados, pessoas e resultados.",
-      "techstack": "Stack tecnológico estruturado por áreas, demonstrando domínio em frontend, backend e arquitetura de sistemas, sempre com foco em escalabilidade, automação e boas práticas de desenvolvimento.",
-      "years": "anos",
-      "solutions": {
-        "title": "Soluções Flexíveis",
-        "single": {
-          "name": "Single-tenant",
-          "slug": "Personalização",
-          "description": "Um cliente, uma instância.",
-          "help": "Cada cliente possui sua própria instância de software e infraestrutura dedicadas, permitindo alto nível de personalização, segurança e isolamento de dados."
-        },
-        "multi": {
-          "name": "Multi-tenant",
-          "slug": "SaaS",
-          "description": "Vários clientes, uma instância.",
-          "help": "Todos os clientes compartilham o mesmo ambiente de software, reduzindo custos operacionais e simplificando a manutenção, sem comprometer desempenho e confiabilidade."
-        }
+  "hero": {
+    "role": "Engenheiro de Software Full Stack",
+    "tagline": "Construo, integro e opero sistemas em produção.",
+    "ctaProjects": "Ver projetos",
+    "ctaContact": "Falar comigo",
+    "integrations": "Integrações que já coloquei em produção",
+    "photoAlt": "Guilherme Schiavon em frente à Fontana di Trevi"
+  },
+  "proof": {
+    "years": "anos construindo software para produção",
+    "services": "serviços em produção sob minha operação",
+    "servers": "servidores administrados, do deploy ao monitoramento",
+    "projects": "projetos documentados neste site",
+    "seeProjects": "Ver projetos"
+  },
+  "about": {
+    "eyebrow": "Sobre mim",
+    "title": "Do código ao servidor, eu fecho o ciclo.",
+    "paragraphs": [
+      "Sou cientista da computação e trabalho com desenvolvimento full stack há mais de {{years}} anos. Comecei como estagiário, fui promovido a júnior em três meses e, desde 2022, projeto, construo e mantenho plataformas para instituições médicas como <a href='https://sbu-sp.org.br' target='_blank' rel='noopener noreferrer'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' rel='noopener noreferrer'>SBN</a> e <a href='https://www.unifesp.br' target='_blank' rel='noopener noreferrer'>UNIFESP</a>: EADs, gestão de associados, cobrança recorrente, eventos e campanhas nacionais de saúde, usadas por milhares de profissionais.",
+      "Em 2026 entrei na <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> para trabalhar com integrações logísticas de alto volume: microsserviços, mensageria e observabilidade com NestJS, PostgreSQL, Redis e RabbitMQ. Em paralelo, sigo responsável pela arquitetura e pela operação de mais de {{services}} serviços em produção.",
+      "Não paro na entrega do código. Cuido do deploy, do servidor, do monitoramento e do que acontece depois, porque sistema bom é o que continua funcionando."
+    ],
+    "pillarsTitle": "O que eu faço",
+    "pillars": [
+      {
+        "title": "Produto full stack",
+        "text": "Plataformas completas, do banco à interface: Node.js, NestJS, Vue, React e Next.js. SaaS multi-tenant ou instância dedicada, conforme o caso."
       },
-      "certificatesTitle": "Certificados & Eventos",
-      "certificates": {
-        "google": "Certificado Google Cloud",
-        "googleDesc": "Introdução à Inteligência Artificial e Machine Learning no Google Cloud",
-        "hacktown": "HackTown 2025",
-        "hacktownDesc": "Participação no maior evento de tecnologia e inovação da América Latina"
+      {
+        "title": "Integrações e mensageria",
+        "text": "Pagamentos, logística, marketplaces e APIs de terceiros (Mercado Pago, Google, Meta, Zoom, OpenAI). Filas, retentativas seguras e contratos claros para o que não pode falhar em silêncio."
+      },
+      {
+        "title": "IA aplicada",
+        "text": "Agentes e automações que entram no fluxo real do produto e do time. E IA como parte do meu próprio processo de engenharia, com regras e revisão."
+      },
+      {
+        "title": "Infra e operação",
+        "text": "Servidores Linux, Nginx, PM2, Docker, CI/CD e observabilidade. Mantenho no ar o que eu construo."
       }
-    },
-    "techStack": {
-      "title": "Tecnologias",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "architecture": "Arquitetura",
-      "devops": "Infra / DevOps"
-    },
-    "stats": {
-      "viewProjects": "Ver Projetos",
-      "viewTechnologies": "Ver Tecnologias",
-      "viewExperience": "Ver Experiência"
-    },
-    "project": {
-      "explore": "Explorar",
-      "implementation": "Implementação",
-      "implementations": "Implementações"
-    },
-    "otherProjects": {
-      "title": "Outros Projetos",
-      "seeMore": "Ver Mais"
-    },
-    "experiences": {
-      "title": "Jornada Profissional",
-      "itens": [
+    ]
+  },
+  "work": {
+    "eyebrow": "Como eu trabalho",
+    "title": "A ferramenta muda. O critério não.",
+    "intro": "A forma de desenvolver software mudou muito no último ano. Hoje toco vários projetos em paralelo com agentes de IA, mas quem decide a arquitetura, define os limites e responde pelo resultado sou eu.",
+    "ai": {
+      "title": "Com IA",
+      "items": [
         {
-          "period": "Fev 2026 – Presente",
-          "title": "Desenvolvedor Full Stack / Engenheiro de Integrações Logísticas",
-          "organization": "Mais Envios",
-          "url": "https://maisenvios.com.br/",
-          "description": "Construção e evolução de sistemas para operações logísticas de alto volume, com ênfase em confiabilidade, integrações e automação — desafios próximos ao que grandes marketplaces enfrentam em escala (throughput, consistência operacional e resiliência a falhas de parceiros e APIs).<ul class='list-disc px-6'><li>Microsserviços e integrações com transportadoras, marketplaces e plataformas de e-commerce, com foco em contratos claros, retentativas seguras e redução de inconsistências em fluxos distribuídos.</li><li>Arquitetura orientada a eventos com mensageria e processamento assíncrono para desacoplar domínios e absorver picos de carga sem degradar operações críticas.</li><li>Rastreabilidade ponta a ponta, observabilidade (métricas, logs correlacionados) e práticas que encurtam tempo de diagnóstico e recuperação em incidentes operacionais.</li><li>Otimização de caminhos quentes na operação — consultas e integrações sensíveis a latência, uso estratégico de cache e filas para custo previsível de I/O.</li><li>Ambientes distribuídos com Node.js, NestJS, PostgreSQL, Redis e RabbitMQ; evolução contínua do backend pensando disponibilidade, manutenibilidade e evolução segura em produção.</li><li>Automações e guardrails que reduzem retrabalho manual, erros repetitivos e falhas silenciosas em integrações de terceiros.</li></ul>"
+          "title": "Contexto antes de código",
+          "text": "Cada projeto tem suas regras, seu inventário e seus runbooks escritos. É isso que permite a um agente, ou a uma pessoa nova no time, trabalhar com segurança."
         },
         {
-          "period": "Mai 2022 – Presente",
-          "title": "Desenvolvedor Full Stack Sênior / Engenheiro de Soluções em IA",
-          "organization": "Unimagem Produções Audiovisuais LTDA",
-          "url": "https://unimagem.com.br",
-          "description": "Responsável pelo design e integração de sistemas full stack inteligentes para sociedades médicas nacionais e internacionais, utilizando Node.js, Vue.js e serviços em nuvem.<ul class='list-disc px-6'><li>Desenvolvimento de uma <strong>plataforma EAD médica</strong> (Vue.js/Vuex) com monitoramento detalhado e métricas de engajamento, aumentando a taxa de conclusão dos cursos.</li><li>Criação da <strong>plataforma do Dia Mundial do Rim</strong>, conectando hospitais de todo o país em campanhas de prevenção à saúde.</li><li>Desenvolvimento de uma <strong>ferramenta de busca de especialistas por geolocalização</strong>, garantindo resultados precisos e próximos ao usuário.</li><li>Implementação de um <strong>sistema de gestão de anuidades e assinaturas recorrentes</strong>, integrado ao Mercado Pago, reduzindo significativamente a inadimplência.</li><li>Atualmente, aplicando <strong>integrações e automações com IA</strong> para otimizar fluxos e melhorar a escalabilidade dos sistemas.</li></ul>Todos os projetos entregues geraram melhorias mensuráveis em eficiência, usabilidade e manutenção."
+          "title": "Agentes com guardrails",
+          "text": "Produção é somente leitura por padrão. Mudança em servidor só com aprovação explícita. Limites claros valem mais do que prompts espertos."
         },
         {
-          "period": "Jan 2022 – Mai 2022",
-          "title": "Desenvolvedor Júnior",
-          "organization": "DevCodes – Software House",
-          "url": "https://devcodes.com.br",
-          "description": "Promovido de estagiário a desenvolvedor júnior por desempenho técnico e iniciativa.<ul class='list-disc px-6'><li>Atuação em arquitetura backend e desenvolvimento full stack.</li><li>Integração de APIs como Google, Facebook (OAuth 2.0) e Mercado Pago.</li><li>Estruturação e otimização de modelos de banco de dados relacionais, aprimorando desempenho e escalabilidade.</li></ul>"
+          "title": "Revisão é inegociável",
+          "text": "A IA escreve rápido; eu leio tudo. Nada vai para produção sem eu entender o que mudou e por quê."
         },
         {
-          "period": "Out 2021 – Dez 2021",
-          "title": "Estagiário em Desenvolvimento",
-          "organization": "DevCodes – Software House",
-          "url": "https://devcodes.com.br",
-          "description": "Apoio na manutenção e modernização de sistemas web, aprimorando consistência de interface e experiência do usuário.<br>Experiência prática em múltiplos projetos, acelerando o aprendizado técnico e a versatilidade no desenvolvimento."
+          "title": "Verificar antes de afirmar",
+          "text": "Teste, log e métrica antes de dizer que está pronto. Otimismo não é evidência."
         }
       ]
     },
-    "projectDetail": {
-      "implementations": "implementações",
-      "technologies": "tecnologias",
-      "viewExample": "Ver Exemplo",
-      "summary": "Sumário",
-      "aboutProject": "Sobre o Projeto",
-      "features": "Funcionalidades",
-      "updates": "Atualizações",
-      "latestUpdates": "Últimas Atualizações",
-      "projectUpdates": "Atualizações do Projeto",
-      "videoPresentation": "Vídeo de Apresentação",
-      "recommendedProjects": "Outros Projetos"
-    },
-    "projectsList": {
-      "allThe": "Todos os",
-      "projects": "Projetos",
-      "subtitle": "Explore minha coleção completa de projetos — desde aplicações web modernas até sistemas inteligentes integrados com APIs e IA.",
-      "searchPlaceholder": "Buscar projetos...",
-      "loadingProjects": "Carregando projetos...",
-      "noProjectsFound": "Nenhum projeto encontrado.",
-      "loadMore": "Carregar Mais",
-      "loading": "Carregando..."
-    },
-    "projectsSection": {
-      "title": "Portfólio",
-      "featured": "Projetos",
-      "projects": "Destacados",
-      "subtitle": "Uma seleção dos meus trabalhos recentes — sistemas modernos e aplicações integradas com IA, desenvolvidos com tecnologias de ponta.",
-      "viewAllProjects": "Ver Todos os Projetos"
+    "team": {
+      "title": "Em time",
+      "intro": "Não chego querendo mudar tudo. Chego para entender, e depois assumo o que está travando.",
+      "steps": [
+        {
+          "title": "Primeiro, eu aprendo",
+          "text": "Entro para entender as regras da empresa, o contexto e o porquê das decisões que já foram tomadas."
+        },
+        {
+          "title": "Depois, encontro o gargalo",
+          "text": "Onde o time perde tempo, onde o risco se acumula, o que ninguém tem tempo de olhar."
+        },
+        {
+          "title": "Então, assumo a frente",
+          "text": "Proponho, entrego e documento, respeitando a liderança e alinhando antes de mudar o que é de todos."
+        }
+      ]
     }
+  },
+  "experience": {
+    "eyebrow": "Experiência",
+    "title": "Jornada profissional",
+    "stackLabel": "Stack",
+    "items": [
+      {
+        "period": "Fev 2026 – Presente",
+        "title": "Desenvolvedor Full Stack / Engenheiro de Integrações Logísticas",
+        "organization": "Mais Envios",
+        "url": "https://maisenvios.com.br/",
+        "summary": "Sistemas para operações logísticas de alto volume, com foco em confiabilidade, integrações e automação.",
+        "highlights": [
+          "Microsserviços e integrações com transportadoras, marketplaces e plataformas de e-commerce, com contratos claros e retentativas seguras.",
+          "Arquitetura orientada a eventos, com mensageria e processamento assíncrono para absorver picos sem degradar a operação.",
+          "Rastreabilidade ponta a ponta e observabilidade (métricas e logs correlacionados) para encurtar o diagnóstico de incidentes.",
+          "Automações e guardrails que reduzem retrabalho manual e falhas silenciosas em integrações de terceiros."
+        ],
+        "stack": [
+          "Node.js",
+          "NestJS",
+          "PostgreSQL",
+          "Redis",
+          "RabbitMQ"
+        ]
+      },
+      {
+        "period": "Mai 2022 – Presente",
+        "title": "Desenvolvedor Full Stack Sênior / Engenheiro de Soluções em IA",
+        "organization": "Unimagem Produções Audiovisuais",
+        "url": "https://unimagem.com.br",
+        "summary": "Arquitetura, desenvolvimento e operação das plataformas de sociedades médicas nacionais e internacionais.",
+        "highlights": [
+          "Plataforma EAD médica com acompanhamento de progresso e métricas de engajamento, que aumentou a taxa de conclusão dos cursos.",
+          "Plataforma do Dia Mundial do Rim, conectando hospitais de todo o país em campanhas de prevenção.",
+          "Busca de especialistas por geolocalização, com resultados precisos e próximos do usuário.",
+          "Gestão de anuidades e assinaturas recorrentes integrada ao Mercado Pago, reduzindo a inadimplência.",
+          "Administração dos servidores de produção: deploy, Nginx, PM2, atualizações de segurança e monitoramento.",
+          "Integrações e automações com IA para otimizar fluxos e escalar os sistemas."
+        ],
+        "stack": [
+          "Node.js",
+          "Vue.js",
+          "MySQL",
+          "Redis",
+          "Docker",
+          "Nginx"
+        ]
+      },
+      {
+        "period": "Jan 2022 – Mai 2022",
+        "title": "Desenvolvedor Júnior",
+        "organization": "DevCodes – Software House",
+        "url": "https://devcodes.com.br",
+        "summary": "Promovido de estagiário a júnior em três meses, por desempenho técnico e iniciativa.",
+        "highlights": [
+          "Arquitetura backend e desenvolvimento full stack.",
+          "Integrações com Google, Facebook (OAuth 2.0) e Mercado Pago.",
+          "Modelagem e otimização de bancos de dados relacionais."
+        ],
+        "stack": []
+      },
+      {
+        "period": "Out 2021 – Dez 2021",
+        "title": "Estagiário em Desenvolvimento",
+        "organization": "DevCodes – Software House",
+        "url": "https://devcodes.com.br",
+        "summary": "Manutenção e modernização de sistemas web em vários projetos, com foco em consistência de interface e experiência do usuário.",
+        "highlights": [],
+        "stack": []
+      }
+    ]
+  },
+  "stack": {
+    "eyebrow": "Stack",
+    "title": "O que uso no dia a dia",
+    "groups": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "data": "Dados e mensageria",
+      "infra": "Infra e operação",
+      "ai": "IA"
+    },
+    "extra": {
+      "ai": [
+        "Agentes e automações"
+      ]
+    }
+  },
+  "events": {
+    "eyebrow": "Além do código",
+    "title": "Certificados e eventos",
+    "items": [
+      {
+        "icon": "/icons/google.svg",
+        "title": "Certificado Google Cloud",
+        "text": "Introdução à Inteligência Artificial e Machine Learning no Google Cloud."
+      },
+      {
+        "icon": "/icons/hacktown.png",
+        "title": "HackTown 2025",
+        "text": "Participação no maior evento de tecnologia e inovação da América Latina."
+      }
+    ],
+    "videoLabel": "Vídeo {{current}} de {{total}} do HackTown 2025",
+    "previous": "Vídeo anterior",
+    "next": "Próximo vídeo"
+  },
+  "projectsSection": {
+    "eyebrow": "Portfólio",
+    "title": "Projetos em destaque",
+    "subtitle": "Alguns dos sistemas que projetei e construí, com contexto, stack e o que foi entregue.",
+    "viewAll": "Ver todos os projetos",
+    "unavailable": "Não consegui carregar os projetos agora. Tente de novo em instantes."
+  },
+  "card": {
+    "viewProject": "Ver projeto",
+    "video": "Vídeo",
+    "images": "{{count}} imagens",
+    "previousImage": "Imagem anterior",
+    "nextImage": "Próxima imagem",
+    "implementations_one": "{{count}} implementação",
+    "implementations_other": "{{count}} implementações"
+  },
+  "projectsList": {
+    "title": "Todos os projetos",
+    "subtitle": "De plataformas de ensino a automações com IA: o que construí, como funciona e com quais tecnologias.",
+    "searchPlaceholder": "Buscar projetos...",
+    "searchLabel": "Buscar projetos",
+    "noProjectsFound": "Nenhum projeto encontrado.",
+    "clearSearch": "Limpar busca",
+    "loadMore": "Carregar mais"
+  },
+  "projectDetail": {
+    "back": "Todos os projetos",
+    "implementations_one": "{{count}} implementação",
+    "implementations_other": "{{count}} implementações",
+    "technologiesCount_one": "{{count}} tecnologia",
+    "technologiesCount_other": "{{count}} tecnologias",
+    "technologies": "Tecnologias",
+    "viewExample": "Ver exemplo",
+    "summary": "Sumário",
+    "aboutProject": "Sobre o projeto",
+    "features": "Funcionalidades",
+    "updates": "Atualizações",
+    "latestUpdates": "Últimas atualizações",
+    "projectUpdates": "Atualizações do projeto",
+    "videoPresentation": "Vídeo de apresentação",
+    "recommendedProjects": "Outros projetos",
+    "previousMedia": "Mídia anterior",
+    "nextMedia": "Próxima mídia",
+    "openFullscreen": "Abrir em tela cheia",
+    "version": "Versão {{version}}",
+    "close": "Fechar"
+  },
+  "techTypes": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "architecture": "Arquitetura",
+    "devops": "Infra / DevOps"
   }
+}

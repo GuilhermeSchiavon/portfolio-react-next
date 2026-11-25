@@ -1,42 +1,58 @@
 {
-    "home": "Global PT",
-    "navItens": [
-        {
-            "name": "Home",
-            "url": "/#home"
-        },
-        {
-            "name": "Sobre",
-            "url": "/#about"
-        },
-        {
-            "name": "Projetos",
-            "url": "/projects"
-        },
-        {
-            "name": "Contatos",
-            "url": "/#contact"
-        }
-    ],
-    "footer": {
-        "description": "Vamos discutir como minha experiência pode adicionar um valor real ao seu próximo projeto.",
-        "textLink": "Olá Guilherme, você pode me ajudar com ...",
-        "terms": "Termos e Condições",
-        "privacy": "Política de Privacidade",
-        "cookies": "Cookies",
-        "chat": {
-            "name": "Guilherme Schiavon",
-            "massages": [
-                "É um prazer te ver aqui, sinta-se à vontade para compartilhar como posso ajudar",
-                "Obrigado pelo envio, responderei seu e-mail assim que possível, caso precise reenviar",
-                "Clique aqui"
-            ],
-            "placeholder": [
-                "Você",
-                "seu-email@email.com",
-                "Insira quaisquer notas adicionais..."
-            ],
-            "send": "Enviar"
-        }
-    }
+  "nav": {
+    "about": "Sobre",
+    "work": "Como trabalho",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "home": "Início",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "skipToContent": "Pular para o conteúdo"
+  },
+  "theme": {
+    "toggle": "Alternar entre tema claro e escuro"
+  },
+  "language": {
+    "label": "Idioma",
+    "pt": "Português",
+    "en": "English"
+  },
+  "contact": {
+    "eyebrow": "Contato",
+    "title": "Tem um gargalo para resolver?",
+    "text": "Me conta o contexto. Se eu puder ajudar, a gente resolve. Se não for comigo, eu te digo com sinceridade.",
+    "whatsapp": "Chamar no WhatsApp",
+    "email": "Enviar e-mail",
+    "whatsappMessage": "Olá, Guilherme! Vi seu portfólio e queria conversar.",
+    "emailSubject": "Contato pelo portfólio",
+    "emailLabel": "E-mail",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Localização",
+    "location": "São Paulo, Brasil"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "backToTop": "Voltar ao topo",
+    "source": "Código deste site",
+    "social": "Redes"
+  },
+  "meta": {
+    "home": {
+      "title": "Guilherme Schiavon | Engenheiro de Software Full Stack",
+      "description": "Engenheiro de software full stack. Construo, integro e opero sistemas em produção com Node.js, NestJS, Vue e React, usando IA com critério."
+    },
+    "projects": {
+      "title": "Projetos",
+      "description": "Sistemas que projetei e construí: plataformas EAD, e-commerce, automações com IA e mais. Contexto, stack e o que foi entregue."
+    },
+    "jobTitle": "Engenheiro de Software Full Stack"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "projectTitle": "Projeto não encontrado",
+    "text": "O endereço que você abriu não existe ou foi removido.",
+    "home": "Voltar ao início",
+    "projects": "Ver todos os projetos"
+  }
 }

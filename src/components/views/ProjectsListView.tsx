@@ -1,196 +1,120 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import Link from 'next/link'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { useAppDispatch, useAppSelector } from '@/store'
-import { fetchProjects } from '@/store/slices/projectSlice'
+import { usePathname, useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { PageShell } from '@/components/layout/PageShell'
+import { SectionHeading } from '@/components/ui/SectionHeading'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import { Close, Search } from '@/components/ui/Icons'
+import type { Project } from '@/types/project'
 
-export function ProjectsListView() {
-  const { t, i18n } = useTranslation('home')
-  const dispatch = useAppDispatch()
-  const { projects, loading, error, pageNumber, pages } = useAppSelector((state) => state.project)
-  const [searchKeyword, setSearchKeyword] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [visibleVideos, setVisibleVideos] = useState<Set<number>>(new Set())
-  const [activeVideo, setActiveVideo] = useState<number | null>(null)
-  
+interface ProjectsListViewProps {
+  projects: Project[]
+  hasMore: boolean
+  keyword: string
+  pages: number
+}
 
+// A busca e o "carregar mais" viram parâmetros da URL (?q= e ?pages=) e o
+// servidor devolve a lista pronta. O link de uma busca pode ser compartilhado.
+export function ProjectsListView({ projects, hasMore, keyword, pages }: ProjectsListViewProps) {
+  const { t } = useTranslation('home')
+  const router = useRouter()
+  const pathname = usePathname()
+  const [value, setValue] = useState(keyword)
+  const [isPending, startTransition] = useTransition()
+  const timer = useRef<ReturnType<typeof setTimeout>>()
 
-  useEffect(() => {
-    dispatch(fetchProjects({ 
-      keyword: searchKeyword, 
-      pageNumber: currentPage, 
-      language: i18n.language 
-    }))
-  }, [dispatch, searchKeyword, currentPage, i18n.language])
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const projectId = parseInt(entry.target.getAttribute('data-project-id') || '0')
-          if (entry.isIntersecting) {
-            setVisibleVideos(prev => new Set(Array.from(prev).concat(projectId)))
-          } else {
-            setVisibleVideos(prev => {
-              const newSet = new Set(prev)
-              newSet.delete(projectId)
-              return newSet
-            })
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
-    
-    const projectCards = document.querySelectorAll('[data-project-id]')
-    projectCards.forEach(card => observer.observe(card))
-    
-    return () => observer.disconnect()
-  }, [projects])
+  useEffect(() => () => clearTimeout(timer.current), [])
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    setCurrentPage(1)
-    dispatch(fetchProjects({ 
-      keyword: searchKeyword, 
-      pageNumber: 1, 
-      language: i18n.language 
-    }))
+  const hrefFor = (query: string, pageCount = 1) => {
+    const params = new URLSearchParams()
+    if (query.trim()) params.set('q', query.trim())
+    if (pageCount > 1) params.set('pages', String(pageCount))
+    const search = params.toString()
+    return search ? `${pathname}?${search}` : pathname
   }
 
-  const loadMore = () => {
-    if (currentPage < pages) {
-      setCurrentPage(prev => prev + 1)
-    }
+  const search = (query: string, immediate = false) => {
+    setValue(query)
+    clearTimeout(timer.current)
+    const navigate = () => startTransition(() => router.replace(hrefFor(query), { scroll: false }))
+    if (immediate) navigate()
+    else timer.current = setTimeout(navigate, 350)
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950">
-      <Header />
-      
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-neutral-900 dark:to-neutral-800">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+    <PageShell>
+      <section className="border-b border-neutral-200 bg-neutral-50 py-14 dark:border-neutral-800 dark:bg-neutral-900/40 lg:py-20">
+        <div className="container">
+          <SectionHeading
+            as="h1"
+            eyebrow={t('projectsSection.eyebrow')}
+            title={t('projectsList.title')}
+            description={t('projectsList.subtitle')}
+          />
+
+          <form
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault()
+              search(value, true)
+            }}
+            className="relative mt-8 max-w-md"
+          >
+            <label htmlFor="project-search" className="sr-only">
+              {t('projectsList.searchLabel')}
+            </label>
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+            <input
+              id="project-search"
+              type="search"
+              value={value}
+              onChange={(event) => search(event.target.value)}
+              placeholder={t('projectsList.searchPlaceholder')}
+              autoComplete="off"
+              maxLength={80}
+              className="w-full rounded-full border border-neutral-300 bg-white py-3 pl-12 pr-12 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white [&::-webkit-search-cancel-button]:hidden"
+            />
+            {value && (
+              <button
+                type="button"
+                onClick={() => search('', true)}
+                aria-label={t('projectsList.clearSearch')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-                  {t('projectsList.allThe')}
-                  <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent"> {t('projectsList.projects')}</span>
-                </h1>
-                
-                <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed mb-8">
-                  {t('projectsList.subtitle')}
-                </p>
-
-                {/* Search Form */}
-                <form onSubmit={handleSearch} className="max-w-md mx-auto">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchKeyword}
-                      onChange={(e) => setSearchKeyword(e.target.value)}
-                      placeholder={t('projectsList.searchPlaceholder')}
-                      className="w-full px-4 py-3 pl-12 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    />
-                    <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </form>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Grid */}
-        <section className="py-20">
-          <div className="container mx-auto px-6 lg:px-8">
-            {loading && currentPage === 1 ? (
-              <div className="text-center py-12">
-                <div className="inline-flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-primary-500 rounded-full animate-pulse"></div>
-                  <span className="text-neutral-600 dark:text-neutral-400">{t('projectsList.loadingProjects')}</span>
-                </div>
-              </div>
-            ) : error ? (
-              <div className="text-center py-12">
-                <p className="text-red-500">{error}</p>
-              </div>
-            ) : projects.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-neutral-600 dark:text-neutral-400">
-                  {t('projectsList.noProjectsFound')}
-                </p>
-              </div>
-            ) : (
-              <>
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                  {projects.map((project, index) => {
-                    const isVideoVisible = activeVideo === project.id
-                    const isFirstCard = index === 0
-                    
-                    return (
-                      <ProjectCard
-                        key={project.id}
-                        project={project}
-                        isVideoVisible={isVideoVisible}
-                        isFirstCard={isFirstCard && !activeVideo}
-                        showAnimation={true}
-                        animationDelay={index * 0.1}
-                        onMouseEnter={() => project.youtubeUrl && setActiveVideo(project.id)}
-                        onMouseLeave={() => setActiveVideo(null)}
-                      />
-                    )
-                  })}
-                </motion.div>
-
-                {/* Load More Button */}
-                {currentPage < pages && (
-                  <div className="text-center mt-12">
-                    <button
-                      onClick={loadMore}
-                      disabled={loading}
-                      className="inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all duration-300"
-                    >
-                      {loading ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>{t('projectsList.loading')}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>{t('projectsList.loadMore')}</span>
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                          </svg>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                )}
-              </>
+                <Close className="h-4 w-4" />
+              </button>
             )}
-          </div>
-        </section>
-      </main>
+          </form>
+        </div>
+      </section>
 
-      <Footer />
-    </div>
+      <section className="py-14 lg:py-20" aria-busy={isPending}>
+        <div className={`container transition-opacity duration-200 ${isPending ? 'opacity-50' : ''}`}>
+          {projects.length === 0 ? (
+            <p className="py-12 text-center text-neutral-600 dark:text-neutral-400">{t('projectsList.noProjectsFound')}</p>
+          ) : (
+            <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project, index) => (
+                <li key={project.id}>
+                  <ProjectCard project={project} priority={index < 3} />
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {hasMore && (
+            <div className="mt-12 text-center">
+              <Link href={hrefFor(keyword, pages + 1)} scroll={false} className="btn-ghost">
+                {t('projectsList.loadMore')}
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+    </PageShell>
   )
 }

@@ -1,29 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  safelist: [
-    'from-blue-500',
-    'to-blue-600',
-    'from-green-500', 
-    'to-green-600',
-    'from-purple-500',
-    'to-purple-600',
-    'from-orange-500',
-    'to-orange-600',
-    'from-neutral-500',
-    'to-neutral-600',
-    'bg-blue-500',
-    'bg-green-500',
-    'bg-purple-500',
-    'bg-orange-500',
-    'bg-neutral-500'
-  ],
+  content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        // Notebooks de tela baixa (1366x768, 1280x720): o hero usa texto mais
+        // compacto para não encostar no rosto da foto.
+        short: { raw: '(min-width: 1024px) and (max-height: 820px)' },
+      },
       colors: {
         neutral: {
           50: '#fafafa',
@@ -64,52 +49,14 @@ module.exports = {
           900: '#0c4a6e',
           950: '#082f49',
         },
-        success: '#10b981',
-        warning: '#f59e0b',
-        error: '#ef4444',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
-        raleway: ['Raleway', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-down': 'slideDown 0.5s ease-out',
-        'scale-in': 'scaleIn 0.3s ease-out',
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(100%)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-100%)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        scaleIn: {
-          '0%': { transform: 'scale(0.9)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
-          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' },
-        },
+        // Variáveis definidas pelo next/font em src/app/layout.tsx.
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-poppins)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
+        raleway: ['var(--font-raleway)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
     },
   },
   plugins: [],
-  darkMode: 'class',
 }

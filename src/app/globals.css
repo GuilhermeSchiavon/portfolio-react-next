@@ -1,373 +1,152 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global Styles */
-:root {
-  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-poppins: 'Poppins', 'Inter', system-ui, sans-serif;
-  --font-raleway: 'Raleway', 'Inter', system-ui, sans-serif;
-}
+/* As fontes vêm do next/font (layout.tsx) pelas variáveis --font-*.
+   O @import do Google Fonts que existia aqui baixava as mesmas fontes de novo. */
 
-html {
-  font-family: var(--font-inter);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  scroll-behavior: smooth;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Compensa o cabeçalho fixo ao navegar por âncoras (#about, #projects...). */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  body {
+    @apply bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100;
+  }
 
-body {
-  margin: 0;
-  background-color: #ffffff;
-  color: #171717;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+  :focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
 
-/* Dark mode */
-.dark body {
-  background-color: #0a0a0a;
-  color: #fafafa;
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f5f5f5;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #262626;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #525252;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #737373;
-}
-
-/* Focus styles for accessibility */
-:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* Button reset */
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-}
-
-/* List reset */
-ul, ol {
-  list-style: none;
-  padding: 0;
-}
-
-/* Link reset */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Image optimization */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Container utility */
-.container {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
+  ::selection {
+    background-color: rgba(59, 130, 246, 0.25);
   }
 }
 
-@media (min-width: 768px) {
+@layer components {
   .container {
-    max-width: 768px;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.18em] text-primary-600 dark:text-primary-400;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white sm:text-4xl lg:text-5xl;
+  }
+
+  .card {
+    @apply rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+  }
+
+  .btn-ghost {
+    @apply btn border border-neutral-300 text-neutral-800 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800;
+  }
+
+  /* Texto rico vindo do painel (descrição dos projetos). */
+  .rich-text {
+    @apply space-y-4 leading-relaxed text-neutral-700 dark:text-neutral-300;
+  }
+  .rich-text h1,
+  .rich-text h2 {
+    @apply mt-8 font-display text-2xl font-semibold text-neutral-900 dark:text-white;
+  }
+  .rich-text h3,
+  .rich-text h4 {
+    @apply mt-6 font-display text-lg font-semibold text-neutral-900 dark:text-white;
+  }
+  .rich-text ul {
+    @apply list-disc space-y-2 pl-6;
+  }
+  .rich-text ol {
+    @apply list-decimal space-y-2 pl-6;
+  }
+  .rich-text a {
+    @apply font-medium text-primary-600 underline underline-offset-2 hover:text-primary-700 dark:text-primary-400;
+  }
+  .rich-text strong {
+    @apply font-semibold text-neutral-900 dark:text-white;
+  }
+  .rich-text > :first-child,
+  .rich-text header > :first-child {
+    @apply mt-0;
+  }
+
+  /* Links dentro dos parágrafos do "Sobre". */
+  .prose-links a {
+    @apply font-medium text-neutral-900 underline decoration-primary-500/60 underline-offset-4 transition-colors hover:decoration-primary-500 dark:text-white;
   }
 }
 
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
-/* Custom animations */
-@keyframes fadeIn {
+/* Entrada do hero em CSS puro: o texto aparece mesmo antes do JavaScript
+   carregar (antes dependia de uma timeline de ~4 s do GSAP). */
+@keyframes rise {
   from {
     opacity: 0;
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
+.rise {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes marquee {
   to {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateX(-50%);
   }
 }
 
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.marquee {
+  animation: marquee 28s linear infinite;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+.marquee:hover {
+  animation-play-state: paused;
 }
 
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
-  }
-}
-
-/* Backdrop blur support check */
-@supports (backdrop-filter: blur(12px)) {
-  .backdrop-blur-md {
-    backdrop-filter: blur(12px);
-  }
-}
-
-/* Fallback for browsers without backdrop-filter */
-@supports not (backdrop-filter: blur(12px)) {
-  .backdrop-blur-md {
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-  
-  .dark .backdrop-blur-md {
-    background-color: rgba(23, 23, 23, 0.95);
-  }
-}
-
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .rise,
+  .marquee {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Estilos para animações do HeroSection */
-.shadow-glow {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.bg-gradient-radial {
-  background: radial-gradient(circle at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.2) 100%);
-}
-
-/* Efeito de hover nos textos principais */
-.hero-text:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-out;
-}
-
-/* Animação de pulsação para elementos interativos */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
-  }
-}
-
-.floating-element {
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-/* Efeito de glitch sutil */
-@keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-1px, 1px); }
-  40% { transform: translate(-1px, -1px); }
-  60% { transform: translate(1px, 1px); }
-  80% { transform: translate(1px, -1px); }
-}
-
-.hero-text:hover {
-  animation: glitch 0.3s ease-in-out;
-}
-
-/* Melhorias para navegação de vídeos em dispositivos touch */
-@media (hover: none) and (pointer: coarse) {
-  .video-controls {
-    opacity: 1 !important;
-  }
-  
-  .video-nav-button {
-    opacity: 0.8 !important;
-    transform: scale(1.1);
-  }
-  
-  .video-nav-button:active {
-    transform: scale(0.95);
-  }
-}
-
-/* Melhorias para tabs em dispositivos móveis */
-@media (max-width: 768px) {
-  .tab-container {
-    padding: 0.25rem;
-  }
-  
-  .tab-button {
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-  }
-}
-
-/* Timeline responsivo melhorado */
-@media (max-width: 768px) {
-  .timeline-line {
-    left: 1rem !important;
-    transform: none !important;
-  }
-  
-  .timeline-dot {
-    left: 1rem !important;
-    transform: translateX(-50%) !important;
-  }
-  
-  .timeline-card {
-    margin-left: 3rem !important;
-    width: calc(100% - 3rem) !important;
-  }
-}
-
-/* Melhorias para indicadores de vídeo */
-.video-indicator {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.video-indicator:hover {
-  transform: scale(1.2);
-}
-
-.video-indicator.active {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
-}
-
-/* Otimizações para Footer */
-.footer-animation-item {
-  will-change: transform, opacity;
-}
-
-/* Melhorias para acessibilidade */
-@media (prefers-contrast: high) {
-  .video-nav-button {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-    border: 2px solid white;
-  }
-  
-  .video-indicator {
-    border: 2px solid white;
-  }
-}
-
-/* Focus states melhorados */
-.tab-button:focus-visible,
-.video-nav-button:focus-visible,
-.video-indicator:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* Animações otimizadas para performance */
-@media (prefers-reduced-motion: reduce) {
-  .video-carousel,
-  .tab-transition,
-  .timeline-animation {
-    transition: none !important;
-    animation: none !important;
   }
 }

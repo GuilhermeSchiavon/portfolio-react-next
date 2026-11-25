@@ -1,68 +1,64 @@
-interface StructuredDataProps {
-  type: 'person' | 'project' | 'organization'
-  data: any
-}
+import { site } from '@/lib/site'
+import { plainText, projectMediaUrl } from '@/lib/media'
+import type { Project } from '@/types/project'
 
-export function StructuredData({ type, data }: StructuredDataProps) {
-  const generatePersonSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Guilherme Schiavon",
-    "jobTitle": "Full Stack Developer",
-    "description": "Desenvolvedor Full Stack especializado em Vue.js, React e Node.js",
-    "url": process.env.NEXT_PUBLIC_SITE_URL,
-    "sameAs": [
-      data.linkedin || "",
-      data.github || "",
-      data.twitter || ""
-    ].filter(Boolean),
-    "knowsAbout": [
-      "Vue.js", "React", "Node.js", "TypeScript", "JavaScript",
-      "Full Stack Development", "Web Development", "API Development"
-    ]
-  })
-
-  const generateProjectSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": data.title,
-    "description": data.description,
-    "creator": {
-      "@type": "Person",
-      "name": "Guilherme Schiavon"
-    },
-    "dateCreated": data.createdAt,
-    "url": data.link,
-    "image": data.Images?.[0]?.url,
-    "keywords": data.Technologies?.map((tech: any) => tech.name).join(", ")
-  })
-
-  const generateOrganizationSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Guilherme Schiavon Portfolio",
-    "url": process.env.NEXT_PUBLIC_SITE_URL,
-    "logo": `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
-    "founder": {
-      "@type": "Person",
-      "name": "Guilherme Schiavon"
-    }
-  })
-
-  const getSchema = () => {
-    switch (type) {
-      case 'person': return generatePersonSchema()
-      case 'project': return generateProjectSchema()
-      case 'organization': return generateOrganizationSchema()
-      default: return {}
-    }
-  }
-
+function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(getSchema())
+      // "<" escapado para o JSON nunca fechar a tag <script>.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }}
+    />
+  )
+}
+
+export function PersonStructuredData({ jobTitle, description }: { jobTitle: string; description: string }) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: site.name,
+        jobTitle,
+        description,
+        url: site.url,
+        image: `${site.url}/img/guilherme-schiavon.jpg`,
+        email: `mailto:${site.email}`,
+        address: { '@type': 'PostalAddress', addressLocality: 'São Paulo', addressCountry: 'BR' },
+        sameAs: [site.social.github, site.social.linkedin, site.social.instagram],
+        knowsAbout: [
+          'Node.js',
+          'NestJS',
+          'TypeScript',
+          'Vue.js',
+          'React',
+          'Next.js',
+          'PostgreSQL',
+          'RabbitMQ',
+          'Redis',
+          'System integrations',
+          'AI-assisted software engineering',
+        ],
+      }}
+    />
+  )
+}
+
+export function ProjectStructuredData({ project }: { project: Project }) {
+  const cover = project.Images?.find((image) => image.mediaType !== 'video')
+
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: project.title,
+        headline: project.subtitle || undefined,
+        description: plainText(project.description, 300),
+        url: `${site.url}/projects/${project.slug}`,
+        image: cover ? projectMediaUrl(cover.filename) : undefined,
+        creator: { '@type': 'Person', name: site.name, url: site.url },
+        keywords: project.Technologies?.map((tech) => tech.name).join(', ') || undefined,
       }}
     />
   )

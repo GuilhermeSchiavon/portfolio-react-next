@@ -1,42 +1,58 @@
 {
-    "home": "Global EN",
-    "navItens": [
-        {
-            "name": "Home",
-            "url": "/#home"
-        },
-        {
-            "name": "About",
-            "url": "/#about"
-        },
-        {
-            "name": "Projects",
-            "url": "/projects"
-        },
-        {
-            "name": "Contact",
-            "url": "/#contact"
-        }
-    ],
-    "footer": {
-        "description": "Let's discuss how my experience can add real value to your next project.",
-        "textLink": "Hello Guilherme, can you help me with ...",
-        "terms": "Terms & Conditions",
-        "privacy": "Privacy Policy",
-        "cookies": "Cookies",
-        "chat": {
-            "name": "Developer Schiavon",
-            "massages": [
-                "It's a pleasure to see you here, feel free to share how I can assist",
-                "Thank you for sending, I will contact you as soon, if you need to resend, ",
-                "click here"
-            ],
-            "placeholder": [
-                "You",
-                "your-email@email.com",
-                "Enter any additional order notes..."
-            ],
-            "send": "Send"
-        }
-    }
+  "nav": {
+    "about": "About",
+    "work": "How I work",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "home": "Home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "theme": {
+    "toggle": "Switch between light and dark theme"
+  },
+  "language": {
+    "label": "Language",
+    "pt": "Português",
+    "en": "English"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Got a bottleneck to solve?",
+    "text": "Tell me the context. If I can help, we'll get it done. If I'm not the right person, I'll tell you honestly.",
+    "whatsapp": "Message me on WhatsApp",
+    "email": "Send an email",
+    "whatsappMessage": "Hi Guilherme! I saw your portfolio and would like to talk.",
+    "emailSubject": "Contact from your portfolio",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Location",
+    "location": "São Paulo, Brazil"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "backToTop": "Back to top",
+    "source": "Source code of this site",
+    "social": "Social"
+  },
+  "meta": {
+    "home": {
+      "title": "Guilherme Schiavon | Full-Stack Software Engineer",
+      "description": "Full-stack software engineer. I build, integrate and run production systems with Node.js, NestJS, Vue and React, using AI with judgment."
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Systems I designed and built: e-learning platforms, e-commerce, AI automations and more. Context, stack and what was delivered."
+    },
+    "jobTitle": "Full-Stack Software Engineer"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "projectTitle": "Project not found",
+    "text": "The address you opened doesn't exist or has been removed.",
+    "home": "Back to home",
+    "projects": "See all projects"
+  }
 }

@@ -1,47 +1,13 @@
-import { Metadata } from 'next'
 import { HomeView } from '@/components/views/HomeView'
+import { getAllProjectSlugs, getProjects } from '@/lib/api'
+import { getRequestLocale } from '@/lib/request'
 
-export const metadata: Metadata = {
-  title: 'Guilherme Schiavon - Full Stack Developer | Portfolio',
-  description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
-  keywords: ['guilherme schiavon', 'full stack developer', 'vue.js', 'react', 'node.js', 'portfolio'],
-  authors: [{ name: 'Guilherme Schiavon' }],
-  creator: 'Guilherme Schiavon',
-  openGraph: {
-    title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js. Criando soluções web modernas e escaláveis.',
-    url: '/',
-    siteName: 'Guilherme Schiavon Portfolio',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Guilherme Schiavon Portfolio',
-      },
-    ],
-    locale: 'pt_BR',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Guilherme Schiavon - Full Stack Developer',
-    description: 'Desenvolvedor Full Stack especializado em Vue.js, React e Node.js',
-    images: ['/og-image.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-}
+const FEATURED_COUNT = 3
 
-export default function HomePage() {
-  return <HomeView />
+export default async function HomePage() {
+  const locale = getRequestLocale()
+  // O total vem da contagem de slugs, que percorre todas as páginas da API.
+  const [{ items }, slugs] = await Promise.all([getProjects(locale), getAllProjectSlugs()])
+
+  return <HomeView featuredProjects={items.slice(0, FEATURED_COUNT)} projectCount={slugs.length} />
 }

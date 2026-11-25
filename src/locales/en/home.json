@@ -1,123 +1,249 @@
 {
-    "heroComponent": {
-      "scientist": "Computer Scientist",
-      "full": "Full-Stack Developer",
-      "tagline": "Full-Stack Developer focused on building scalable systems and AI integrations."
-    },
-    "descriptionComponent": {
-      "title": "Professional Experience",
-      "subtitle": "Transforming code into intelligent solutions for",
-      "itens": ["About me", "Technologies"],
-      "about": "I work as a <strong>Computer Scientist and Full-Stack Developer</strong>, turning ideas into solid, scalable, and intelligent solutions. My career is driven by practical innovation — using technology not just to solve problems, but to <strong>create measurable, real-world impact</strong>.",
-      "technical": "Throughout this journey, I’ve developed complete platforms and built complex integrations with APIs from major companies such as <strong>Google, Meta, Mercado Pago, ChatGPT, and Zoom</strong>. I also led the creation of systems for medical institutions including <a href='https://sbu-sp.org.br' target='_blank' class='underline hover:text-blue-400 font-medium'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' class='underline hover:text-blue-400 font-medium'>SBN</a>, and <a href='https://www.unifesp.br' target='_blank' class='underline hover:text-blue-400 font-medium'>UNIFESP</a>, implementing solutions that enhanced performance, security, and process management for thousands of professionals. This combination of <strong>technology, automation, and purpose</strong> defines my current focus — developing AI-driven systems that connect data, people, and results.",
-      "techstack": "Technology stack organized by areas, demonstrating expertise in frontend, backend, and system architecture — always emphasizing scalability, automation, and best development practices.",
-      "years": "years",
-      "solutions": {
-        "title": "Flexible Solutions",
-        "single": {
-          "name": "Single-tenant",
-          "slug": "Customization",
-          "description": "One client, one instance.",
-          "help": "Each client has a dedicated software instance and infrastructure, allowing for a high level of customization, security, and data isolation."
-        },
-        "multi": {
-          "name": "Multi-tenant",
-          "slug": "SaaS",
-          "description": "Multiple clients, one instance.",
-          "help": "All clients share the same software environment, reducing operational costs and simplifying maintenance while maintaining performance and reliability."
-        }
+  "hero": {
+    "role": "Full-Stack Software Engineer",
+    "tagline": "I build, integrate and run production systems.",
+    "ctaProjects": "See projects",
+    "ctaContact": "Get in touch",
+    "integrations": "Integrations I've shipped to production",
+    "photoAlt": "Guilherme Schiavon in front of the Trevi Fountain"
+  },
+  "proof": {
+    "years": "years building production software",
+    "services": "services in production under my watch",
+    "servers": "servers I manage, from deploy to monitoring",
+    "projects": "projects documented on this site",
+    "seeProjects": "See projects"
+  },
+  "about": {
+    "eyebrow": "About me",
+    "title": "From code to server, I close the loop.",
+    "paragraphs": [
+      "I'm a computer scientist and I've been doing full-stack development for over {{years}} years. I started as an intern, was promoted to junior developer in three months and, since 2022, I've designed, built and maintained platforms for medical institutions such as <a href='https://sbu-sp.org.br' target='_blank' rel='noopener noreferrer'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' rel='noopener noreferrer'>SBN</a> and <a href='https://www.unifesp.br' target='_blank' rel='noopener noreferrer'>UNIFESP</a>: e-learning, membership management, recurring billing, events and nationwide health campaigns, used by thousands of professionals.",
+      "In 2026 I joined <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> to work on high-volume logistics integrations: microservices, messaging and observability with NestJS, PostgreSQL, Redis and RabbitMQ. In parallel, I remain responsible for the architecture and operation of more than {{services}} services in production.",
+      "I don't stop at shipping code. I handle the deploy, the server, the monitoring and whatever comes after, because a good system is one that keeps working."
+    ],
+    "pillarsTitle": "What I do",
+    "pillars": [
+      {
+        "title": "Full-stack product",
+        "text": "Complete platforms, from database to interface: Node.js, NestJS, Vue, React and Next.js. Multi-tenant SaaS or a dedicated instance, depending on the case."
       },
-      "certificatesTitle": "Certificates & Events",
-      "certificates": {
-        "google": "Google Cloud Certificate",
-        "googleDesc": "Introduction to Artificial Intelligence and Machine Learning on Google Cloud",
-        "hacktown": "HackTown 2025",
-        "hacktownDesc": "Participation in the largest technology and innovation event in Latin America"
+      {
+        "title": "Integrations and messaging",
+        "text": "Payments, logistics, marketplaces and third-party APIs (Mercado Pago, Google, Meta, Zoom, OpenAI). Queues, safe retries and clear contracts for what can't fail silently."
+      },
+      {
+        "title": "Applied AI",
+        "text": "Agents and automations that plug into the real flow of the product and the team. And AI as part of my own engineering process, with rules and review."
+      },
+      {
+        "title": "Infra and operations",
+        "text": "Linux servers, Nginx, PM2, Docker, CI/CD and observability. I keep what I build running."
       }
-    },
-    "techStack": {
-      "title": "Technologies",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "architecture": "Architecture",
-      "devops": "Infra / DevOps"
-    },
-    "stats": {
-      "viewProjects": "View Projects",
-      "viewTechnologies": "View Technologies",
-      "viewExperience": "View Experience"
-    },
-    "project": {
-      "explore": "Explore",
-      "implementation": "Implementation",
-      "implementations": "Implementations"
-    },
-    "otherProjects": {
-      "title": "Other Projects",
-      "seeMore": "See More"
-    },
-    "experiences": {
-      "title": "Professional Journey",
-      "itens": [
+    ]
+  },
+  "work": {
+    "eyebrow": "How I work",
+    "title": "Tools change. Judgment doesn't.",
+    "intro": "The way software gets built has changed a lot in the past year. Today I run several projects in parallel with AI agents, but I'm the one who decides the architecture, sets the limits and answers for the result.",
+    "ai": {
+      "title": "With AI",
+      "items": [
         {
-          "period": "Feb 2026 – Present",
-          "title": "Full-Stack Developer / Logistics Integrations Engineer",
-          "organization": "Mais Envios",
-          "url": "https://maisenvios.com.br/",
-          "description": "Building and evolving systems for high-volume logistics operations with a strong focus on reliability, integrations, and automation — aligned with challenges large marketplaces tackle at scale (throughput, operational consistency, and resilience to partner/API failures).<ul class='list-disc px-6'><li>Microservices and integrations with carriers, marketplaces, and e-commerce platforms, emphasizing clear contracts, safe retries, and fewer inconsistencies across distributed workflows.</li><li>Event-driven architecture with messaging and asynchronous processing to decouple domains and absorb traffic spikes without degrading critical operational paths.</li><li>End-to-end traceability, observability (metrics, correlated logs), and practices that shorten mean time to diagnose and recover from operational incidents.</li><li>Optimization of hot paths—latency-sensitive queries and integrations, strategic use of caching and queues for predictable I/O cost.</li><li>Distributed environments with Node.js, NestJS, PostgreSQL, Redis, and RabbitMQ; continuous backend evolution with availability, maintainability, and safer production rollout in mind.</li><li>Automations and guardrails that reduce manual rework, repetitive errors, and silent failures in third-party integrations.</li></ul>"
+          "title": "Context before code",
+          "text": "Every project has its rules, inventory and runbooks written down. That's what lets an agent, or a new teammate, work safely."
         },
         {
-          "period": "May 2022 – Present",
-          "title": "Senior Full-Stack Developer / AI Solutions Engineer",
-          "organization": "Unimagem Produções Audiovisuais LTDA",
-          "url": "https://unimagem.com.br",
-          "description": "Responsible for designing and integrating intelligent full-stack systems for national and international medical societies using Node.js, Vue.js, and cloud services.<ul class='list-disc px-6'><li>Developed a <strong>medical e-learning platform</strong> (Vue.js/Vuex) with detailed tracking and engagement analytics, increasing course completion rates.</li><li>Created the <strong>World Kidney Day platform</strong>, connecting hospitals nationwide for health awareness campaigns.</li><li>Developed a <strong>geolocation-based specialist search tool</strong>, ensuring accurate and localized results for users.</li><li>Implemented an <strong>annual fee and recurring subscription management system</strong> integrated with Mercado Pago, significantly reducing delinquency rates.</li><li>Currently applying <strong>AI integrations and automations</strong> to optimize workflows and improve system scalability.</li></ul>All projects delivered measurable improvements in efficiency, usability, and maintainability."
+          "title": "Agents with guardrails",
+          "text": "Production is read-only by default. Server changes need explicit approval. Clear limits are worth more than clever prompts."
         },
         {
-          "period": "Jan 2022 – May 2022",
-          "title": "Junior Developer",
-          "organization": "DevCodes – Software House",
-          "url": "https://devcodes.com.br",
-          "description": "Promoted from intern to junior developer for technical performance and initiative.<ul class='list-disc px-6'><li>Worked on backend architecture and full-stack development.</li><li>Integrated APIs such as Google, Facebook (OAuth 2.0), and Mercado Pago.</li><li>Structured and optimized relational database models to improve performance and scalability.</li></ul>"
+          "title": "Review is non-negotiable",
+          "text": "AI writes fast; I read everything. Nothing reaches production before I understand what changed and why."
         },
         {
-          "period": "Oct 2021 – Dec 2021",
-          "title": "Development Intern",
-          "organization": "DevCodes – Software House",
-          "url": "https://devcodes.com.br",
-          "description": "Assisted in maintaining and modernizing web systems, enhancing interface consistency and user experience.<br>Gained hands-on experience across multiple projects, accelerating technical learning and development versatility."
+          "title": "Verify before claiming",
+          "text": "Tests, logs and metrics before saying it's done. Optimism isn't evidence."
         }
       ]
     },
-    "projectDetail": {
-      "implementations": "implementations",
-      "technologies": "technologies",
-      "viewExample": "View Example",
-      "summary": "Summary",
-      "aboutProject": "About the Project",
-      "features": "Features",
-      "updates": "Updates",
-      "latestUpdates": "Latest Updates",
-      "projectUpdates": "Project Updates",
-      "videoPresentation": "Video Presentation",
-      "recommendedProjects": "Other Projects"
-    },
-    "projectsList": {
-      "allThe": "All",
-      "projects": "Projects",
-      "subtitle": "Explore my complete collection of projects — from modern web applications to intelligent systems integrated with APIs and AI.",
-      "searchPlaceholder": "Search projects...",
-      "loadingProjects": "Loading projects...",
-      "noProjectsFound": "No projects found.",
-      "loadMore": "Load More",
-      "loading": "Loading..."
-    },
-    "projectsSection": {
-      "title": "Portfolio",
-      "featured": "Featured",
-      "projects": "Projects",
-      "subtitle": "A selection of my recent work — modern systems and AI-integrated applications built with cutting-edge technologies.",
-      "viewAllProjects": "View All Projects"
+    "team": {
+      "title": "On a team",
+      "intro": "I don't arrive wanting to change everything. I arrive to understand, then I take on what's stuck.",
+      "steps": [
+        {
+          "title": "First, I learn",
+          "text": "I come in to understand the company's rules, the context and the reasons behind decisions already made."
+        },
+        {
+          "title": "Then, I find the bottleneck",
+          "text": "Where the team loses time, where risk piles up, what nobody has time to look at."
+        },
+        {
+          "title": "Then, I take the lead",
+          "text": "I propose, deliver and document, respecting leadership and aligning before changing what belongs to everyone."
+        }
+      ]
     }
+  },
+  "experience": {
+    "eyebrow": "Experience",
+    "title": "Professional journey",
+    "stackLabel": "Stack",
+    "items": [
+      {
+        "period": "Feb 2026 – Present",
+        "title": "Full-Stack Developer / Logistics Integrations Engineer",
+        "organization": "Mais Envios",
+        "url": "https://maisenvios.com.br/",
+        "summary": "Systems for high-volume logistics operations, focused on reliability, integrations and automation.",
+        "highlights": [
+          "Microservices and integrations with carriers, marketplaces and e-commerce platforms, with clear contracts and safe retries.",
+          "Event-driven architecture with messaging and asynchronous processing to absorb traffic spikes without degrading operations.",
+          "End-to-end traceability and observability (metrics and correlated logs) to shorten incident diagnosis.",
+          "Automations and guardrails that cut manual rework and silent failures in third-party integrations."
+        ],
+        "stack": [
+          "Node.js",
+          "NestJS",
+          "PostgreSQL",
+          "Redis",
+          "RabbitMQ"
+        ]
+      },
+      {
+        "period": "May 2022 – Present",
+        "title": "Senior Full-Stack Developer / AI Solutions Engineer",
+        "organization": "Unimagem Produções Audiovisuais",
+        "url": "https://unimagem.com.br",
+        "summary": "Architecture, development and operation of the platforms used by national and international medical societies.",
+        "highlights": [
+          "Medical e-learning platform with progress tracking and engagement analytics, which increased course completion rates.",
+          "World Kidney Day platform, connecting hospitals nationwide in prevention campaigns.",
+          "Geolocation-based specialist search, with accurate results close to the user.",
+          "Annual fee and recurring subscription management integrated with Mercado Pago, reducing delinquency.",
+          "Administration of the production servers: deploys, Nginx, PM2, security updates and monitoring.",
+          "AI integrations and automations to optimize workflows and scale the systems."
+        ],
+        "stack": [
+          "Node.js",
+          "Vue.js",
+          "MySQL",
+          "Redis",
+          "Docker",
+          "Nginx"
+        ]
+      },
+      {
+        "period": "Jan 2022 – May 2022",
+        "title": "Junior Developer",
+        "organization": "DevCodes – Software House",
+        "url": "https://devcodes.com.br",
+        "summary": "Promoted from intern to junior developer in three months, for technical performance and initiative.",
+        "highlights": [
+          "Backend architecture and full-stack development.",
+          "Integrations with Google, Facebook (OAuth 2.0) and Mercado Pago.",
+          "Modeling and optimization of relational databases."
+        ],
+        "stack": []
+      },
+      {
+        "period": "Oct 2021 – Dec 2021",
+        "title": "Development Intern",
+        "organization": "DevCodes – Software House",
+        "url": "https://devcodes.com.br",
+        "summary": "Maintenance and modernization of web systems across several projects, focused on interface consistency and user experience.",
+        "highlights": [],
+        "stack": []
+      }
+    ]
+  },
+  "stack": {
+    "eyebrow": "Stack",
+    "title": "What I use day to day",
+    "groups": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "data": "Data and messaging",
+      "infra": "Infra and operations",
+      "ai": "AI"
+    },
+    "extra": {
+      "ai": [
+        "Agents and automations"
+      ]
+    }
+  },
+  "events": {
+    "eyebrow": "Beyond the code",
+    "title": "Certificates and events",
+    "items": [
+      {
+        "icon": "/icons/google.svg",
+        "title": "Google Cloud Certificate",
+        "text": "Introduction to Artificial Intelligence and Machine Learning on Google Cloud."
+      },
+      {
+        "icon": "/icons/hacktown.png",
+        "title": "HackTown 2025",
+        "text": "Attended the largest technology and innovation event in Latin America."
+      }
+    ],
+    "videoLabel": "Video {{current}} of {{total}} from HackTown 2025",
+    "previous": "Previous video",
+    "next": "Next video"
+  },
+  "projectsSection": {
+    "eyebrow": "Portfolio",
+    "title": "Featured projects",
+    "subtitle": "Some of the systems I designed and built, with context, stack and what was delivered.",
+    "viewAll": "See all projects",
+    "unavailable": "I couldn't load the projects right now. Please try again in a moment."
+  },
+  "card": {
+    "viewProject": "View project",
+    "video": "Video",
+    "images": "{{count}} images",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "implementations_one": "{{count}} implementation",
+    "implementations_other": "{{count}} implementations"
+  },
+  "projectsList": {
+    "title": "All projects",
+    "subtitle": "From e-learning platforms to AI automations: what I built, how it works and with which technologies.",
+    "searchPlaceholder": "Search projects...",
+    "searchLabel": "Search projects",
+    "noProjectsFound": "No projects found.",
+    "clearSearch": "Clear search",
+    "loadMore": "Load more"
+  },
+  "projectDetail": {
+    "back": "All projects",
+    "implementations_one": "{{count}} implementation",
+    "implementations_other": "{{count}} implementations",
+    "technologiesCount_one": "{{count}} technology",
+    "technologiesCount_other": "{{count}} technologies",
+    "technologies": "Technologies",
+    "viewExample": "View example",
+    "summary": "Summary",
+    "aboutProject": "About the project",
+    "features": "Features",
+    "updates": "Updates",
+    "latestUpdates": "Latest updates",
+    "projectUpdates": "Project updates",
+    "videoPresentation": "Video presentation",
+    "recommendedProjects": "Other projects",
+    "previousMedia": "Previous media",
+    "nextMedia": "Next media",
+    "openFullscreen": "Open fullscreen",
+    "version": "Version {{version}}",
+    "close": "Close"
+  },
+  "techTypes": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "architecture": "Architecture",
+    "devops": "Infra / DevOps"
   }
-  
+}
