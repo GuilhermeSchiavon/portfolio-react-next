@@ -70,4 +70,12 @@ node scripts/optimize-images.mjs   # regenera as imagens do hero
 
 ## Deploy
 
-Em produção o site roda com PM2 (`ecosystem.config.js`): `npm run build` e depois reiniciar só o app do portfólio.
+Em produção o site roda no servidor Schiavon com PM2 (`ecosystem.config.js`, app `9999_Schiavon-frontend`).
+O servidor tem 1 CPU e pouca memória livre, então o build é feito fora dele:
+
+1. Na máquina local, compilar com as URLs de produção:
+   `NEXT_PUBLIC_SITE_URL=https://schiavon.dev NEXT_PUBLIC_API_URL=https://server-main.schiavon.dev npm run build`
+2. Enviar a pasta `.next` para o servidor como `.next.new` (sem `cache/webpack`, `cache/swc` e `trace`).
+3. No servidor: `git pull`, `npm install`, trocar `.next` por `.next.new` (guardando a anterior como `.next.old`) e reiniciar só o app do portfólio.
+
+Para voltar atrás: restaurar `.next.old`, `git checkout` do commit anterior e reiniciar o app.
