@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { LocaleLink as Link } from '@/components/ui/LocaleLink'
 import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from './ThemeToggle'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { Close, Menu } from '@/components/ui/Icons'
+import { splitLocalePath } from '@/lib/locale'
 
 const links = [
   { key: 'about', href: '/#about' },
@@ -37,7 +38,7 @@ export function Header() {
   }, [])
 
   // Sobre o hero (topo da home) o cabeçalho fica transparente com texto branco.
-  const overHero = pathname === '/' && !isScrolled && !isMenuOpen
+  const overHero = splitLocalePath(pathname).path === '/' && !isScrolled && !isMenuOpen
 
   return (
     <header

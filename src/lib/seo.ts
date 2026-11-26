@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { site } from './site'
-import { ogLocale, type Locale } from './locale'
+import { defaultLocale, htmlLang, localePath, locales, ogLocale, type Locale } from './locale'
 import { plainText, projectMediaUrl } from './media'
 import type { Project } from '@/types/project'
 
@@ -22,21 +22,35 @@ interface PageSeo {
   absoluteTitle?: boolean
 }
 
+// Endereço da mesma página em cada idioma (hreflang). É o que diz aos
+// buscadores que "/projects/x" e "/pt/projects/x" são versões uma da outra.
+export function languageAlternates(path: string, base = ''): Record<string, string> {
+  // Com base (sitemap), o endereço sai completo e sem barra no fim.
+  const address = (locale: Locale) => (base ? `${base}${localePath(locale, path)}`.replace(/\/$/, '') : localePath(locale, path))
+
+  return {
+    ...Object.fromEntries(locales.map((locale) => [htmlLang[locale], address(locale)])),
+    'x-default': address(defaultLocale),
+  }
+}
+
 export function pageMetadata(locale: Locale, page: PageSeo): Metadata {
   const image = page.image || '/og-image.jpg'
   const path = page.path || '/'
+  const url = localePath(locale, path)
 
   return {
     title: page.absoluteTitle ? { absolute: page.title } : page.title,
     description: page.description,
-    alternates: { canonical: path },
+    alternates: { canonical: url, languages: languageAlternates(path) },
     openGraph: {
       type: 'website',
       title: page.title,
       description: page.description,
-      url: path,
+      url,
       siteName: site.name,
       locale: ogLocale[locale],
+      alternateLocale: locales.filter((other) => other !== locale).map((other) => ogLocale[other]),
       images: [{ url: image, alt: page.title }],
     },
     twitter: {

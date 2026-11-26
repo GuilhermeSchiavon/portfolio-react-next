@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { LocaleLink as Link } from '@/components/ui/LocaleLink'
 import { useTranslation } from 'react-i18next'
 import { plainText, projectMediaUrl, techName, youTubeId, youTubeThumbnail } from '@/lib/media'
 import { ChevronLeft, ChevronRight, Play } from '@/components/ui/Icons'

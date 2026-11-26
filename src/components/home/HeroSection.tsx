@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { LocaleLink as Link } from '@/components/ui/LocaleLink'
 import { useTranslation } from 'react-i18next'
 import { integrations, whatsappLink } from '@/lib/site'
 import { ArrowRight, WhatsApp } from '@/components/ui/Icons'

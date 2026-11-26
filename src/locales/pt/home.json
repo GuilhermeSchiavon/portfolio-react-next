@@ -17,11 +17,13 @@
   "about": {
     "eyebrow": "Sobre mim",
     "title": "Do código ao servidor, eu fecho o ciclo.",
-    "paragraphs": [
+    "story": [
       "Sou cientista da computação e trabalho com desenvolvimento full stack há mais de {{years}} anos. Comecei como estagiário, fui promovido a júnior em três meses e, desde 2022, projeto, construo e mantenho plataformas para instituições médicas como <a href='https://sbu-sp.org.br' target='_blank' rel='noopener noreferrer'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' rel='noopener noreferrer'>SBN</a> e <a href='https://www.unifesp.br' target='_blank' rel='noopener noreferrer'>UNIFESP</a>: EADs, gestão de associados, cobrança recorrente, eventos e campanhas nacionais de saúde, usadas por milhares de profissionais.",
-      "Em 2026 entrei na <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> para trabalhar com integrações logísticas de alto volume: microsserviços, mensageria e observabilidade com NestJS, PostgreSQL, Redis e RabbitMQ. Em paralelo, sigo responsável pela arquitetura e pela operação de mais de {{services}} serviços em produção.",
-      "Não paro na entrega do código. Cuido do deploy, do servidor, do monitoramento e do que acontece depois, porque sistema bom é o que continua funcionando."
+      "Em 2026 entrei na <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> para trabalhar com integrações logísticas de alto volume: microsserviços, mensageria e observabilidade com NestJS, PostgreSQL, Redis e RabbitMQ. Em paralelo, sigo responsável pela arquitetura e pela operação de mais de {{services}} serviços em produção."
     ],
+    "closing": "Não paro na entrega do código. Cuido do deploy, do servidor, do monitoramento e do que acontece depois, porque sistema bom é o que continua funcionando.",
+    "more": "Ler minha trajetória",
+    "less": "Mostrar menos",
     "pillarsTitle": "O que eu faço",
     "pillars": [
       {
@@ -90,6 +92,9 @@
     "eyebrow": "Experiência",
     "title": "Jornada profissional",
     "stackLabel": "Stack",
+    "showHighlights_one": "Ver {{count}} destaque",
+    "showHighlights_other": "Ver {{count}} destaques",
+    "hideHighlights": "Ocultar destaques",
     "items": [
       {
         "period": "Fev 2026 – Presente",

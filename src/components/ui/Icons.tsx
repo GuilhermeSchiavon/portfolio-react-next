@@ -49,6 +49,12 @@ export const ChevronRight = (props: IconProps) => (
   </Stroke>
 )
 
+export const ChevronDown = (props: IconProps) => (
+  <Stroke {...props}>
+    <path d="M6 9l6 6 6-6" />
+  </Stroke>
+)
+
 export const ExternalLink = (props: IconProps) => (
   <Stroke {...props}>
     <path d="M14 5h5v5M19 5l-8 8M11 7H7a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-4" />

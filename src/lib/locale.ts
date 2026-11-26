@@ -4,6 +4,8 @@ export type Locale = (typeof locales)[number]
 export const defaultLocale: Locale = 'en'
 export const LOCALE_COOKIE = 'lang'
 export const THEME_COOKIE = 'theme'
+// Cabeçalho interno: o middleware avisa as páginas qual idioma o endereço pede.
+export const LOCALE_HEADER = 'x-site-locale'
 
 export const htmlLang: Record<Locale, string> = { pt: 'pt-BR', en: 'en' }
 export const ogLocale: Record<Locale, string> = { pt: 'pt_BR', en: 'en_US' }
@@ -31,4 +33,24 @@ export function pickLocale(cookieValue?: string | null, acceptLanguage?: string 
     if (isLocale(lang)) return lang
   }
   return defaultLocale
+}
+
+// Cada idioma tem o seu endereço, para os buscadores indexarem os dois:
+// o padrão fica na raiz ("/projects") e os outros ganham prefixo ("/pt/projects").
+
+// "/pt/projects/x" -> { locale: 'pt', path: '/projects/x' }
+export function splitLocalePath(pathname: string): { locale: Locale | null; path: string } {
+  const [, first, ...rest] = pathname.split('/')
+  if (isLocale(first)) return { locale: first, path: `/${rest.join('/')}` }
+  return { locale: null, path: pathname }
+}
+
+// localePath('pt', '/#about') -> '/pt#about'. Links externos e âncoras da
+// própria página ("#contact") passam direto.
+export function localePath(locale: Locale, href: string): string {
+  if (locale === defaultLocale || !href.startsWith('/')) return href
+  const cut = href.search(/[?#]/)
+  const pathname = cut === -1 ? href : href.slice(0, cut)
+  const rest = cut === -1 ? '' : href.slice(cut)
+  return `/${locale}${pathname === '/' ? '' : pathname}${rest}`
 }

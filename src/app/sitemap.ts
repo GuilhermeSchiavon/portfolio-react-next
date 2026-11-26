@@ -1,20 +1,28 @@
 import type { MetadataRoute } from 'next'
 import { getAllProjectSlugs } from '@/lib/api'
+import { localePath, locales } from '@/lib/locale'
+import { languageAlternates } from '@/lib/seo'
 import { site } from '@/lib/site'
 
-// Inclui cada página de projeto, não só a home e a listagem.
+// Cada página aparece uma vez por idioma (inglês na raiz, português em /pt),
+// com a indicação de qual é a versão equivalente no outro idioma.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getAllProjectSlugs()
   const now = new Date()
 
-  return [
-    { url: site.url, lastModified: now, changeFrequency: 'monthly', priority: 1 },
-    { url: `${site.url}/projects`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
-    ...slugs.map((slug) => ({
-      url: `${site.url}/projects/${slug}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
+  const pages = [
+    { path: '/', changeFrequency: 'monthly' as const, priority: 1 },
+    { path: '/projects', changeFrequency: 'weekly' as const, priority: 0.9 },
+    ...slugs.map((slug) => ({ path: `/projects/${slug}`, changeFrequency: 'monthly' as const, priority: 0.7 })),
   ]
+
+  return pages.flatMap(({ path, changeFrequency, priority }) =>
+    locales.map((locale) => ({
+      url: `${site.url}${localePath(locale, path)}`.replace(/\/$/, ''),
+      lastModified: now,
+      changeFrequency,
+      priority,
+      alternates: { languages: languageAlternates(path, site.url) },
+    }))
+  )
 }

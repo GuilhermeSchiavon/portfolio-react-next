@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { PageShell } from '@/components/layout/PageShell'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { ProjectCard } from '@/components/ui/ProjectCard'
 import { Close, Search } from '@/components/ui/Icons'
+import { localePath, type Locale } from '@/lib/locale'
 import type { Project } from '@/types/project'
 
 interface ProjectsListViewProps {
@@ -20,9 +21,9 @@ interface ProjectsListViewProps {
 // A busca e o "carregar mais" viram parâmetros da URL (?q= e ?pages=) e o
 // servidor devolve a lista pronta. O link de uma busca pode ser compartilhado.
 export function ProjectsListView({ projects, hasMore, keyword, pages }: ProjectsListViewProps) {
-  const { t } = useTranslation('home')
+  const { t, i18n } = useTranslation('home')
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = localePath(i18n.language as Locale, '/projects')
   const [value, setValue] = useState(keyword)
   const [isPending, startTransition] = useTransition()
   const timer = useRef<ReturnType<typeof setTimeout>>()

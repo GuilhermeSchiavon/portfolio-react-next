@@ -17,11 +17,13 @@
   "about": {
     "eyebrow": "About me",
     "title": "From code to server, I close the loop.",
-    "paragraphs": [
+    "story": [
       "I'm a computer scientist and I've been doing full-stack development for over {{years}} years. I started as an intern, was promoted to junior developer in three months and, since 2022, I've designed, built and maintained platforms for medical institutions such as <a href='https://sbu-sp.org.br' target='_blank' rel='noopener noreferrer'>SBU-SP</a>, <a href='https://sbn.org.br' target='_blank' rel='noopener noreferrer'>SBN</a> and <a href='https://www.unifesp.br' target='_blank' rel='noopener noreferrer'>UNIFESP</a>: e-learning, membership management, recurring billing, events and nationwide health campaigns, used by thousands of professionals.",
-      "In 2026 I joined <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> to work on high-volume logistics integrations: microservices, messaging and observability with NestJS, PostgreSQL, Redis and RabbitMQ. In parallel, I remain responsible for the architecture and operation of more than {{services}} services in production.",
-      "I don't stop at shipping code. I handle the deploy, the server, the monitoring and whatever comes after, because a good system is one that keeps working."
+      "In 2026 I joined <a href='https://maisenvios.com.br/' target='_blank' rel='noopener noreferrer'>Mais Envios</a> to work on high-volume logistics integrations: microservices, messaging and observability with NestJS, PostgreSQL, Redis and RabbitMQ. In parallel, I remain responsible for the architecture and operation of more than {{services}} services in production."
     ],
+    "closing": "I don't stop at shipping code. I handle the deploy, the server, the monitoring and whatever comes after, because a good system is one that keeps working.",
+    "more": "Read my background",
+    "less": "Show less",
     "pillarsTitle": "What I do",
     "pillars": [
       {
@@ -90,6 +92,9 @@
     "eyebrow": "Experience",
     "title": "Professional journey",
     "stackLabel": "Stack",
+    "showHighlights_one": "Show {{count}} highlight",
+    "showHighlights_other": "Show {{count}} highlights",
+    "hideHighlights": "Hide highlights",
     "items": [
       {
         "period": "Feb 2026 – Present",

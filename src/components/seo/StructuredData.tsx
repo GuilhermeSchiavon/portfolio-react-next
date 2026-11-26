@@ -1,4 +1,5 @@
 import { site } from '@/lib/site'
+import { htmlLang, localePath, type Locale } from '@/lib/locale'
 import { plainText, projectMediaUrl } from '@/lib/media'
 import type { Project } from '@/types/project'
 
@@ -26,6 +27,7 @@ export function PersonStructuredData({ jobTitle, description }: { jobTitle: stri
         email: `mailto:${site.email}`,
         address: { '@type': 'PostalAddress', addressLocality: 'São Paulo', addressCountry: 'BR' },
         sameAs: [site.social.github, site.social.linkedin, site.social.instagram],
+        knowsLanguage: ['pt-BR', 'en'],
         knowsAbout: [
           'Node.js',
           'NestJS',
@@ -44,7 +46,7 @@ export function PersonStructuredData({ jobTitle, description }: { jobTitle: stri
   )
 }
 
-export function ProjectStructuredData({ project }: { project: Project }) {
+export function ProjectStructuredData({ project, locale }: { project: Project; locale: Locale }) {
   const cover = project.Images?.find((image) => image.mediaType !== 'video')
 
   return (
@@ -55,7 +57,8 @@ export function ProjectStructuredData({ project }: { project: Project }) {
         name: project.title,
         headline: project.subtitle || undefined,
         description: plainText(project.description, 300),
-        url: `${site.url}/projects/${project.slug}`,
+        url: `${site.url}${localePath(locale, `/projects/${project.slug}`)}`,
+        inLanguage: htmlLang[locale],
         image: cover ? projectMediaUrl(cover.filename) : undefined,
         creator: { '@type': 'Person', name: site.name, url: site.url },
         keywords: project.Technologies?.map((tech) => tech.name).join(', ') || undefined,

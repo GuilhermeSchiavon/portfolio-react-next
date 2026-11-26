@@ -120,6 +120,19 @@
   animation-delay: var(--delay, 0ms);
 }
 
+/* Entrada dos blocos ao rolar (components/ui/Reveal.tsx). Sem o atributo o
+   bloco é visível: quem esconde é o JavaScript, nunca o HTML. */
+[data-reveal='out'] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+[data-reveal='in'] {
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);

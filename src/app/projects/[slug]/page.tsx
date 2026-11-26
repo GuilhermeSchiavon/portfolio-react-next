@@ -32,7 +32,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <>
-      <ProjectStructuredData project={project} />
+      <ProjectStructuredData project={project} locale={locale} />
       <ProjectDetailView project={project} updates={updates} recommendations={recommendations} />
     </>
   )

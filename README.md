@@ -13,7 +13,8 @@ Site em [schiavon.dev](https://schiavon.dev). Frontend em Next.js (App Router) q
 ## Como funciona
 
 - **Dados no servidor.** As páginas buscam os projetos na API pelo servidor do Next (`src/lib/api.ts`), com cache de 5 minutos. O HTML já chega com o conteúdo, o navegador não depende de CORS e, se a API cair, a página renderiza sem a lista em vez de quebrar.
-- **Idioma decidido no servidor.** A ordem é: cookie `lang`, depois o `Accept-Language` do navegador, depois inglês (`src/lib/locale.ts`). O HTML renderizado e a hidratação usam o mesmo idioma.
+- **Um endereço por idioma.** Inglês na raiz (`/`, `/projects/...`) e português em `/pt/...`. O `src/middleware.ts` tira o `/pt` e avisa as páginas pelo cabeçalho `x-site-locale`; as rotas continuam em `src/app`, sem pasta de idioma. Quem abre um endereço sem prefixo e prefere português (cookie `lang` ou `Accept-Language`) é levado ao `/pt`. Robôs não mandam nenhum dos dois: ficam no inglês e chegam ao português pelos `hreflang` de cada página e pelo `sitemap.xml`, que lista os dois idiomas. Links internos usam `LocaleLink` para manter o idioma.
+- **Conteúdo visível sem JavaScript.** As animações de entrada (`Reveal`) só escondem um bloco depois que o JavaScript roda, e só se ele estiver abaixo da tela. O que fica recolhido no celular (trajetória, destaques da experiência) continua no HTML.
 - **Tema sem "flash".** A classe `dark` do `<html>` vem do cookie `theme`; sem cookie, um script no `<head>` segue o tema do sistema.
 - **Hero estático.** As fotos do hero são geradas em dois tamanhos por `scripts/optimize-images.mjs` e servidas como arquivo estático com `srcset`.
 - **Números e contatos em um lugar só:** `src/lib/site.ts`.

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { LocaleLink as Link } from '@/components/ui/LocaleLink'
 import { useTranslation } from 'react-i18next'
 import { PageShell } from '@/components/layout/PageShell'
 import { MediaFullscreen, type MediaItem } from '@/components/ui/MediaFullscreen'
